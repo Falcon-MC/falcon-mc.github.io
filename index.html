@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Falcon - Bedrock server software in C++</title>
+    <meta name="description" content="Falcon is a Minecraft: Bedrock Edition server software written from scratch in C++17.">
+    <meta property="og:title" content="Falcon">
+    <meta property="og:description" content="Minecraft: Bedrock Edition server software written from scratch in C++17.">
+    <meta property="og:image" content="https://falcon-mc.github.io/assets/logo.png">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+    <a class="brand" href="#top">
+        <img src="assets/icon-white.png" alt="" width="32" height="32">
+        <span>Falcon</span>
+    </a>
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#repositories">Repositories</a>
+        <a href="#start">Get started</a>
+        <a href="https://github.com/Falcon-MC" class="button small">GitHub</a>
+    </nav>
+</header>
+
+<main id="top">
+    <section class="hero">
+        <img class="hero-logo" src="assets/logo-white.png" alt="Falcon" width="280" height="280">
+        <h1>Bedrock server software,<br>written from scratch in C++</h1>
+        <p class="lead">
+            Falcon reimplements the Minecraft: Bedrock Edition protocol, world storage and gameplay by hand.
+            No runtime to install: one self-contained executable.
+        </p>
+        <div class="badges">
+            <span>Bedrock 1.26.50</span>
+            <span>Protocol 2193</span>
+            <span>C++17</span>
+            <span>Windows &amp; Linux</span>
+        </div>
+        <div class="actions">
+            <a class="button" href="https://github.com/Falcon-MC/Falcon/releases">Download</a>
+            <a class="button ghost" href="https://github.com/Falcon-MC/Falcon">Source code</a>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2>Features</h2>
+        <div class="grid">
+            <article>
+                <h3>Native C++17</h3>
+                <p>No virtual machine, no interpreter. The server ships as a single executable for Windows and Linux.</p>
+            </article>
+            <article>
+                <h3>Own RakNet</h3>
+                <p>Sockets, reliability layer and connection handshake are implemented in the Network library.</p>
+            </article>
+            <article>
+                <h3>NetherNet</h3>
+                <p>WebRTC signaling and transport run alongside RakNet, with LAN discovery.</p>
+            </article>
+            <article>
+                <h3>World generation</h3>
+                <p>Noise, density functions, aquifers, caves, 3D biomes, ore veins and surface features.</p>
+            </article>
+            <article>
+                <h3>Threaded chunks</h3>
+                <p>Generation, population, lighting and LevelDB storage run on worker threads, never on the tick.</p>
+            </article>
+            <article>
+                <h3>Behavior packs</h3>
+                <p>Custom items, blocks, actors and recipes loaded from packs, with a QuickJS scripting engine.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="repositories" class="section">
+        <h2>Repositories</h2>
+        <div class="repos">
+            <a class="repo" href="https://github.com/Falcon-MC/Falcon">
+                <h3>Falcon</h3>
+                <p>The server: world, gameplay, commands, generation and scripting.</p>
+            </a>
+            <a class="repo" href="https://github.com/Falcon-MC/Protocol">
+                <h3>Protocol</h3>
+                <p>Bedrock packets, network types, NBT and binary streams.</p>
+            </a>
+            <a class="repo" href="https://github.com/Falcon-MC/Network">
+                <h3>Network</h3>
+                <p>RakNet, NetherNet, compression and login verification.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="start" class="section">
+        <h2>Get started</h2>
+        <p>Grab a build from the <a href="https://github.com/Falcon-MC/Falcon/releases">releases</a>, or build it
+            yourself with CMake 3.16+, a C++17 compiler, zlib and OpenSSL.</p>
+        <pre><code>git clone https://github.com/Falcon-MC/Falcon.git
+cd Falcon
+cmake -B build -G Ninja
+cmake --build build</code></pre>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+    <p><a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a></p>
+</footer>
+</body>
+</html>
