@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://falcon-mc.github.io/sitemap.xml
