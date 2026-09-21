@@ -4,7 +4,8 @@ const ORGANIZATION = "Falcon-MC";
 
 const PLATFORMS = [
     {asset: "FalconServer-windows-x64.exe", label: "Windows"},
-    {asset: "FalconServer-linux-x64", label: "Linux"}
+    {asset: "FalconServer-linux-x64", label: "Linux"},
+    {asset: "FalconServer-macos-arm64", label: "macOS"}
 ];
 
 function detectPlatform() {
@@ -16,6 +17,9 @@ function detectPlatform() {
     }
     if (platform === "Linux" || (/Linux/.test(agent) && !/Android/.test(agent))) {
         return "Linux";
+    }
+    if (platform === "macOS" || /Macintosh/.test(agent)) {
+        return "macOS";
     }
     return null;
 }
