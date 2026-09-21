@@ -62,7 +62,6 @@
     <nav>
         <a href="#features">Features</a>
         <a href="#repositories">Repositories</a>
-        <a href="#start">Get started</a>
         <a href="https://github.com/Falcon-MC" class="button small">GitHub</a>
     </nav>
 </header>
@@ -82,9 +81,17 @@
             <span>Windows &amp; Linux</span>
         </div>
         <div class="actions">
-            <a class="button" href="https://github.com/Falcon-MC/Falcon/releases">Download</a>
+            <a class="button" id="download-windows" href="https://github.com/Falcon-MC/Falcon/releases">Download for Windows</a>
+            <a class="button" id="download-linux" href="https://github.com/Falcon-MC/Falcon/releases">Download for Linux</a>
             <a class="button ghost" href="https://github.com/Falcon-MC/Falcon">Source code</a>
         </div>
+        <p class="release-info" id="release-info" hidden></p>
+        <ul class="stats">
+            <li hidden><strong data-stat="stars"></strong><span>GitHub stars</span></li>
+            <li hidden><strong data-stat="downloads"></strong><span>Downloads</span></li>
+            <li hidden><strong data-stat="contributors"></strong><span>Contributors</span></li>
+            <li hidden><strong data-stat="repositories"></strong><span>Repositories</span></li>
+        </ul>
     </section>
 
     <section id="features" class="section">
@@ -151,16 +158,11 @@
         </div>
     </section>
 
-    <section id="start" class="section">
-        <h2>Get started</h2>
-        <p>Grab a Windows or Linux build from the <a href="https://github.com/Falcon-MC/Falcon/releases">releases</a>,
-            check it against its <code>.sha256</code> file and run it: on the first start, a setup wizard in the
-            console writes <code>server.properties</code>. To build it yourself, you need CMake 3.16+, a C++17
-            compiler, zlib and OpenSSL.</p>
-        <pre><code>git clone https://github.com/Falcon-MC/Falcon.git
-cd Falcon
-cmake -B build -G Ninja
-cmake --build build</code></pre>
+    <section id="contributors" class="section" hidden>
+        <h2>Contributors</h2>
+        <p>Falcon is built in the open. Give it a star on
+            <a href="https://github.com/Falcon-MC/Falcon">GitHub</a> if it helped you.</p>
+        <div class="contributors" id="contributors-list"></div>
     </section>
 </main>
 
@@ -168,5 +170,6 @@ cmake --build build</code></pre>
     <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
     <p><a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a></p>
 </footer>
+<script src="github.js"></script>
 </body>
 </html>

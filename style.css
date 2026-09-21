@@ -140,6 +140,61 @@ h1, h2, h3, .brand span, .badges span, .button {
     font-size: 16px;
 }
 
+.release-info {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 40px;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.stats li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stats li[hidden] {
+    display: none;
+}
+
+.stats strong {
+    font-family: "Minecraft", monospace;
+    font-size: 28px;
+    font-weight: normal;
+    color: var(--text);
+}
+
+.stats span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.contributors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.contributors img {
+    display: block;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+}
+
+.contributors a:hover img {
+    border-color: var(--accent);
+}
+
 .button:hover {
     text-decoration: none;
     filter: brightness(1.1);
@@ -211,32 +266,6 @@ h1, h2, h3, .brand span, .badges span, .button {
 .repo:hover {
     border-color: var(--accent);
     text-decoration: none;
-}
-
-#start p {
-    max-width: 680px;
-    margin: 0 auto 20px;
-    text-align: center;
-    color: var(--muted);
-}
-
-pre {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 18px 20px;
-    overflow-x: auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 14px;
-}
-
-p code {
-    padding: 2px 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.9em;
 }
 
 .footer {
