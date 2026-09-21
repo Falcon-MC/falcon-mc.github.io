@@ -175,6 +175,15 @@ async function loadContributors() {
     showContributors(contributors);
 }
 
+function labelDownloadButton() {
+    const detected = detectPlatform();
+    if (detected) {
+        document.getElementById("download").textContent = `Download for ${detected}`;
+    }
+}
+
+labelDownloadButton();
+
 for (const task of [loadReleases, loadRepository, loadOrganization, loadContributors]) {
     task().catch((error) => console.warn("Could not load GitHub data", error));
 }
