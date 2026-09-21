@@ -76,7 +76,7 @@
             No runtime to install: one self-contained executable.
         </p>
         <div class="badges">
-            <span>Bedrock 1.26.50</span>
+            <span>Bedrock 1.26.51</span>
             <span>Protocol 2193</span>
             <span>C++17</span>
             <span>Windows &amp; Linux</span>
@@ -95,12 +95,12 @@
                 <p>No virtual machine, no interpreter. The server ships as a single executable for Windows and Linux.</p>
             </article>
             <article>
-                <h3>Own RakNet</h3>
-                <p>Sockets, reliability layer and connection handshake are implemented in the Network library.</p>
+                <h3>Own transport</h3>
+                <p>RakNet and NetherNet (WebRTC) are implemented in the Network library, with LAN discovery.</p>
             </article>
             <article>
-                <h3>NetherNet</h3>
-                <p>WebRTC signaling and transport run alongside RakNet, with LAN discovery.</p>
+                <h3>Vanilla worlds</h3>
+                <p>Bedrock world format, so worlds move between Falcon and the game unchanged.</p>
             </article>
             <article>
                 <h3>World generation</h3>
@@ -126,19 +126,37 @@
             </a>
             <a class="repo" href="https://github.com/Falcon-MC/Protocol">
                 <h3>Protocol</h3>
-                <p>Bedrock packets, network types, NBT and binary streams.</p>
+                <p>Bedrock packets and network types.</p>
             </a>
             <a class="repo" href="https://github.com/Falcon-MC/Network">
                 <h3>Network</h3>
                 <p>RakNet, NetherNet, compression and login verification.</p>
+            </a>
+            <a class="repo" href="https://github.com/Falcon-MC/NBT">
+                <h3>NBT</h3>
+                <p>NBT tags and binary streams, shared by the protocol and world storage.</p>
+            </a>
+            <a class="repo" href="https://github.com/Falcon-MC/BedrockData">
+                <h3>BedrockData</h3>
+                <p>Block palette, recipes, item tags, biomes, voxel shapes and loot tables, versioned by protocol.</p>
+            </a>
+            <a class="repo" href="https://github.com/Falcon-MC/BlockStateUpdater">
+                <h3>BlockStateUpdater</h3>
+                <p>Upgrade schemas that bring old block states up to the current version.</p>
+            </a>
+            <a class="repo" href="https://github.com/Falcon-MC/DataGen">
+                <h3>DataGen</h3>
+                <p>Generates the game data from a dedicated server.</p>
             </a>
         </div>
     </section>
 
     <section id="start" class="section">
         <h2>Get started</h2>
-        <p>Grab a build from the <a href="https://github.com/Falcon-MC/Falcon/releases">releases</a>, or build it
-            yourself with CMake 3.16+, a C++17 compiler, zlib and OpenSSL.</p>
+        <p>Grab a Windows or Linux build from the <a href="https://github.com/Falcon-MC/Falcon/releases">releases</a>,
+            check it against its <code>.sha256</code> file and run it: on the first start, a setup wizard in the
+            console writes <code>server.properties</code>. To build it yourself, you need CMake 3.16+, a C++17
+            compiler, zlib and OpenSSL.</p>
         <pre><code>git clone https://github.com/Falcon-MC/Falcon.git
 cd Falcon
 cmake -B build -G Ninja
