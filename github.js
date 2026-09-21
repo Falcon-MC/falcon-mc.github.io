@@ -3,9 +3,22 @@ const REPOSITORY = "Falcon-MC/Falcon";
 const ORGANIZATION = "Falcon-MC";
 
 const PLATFORMS = [
-    {id: "download-windows", asset: "FalconServer-windows-x64.exe", label: "Windows"},
-    {id: "download-linux", asset: "FalconServer-linux-x64", label: "Linux"}
+    {asset: "FalconServer-windows-x64.exe", label: "Windows"},
+    {asset: "FalconServer-linux-x64", label: "Linux"}
 ];
+
+function detectPlatform() {
+    const platform = navigator.userAgentData ? navigator.userAgentData.platform : "";
+    const agent = navigator.userAgent;
+
+    if (platform === "Windows" || /Windows/.test(agent)) {
+        return "Windows";
+    }
+    if (platform === "Linux" || (/Linux/.test(agent) && !/Android/.test(agent))) {
+        return "Linux";
+    }
+    return null;
+}
 
 async function fetchJson(path) {
     const response = await fetch(API + path, {headers: {Accept: "application/vnd.github+json"}});
@@ -34,8 +47,29 @@ function appendLink(parent, text, href) {
     parent.appendChild(link);
 }
 
+function showDownloadMenu(release) {
+    const options = document.getElementById("download-options");
+    for (const platform of PLATFORMS) {
+        const binary = findAsset(release, platform.asset);
+        if (binary) {
+            appendLink(options, `${platform.label} (${release.tag_name})`, binary.browser_download_url);
+        }
+    }
+
+    if (options.children.length > 0) {
+        document.getElementById("download").hidden = true;
+        document.getElementById("download-menu").hidden = false;
+    }
+}
+
 function showRelease(release) {
-    const checksums = [];
+    const detected = detectPlatform();
+    const others = [];
+    let checksum = null;
+
+    if (!detected) {
+        showDownloadMenu(release);
+    }
 
     for (const platform of PLATFORMS) {
         const binary = findAsset(release, platform.asset);
@@ -43,24 +77,32 @@ function showRelease(release) {
             continue;
         }
 
-        const button = document.getElementById(platform.id);
+        if (platform.label !== detected) {
+            others.push({label: platform.label, href: binary.browser_download_url});
+            continue;
+        }
+
+        const button = document.getElementById("download");
         button.href = binary.browser_download_url;
         button.textContent = `Download ${release.tag_name} for ${platform.label}`;
-
-        const checksum = findAsset(release, `${platform.asset}.sha256`);
-        if (checksum) {
-            checksums.push({label: platform.label, href: checksum.browser_download_url});
-        }
+        checksum = findAsset(release, `${platform.asset}.sha256`);
     }
 
     const info = document.getElementById("release-info");
-    info.textContent = `${release.tag_name}, released ${formatDate(release.published_at)} · SHA-256: `;
-    checksums.forEach((checksum, index) => {
-        if (index > 0) {
-            info.appendChild(document.createTextNode(", "));
-        }
-        appendLink(info, checksum.label, checksum.href);
-    });
+    info.textContent = `${release.tag_name}, released ${formatDate(release.published_at)}`;
+    if (checksum) {
+        info.appendChild(document.createTextNode(" · "));
+        appendLink(info, "SHA-256", checksum.browser_download_url);
+    }
+    if (checksum && others.length > 0) {
+        info.appendChild(document.createTextNode(" · Other platforms: "));
+        others.forEach((other, index) => {
+            if (index > 0) {
+                info.appendChild(document.createTextNode(", "));
+            }
+            appendLink(info, other.label, other.href);
+        });
+    }
     info.appendChild(document.createTextNode(" · "));
     appendLink(info, "Release notes", release.html_url);
     info.hidden = false;
