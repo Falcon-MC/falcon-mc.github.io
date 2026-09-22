@@ -124,10 +124,29 @@ function countDownloads(releases) {
     return total;
 }
 
+function formatRelativeDate(value) {
+    const days = Math.round((Date.now() - new Date(value).getTime()) / 86400000);
+    const format = new Intl.RelativeTimeFormat("en-US", {numeric: "auto"});
+    if (days < 30) {
+        return format.format(-days, "day");
+    }
+    if (days < 365) {
+        return format.format(-Math.round(days / 30), "month");
+    }
+    return format.format(-Math.round(days / 365), "year");
+}
+
 function setStat(name, value) {
     const element = document.querySelector(`[data-stat="${name}"]`);
     element.textContent = formatCount(value);
-    element.closest("li").hidden = false;
+    element.classList.remove("skeleton");
+}
+
+function clearPendingStats() {
+    for (const element of document.querySelectorAll("[data-stat].skeleton")) {
+        element.textContent = "-";
+        element.classList.remove("skeleton");
+    }
 }
 
 function showContributors(contributors) {
@@ -163,14 +182,21 @@ async function loadReleases() {
     }
 }
 
-async function loadRepository() {
-    const repository = await fetchJson(`/repos/${REPOSITORY}`);
-    setStat("stars", repository.stargazers_count);
-}
+async function loadRepositories() {
+    const repositories = await fetchJson(`/orgs/${ORGANIZATION}/repos?per_page=100`);
+    for (const repository of repositories) {
+        if (repository.full_name === REPOSITORY) {
+            setStat("stars", repository.stargazers_count);
+        }
 
-async function loadOrganization() {
-    const organization = await fetchJson(`/orgs/${ORGANIZATION}`);
-    setStat("repositories", organization.public_repos);
+        const link = document.querySelector(`[data-repo="${repository.name}"]`);
+        if (!link) {
+            continue;
+        }
+
+        link.querySelector(".repo-meta").textContent =
+            `★ ${formatCount(repository.stargazers_count)} · ${formatRelativeDate(repository.pushed_at)}`;
+    }
 }
 
 async function loadContributors() {
@@ -186,8 +212,98 @@ function labelDownloadButton() {
     }
 }
 
-labelDownloadButton();
+const TERMINAL_LINES = [
+    {prompt: "$ ", text: "./FalconServer"},
+    {level: "INFO", text: "Starting Falcon for Minecraft: Bedrock Edition 1.26.51"},
+    {level: "INFO", text: "Loading server.properties"},
+    {level: "INFO", text: "Preparing level \"world\""},
+    {level: "INFO", text: "Generating spawn area"},
+    {level: "INFO", text: "RakNet listening on 0.0.0.0:19132"},
+    {level: "INFO", text: "NetherNet ready, LAN discovery enabled"},
+    {level: "INFO", text: "Server started. Type help for commands."}
+];
 
-for (const task of [loadReleases, loadRepository, loadOrganization, loadContributors]) {
-    task().catch((error) => console.warn("Could not load GitHub data", error));
+function appendTerminalLine(output, line) {
+    const row = document.createElement("div");
+    const tag = document.createElement("span");
+    if (line.prompt) {
+        tag.className = "prompt";
+        tag.textContent = line.prompt;
+    } else {
+        tag.className = "level";
+        tag.textContent = `[${line.level}] `;
+    }
+    row.appendChild(tag);
+    row.appendChild(document.createTextNode(line.text));
+    output.appendChild(row);
 }
+
+function playTerminal() {
+    const output = document.getElementById("terminal-output");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+
+    if (reduceMotion) {
+        TERMINAL_LINES.forEach((line) => appendTerminalLine(output, line));
+        output.appendChild(cursor);
+        return;
+    }
+
+    let index = 0;
+    const step = () => {
+        cursor.remove();
+        if (index < TERMINAL_LINES.length) {
+            appendTerminalLine(output, TERMINAL_LINES[index]);
+            index++;
+            output.appendChild(cursor);
+            setTimeout(step, index === 1 ? 700 : 260 + Math.random() * 280);
+            return;
+        }
+        output.appendChild(cursor);
+    };
+    step();
+}
+
+function setupMenu() {
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("site-menu");
+
+    const setOpen = (open) => {
+        menu.classList.toggle("open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+
+    toggle.addEventListener("click", () => setOpen(!menu.classList.contains("open")));
+    for (const link of menu.querySelectorAll("a")) {
+        link.addEventListener("click", () => setOpen(false));
+    }
+}
+
+function setupReveal() {
+    const elements = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+        elements.forEach((element) => element.classList.add("visible"));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        }
+    }, {threshold: 0.15});
+    elements.forEach((element) => observer.observe(element));
+}
+
+labelDownloadButton();
+setupMenu();
+setupReveal();
+playTerminal();
+
+Promise.allSettled([loadReleases, loadRepositories, loadContributors].map((task) =>
+    task().catch((error) => console.warn("Could not load GitHub data", error))
+)).then(clearPendingStats);

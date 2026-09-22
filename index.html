@@ -51,7 +51,8 @@
         }
     }
     </script>
-    <link rel="stylesheet" href="style.css?v=3">
+    <script>document.documentElement.classList.add("js");</script>
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <header class="nav">
@@ -59,117 +60,184 @@
         <img src="assets/icon-white.png" alt="" width="32" height="32">
         <span>Falcon</span>
     </a>
-    <nav>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-menu">
+        <span></span><span></span><span></span>
+    </button>
+    <nav id="site-menu">
         <a href="#features">Features</a>
         <a href="#repositories">Repositories</a>
+        <a href="#contributors">Contributors</a>
         <a href="https://github.com/Falcon-MC" class="button small">GitHub</a>
     </nav>
 </header>
 
 <main id="top">
     <section class="hero">
-        <img class="hero-logo" src="assets/logo-white.png" alt="Falcon" width="280" height="280">
-        <h1>Bedrock server software,<br>written from scratch in C++</h1>
-        <p class="lead">
-            Falcon reimplements the Minecraft: Bedrock Edition protocol, world storage and gameplay by hand.
-            No runtime to install: one self-contained executable.
-        </p>
-        <div class="badges">
-            <span>Bedrock 1.26.51</span>
-            <span>Protocol 2193</span>
-            <span>C++17</span>
-            <span>Windows &amp; Linux</span>
+        <img class="hero-decoration" src="assets/logo-white.png" alt="" width="520" height="520">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <h1>Bedrock server software, written from scratch in C++</h1>
+                <p class="lead">
+                    Falcon reimplements the Minecraft: Bedrock Edition protocol, world storage and gameplay by hand.
+                    No runtime to install: one self-contained executable.
+                </p>
+                <div class="badges">
+                    <span>Bedrock 1.26.51</span>
+                    <span>Protocol 2193</span>
+                    <span>C++17</span>
+                    <span>Windows &amp; Linux</span>
+                </div>
+                <div class="actions">
+                    <a class="button" id="download" href="https://github.com/Falcon-MC/Falcon/releases">Download</a>
+                    <details class="dropdown" id="download-menu" hidden>
+                        <summary class="button">Download</summary>
+                        <div class="dropdown-menu" id="download-options"></div>
+                    </details>
+                    <a class="button ghost" href="https://github.com/Falcon-MC/Falcon">Source code</a>
+                </div>
+                <p class="release-info" id="release-info"></p>
+            </div>
+
+            <div class="terminal" aria-hidden="true">
+                <div class="terminal-bar">
+                    <span></span><span></span><span></span>
+                    <em>FalconServer</em>
+                </div>
+                <pre id="terminal-output"></pre>
+            </div>
         </div>
-        <div class="actions">
-            <a class="button" id="download" href="https://github.com/Falcon-MC/Falcon/releases">Download</a>
-            <details class="dropdown" id="download-menu" hidden>
-                <summary class="button">Download</summary>
-                <div class="dropdown-menu" id="download-options"></div>
-            </details>
-            <a class="button ghost" href="https://github.com/Falcon-MC/Falcon">Source code</a>
-        </div>
-        <p class="release-info" id="release-info" hidden></p>
+
         <ul class="stats">
-            <li hidden><strong data-stat="stars"></strong><span>GitHub stars</span></li>
-            <li hidden><strong data-stat="downloads"></strong><span>Downloads</span></li>
-            <li hidden><strong data-stat="contributors"></strong><span>Contributors</span></li>
-            <li hidden><strong data-stat="repositories"></strong><span>Repositories</span></li>
+            <li><strong class="skeleton" data-stat="stars"></strong><span>GitHub stars</span></li>
+            <li><strong class="skeleton" data-stat="downloads"></strong><span>Downloads</span></li>
+            <li><strong class="skeleton" data-stat="contributors"></strong><span>Contributors</span></li>
         </ul>
     </section>
 
-    <section id="features" class="section">
-        <h2>Features</h2>
-        <div class="grid">
-            <article>
-                <h3>Native C++17</h3>
-                <p>No virtual machine, no interpreter. The server ships as a single executable for Windows and Linux.</p>
-            </article>
-            <article>
-                <h3>Own transport</h3>
-                <p>RakNet and NetherNet (WebRTC) are implemented in the Network library, with LAN discovery.</p>
-            </article>
-            <article>
-                <h3>Vanilla worlds</h3>
-                <p>Bedrock world format, so worlds move between Falcon and the game unchanged.</p>
-            </article>
-            <article>
-                <h3>World generation</h3>
-                <p>Noise, density functions, aquifers, caves, 3D biomes, ore veins and surface features.</p>
-            </article>
-            <article>
-                <h3>Threaded chunks</h3>
-                <p>Generation, population, lighting and LevelDB storage run on worker threads, never on the tick.</p>
-            </article>
-            <article>
-                <h3>Behavior packs</h3>
-                <p>Custom items, blocks, actors and recipes loaded from packs, with a QuickJS scripting engine.</p>
-            </article>
+    <section id="features" class="section alt">
+        <div class="container">
+            <h2 class="reveal">Features</h2>
+            <div class="grid">
+                <article class="feature featured reveal">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-accent" d="M2 2h4v4H2z"/>
+                        <path class="pixel-light" d="M3 3h2v2H3zM2 0h1v2H2zM5 0h1v2H5zM2 6h1v2H2zM5 6h1v2H5zM0 2h2v1H0zM0 5h2v1H0zM6 2h2v1H6zM6 5h2v1H6z"/>
+                    </svg>
+                    <h3>Native C++17</h3>
+                    <p>No virtual machine, no interpreter. The server ships as a single executable for Windows and Linux: download it and run it.</p>
+                </article>
+                <article class="feature reveal">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-light" d="M3 0h2v1H3zM1 1h2v1H1zM5 1h2v1H5zM0 2h1v2H0zM7 2h1v2H7z"/>
+                        <path class="pixel-accent" d="M3 3h2v1H3zM2 4h1v1H2zM5 4h1v1H5zM3 6h2v2H3z"/>
+                    </svg>
+                    <h3>Own transport</h3>
+                    <p>RakNet and NetherNet (WebRTC) are implemented in the Network library, with LAN discovery.</p>
+                </article>
+                <article class="feature reveal">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-green" d="M0 0h8v3H0z"/>
+                        <path class="pixel-dirt" d="M0 3h8v5H0z"/>
+                        <path class="pixel-dark" d="M1 4h1v1H1zM5 5h1v1H5zM3 6h1v1H3zM6 3h1v1H6z"/>
+                    </svg>
+                    <h3>Vanilla worlds</h3>
+                    <p>Bedrock world format, so worlds move between Falcon and the game unchanged.</p>
+                </article>
+                <article class="feature reveal">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-light" d="M3 1h1v1H3zM2 2h3v1H2zM1 3h5v1H1z"/>
+                        <path class="pixel-green" d="M0 4h8v1H0zM5 3h2v1H5z"/>
+                        <path class="pixel-dirt" d="M0 5h8v3H0z"/>
+                    </svg>
+                    <h3>World generation</h3>
+                    <p>Noise, density functions, aquifers, caves, 3D biomes, ore veins and surface features.</p>
+                </article>
+                <article class="feature reveal">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-accent" d="M0 0h8v2H0z"/>
+                        <path class="pixel-light" d="M0 3h6v2H0z"/>
+                        <path class="pixel-accent" d="M0 6h4v2H0z"/>
+                    </svg>
+                    <h3>Threaded chunks</h3>
+                    <p>Generation, population, lighting and LevelDB storage run on worker threads, never on the tick.</p>
+                </article>
+                <article class="feature reveal">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-accent" d="M1 1h6v6H1z"/>
+                        <path class="pixel-dark" d="M1 3h6v1H1zM3 1h2v2H3z"/>
+                        <path class="pixel-light" d="M3 5h2v1H3z"/>
+                    </svg>
+                    <h3>Behavior packs</h3>
+                    <p>Custom items, blocks, actors and recipes loaded from packs, with a QuickJS scripting engine.</p>
+                </article>
+            </div>
         </div>
     </section>
 
     <section id="repositories" class="section">
-        <h2>Repositories</h2>
-        <div class="repos">
-            <a class="repo" href="https://github.com/Falcon-MC/Falcon">
-                <h3>Falcon</h3>
-                <p>The server: world, gameplay, commands, generation and scripting.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/Protocol">
-                <h3>Protocol</h3>
-                <p>Bedrock packets and network types.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/Network">
-                <h3>Network</h3>
-                <p>RakNet, NetherNet, compression and login verification.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/NBT">
-                <h3>NBT</h3>
-                <p>NBT tags and binary streams, shared by the protocol and world storage.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/BedrockData">
-                <h3>BedrockData</h3>
-                <p>Block palette, recipes, item tags, biomes, voxel shapes and loot tables, versioned by protocol.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/BlockStateUpdater">
-                <h3>BlockStateUpdater</h3>
-                <p>Upgrade schemas that bring old block states up to the current version.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/leveldb">
-                <h3>leveldb</h3>
-                <p>LevelDB with the zlib compression formats used by Bedrock worlds.</p>
-            </a>
-            <a class="repo" href="https://github.com/Falcon-MC/DataGen">
-                <h3>DataGen</h3>
-                <p>Generates the game data from a dedicated server.</p>
-            </a>
+        <div class="container">
+            <h2 class="reveal">Repositories</h2>
+            <ul class="repo-list">
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/Falcon" data-repo="Falcon">
+                        <span class="repo-name">Falcon</span>
+                        <span class="repo-description">The server: world, gameplay, commands, generation and scripting.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/Protocol" data-repo="Protocol">
+                        <span class="repo-name">Protocol</span>
+                        <span class="repo-description">Bedrock packets and network types.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/Network" data-repo="Network">
+                        <span class="repo-name">Network</span>
+                        <span class="repo-description">RakNet, NetherNet, compression and login verification.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/NBT" data-repo="NBT">
+                        <span class="repo-name">NBT</span>
+                        <span class="repo-description">NBT tags and binary streams, shared by the protocol and world storage.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/BedrockData" data-repo="BedrockData">
+                        <span class="repo-name">BedrockData</span>
+                        <span class="repo-description">Block palette, recipes, item tags, biomes, voxel shapes and loot tables, versioned by protocol.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/BlockStateUpdater" data-repo="BlockStateUpdater">
+                        <span class="repo-name">BlockStateUpdater</span>
+                        <span class="repo-description">Upgrade schemas that bring old block states up to the current version.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+                <li class="reveal">
+                    <a href="https://github.com/Falcon-MC/leveldb" data-repo="leveldb">
+                        <span class="repo-name">leveldb</span>
+                        <span class="repo-description">LevelDB with the zlib compression formats used by Bedrock worlds.</span>
+                        <span class="repo-meta"></span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </section>
 
-    <section id="contributors" class="section" hidden>
-        <h2>Contributors</h2>
-        <p>Falcon is built in the open. Give it a star on
-            <a href="https://github.com/Falcon-MC/Falcon">GitHub</a> if it helped you.</p>
-        <div class="contributors" id="contributors-list"></div>
+    <section id="contributors" class="section alt" hidden>
+        <div class="container">
+            <h2>Contributors</h2>
+            <p class="section-lead">Falcon is built in the open. Give it a star on
+                <a href="https://github.com/Falcon-MC/Falcon">GitHub</a> if it helped you.</p>
+            <div class="contributors" id="contributors-list"></div>
+        </div>
     </section>
 </main>
 
@@ -177,6 +245,6 @@
     <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
     <p><a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a></p>
 </footer>
-<script src="github.js?v=5"></script>
+<script src="github.js?v=6"></script>
 </body>
 </html>
