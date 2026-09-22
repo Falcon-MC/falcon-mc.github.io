@@ -214,14 +214,23 @@ function labelDownloadButton() {
 
 const TERMINAL_LINES = [
     {prompt: "$ ", text: "./FalconServer"},
-    {level: "INFO", text: "Starting Falcon for Minecraft: Bedrock Edition 1.26.51"},
-    {level: "INFO", text: "Loading server.properties"},
-    {level: "INFO", text: "Preparing level \"world\""},
-    {level: "INFO", text: "Generating spawn area"},
-    {level: "INFO", text: "RakNet listening on 0.0.0.0:19132"},
-    {level: "INFO", text: "NetherNet ready, LAN discovery enabled"},
-    {level: "INFO", text: "Server started."}
+    {level: "INFO", text: "Starting Server"},
+    {level: "INFO", text: "Version: 1.26.51.01"},
+    {level: "INFO", text: "Level Name: Bedrock level"},
+    {level: "INFO", text: "Game mode: 0 Survival"},
+    {level: "INFO", text: "Difficulty: 1 EASY"},
+    {level: "INFO", text: "Opening level 'worlds/Bedrock level/db'"},
+    {level: "INFO", text: "IPv4 supported, port: 19132: Used for gameplay"},
+    {level: "INFO", text: "Server started."},
+    {level: "INFO", text: "RakNet transport is active."}
 ];
+
+function logTimestamp() {
+    const now = new Date();
+    const pad = (value, length = 2) => String(value).padStart(length, "0");
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} `
+        + `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}:${pad(now.getMilliseconds(), 3)}`;
+}
 
 const RELEASES_URL = "https://github.com/Falcon-MC/Falcon/releases";
 
@@ -233,7 +242,7 @@ function appendTerminalLine(output, line) {
         tag.textContent = line.prompt;
     } else {
         tag.className = "level";
-        tag.textContent = `[${line.level}] `;
+        tag.textContent = `[${logTimestamp()} ${line.level}] `;
     }
     row.appendChild(tag);
     row.appendChild(document.createTextNode(line.text));
@@ -252,7 +261,7 @@ function answerCommand(output, command) {
     const answer = document.createElement("div");
     const level = document.createElement("span");
     level.className = "warn";
-    level.textContent = "[WARN] ";
+    level.textContent = `[${logTimestamp()} WARN] `;
     answer.appendChild(level);
     answer.appendChild(document.createTextNode("This is only a preview. "));
     appendLink(answer, "Download Falcon", document.getElementById("download").href || RELEASES_URL);
