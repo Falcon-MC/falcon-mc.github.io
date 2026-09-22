@@ -288,11 +288,97 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
     border-bottom: 1px solid var(--border);
 }
 
-.terminal-bar span {
-    width: 10px;
-    height: 10px;
+.terminal-slot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 322px;
+}
+
+.terminal-reopen {
+    align-self: center;
+}
+
+.terminal-lights {
+    display: flex;
+    gap: 8px;
+}
+
+.light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border: 0;
     border-radius: 50%;
     background: var(--border);
+    cursor: pointer;
+    transition: background 0.12s;
+}
+
+.light svg {
+    width: 8px;
+    height: 8px;
+    opacity: 0;
+    fill: none;
+    stroke: rgba(0, 0, 0, 0.6);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+}
+
+.light svg .fill {
+    fill: rgba(0, 0, 0, 0.6);
+    stroke: none;
+}
+
+.terminal-lights:hover .light-close,
+.terminal-lights:focus-within .light-close {
+    background: #ff5f57;
+}
+
+.terminal-lights:hover .light-minimize,
+.terminal-lights:focus-within .light-minimize {
+    background: #febc2e;
+}
+
+.terminal-lights:hover .light-zoom,
+.terminal-lights:focus-within .light-zoom {
+    background: #28c840;
+}
+
+.terminal-lights:hover svg,
+.terminal-lights:focus-within svg {
+    opacity: 1;
+}
+
+.terminal.minimized .terminal-body {
+    display: none;
+}
+
+.terminal.zoomed {
+    position: fixed;
+    inset: 24px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal.zoomed .terminal-body {
+    flex: 1;
+    height: auto;
+}
+
+.terminal:fullscreen {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+}
+
+.terminal:fullscreen .terminal-body {
+    flex: 1;
+    height: auto;
 }
 
 .terminal-bar em {
@@ -303,16 +389,53 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
     font-style: normal;
 }
 
-.terminal pre {
-    height: 260px;
-    margin: 0;
+.terminal-body {
+    height: 280px;
     padding: 16px 18px;
-    overflow: hidden;
+    overflow-y: auto;
+    cursor: text;
+}
+
+.terminal pre {
+    margin: 0;
     color: var(--text);
     font-family: var(--mono);
     font-size: 13px;
     line-height: 1.7;
     white-space: pre-wrap;
+}
+
+.terminal pre a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.terminal .warn {
+    color: var(--accent);
+}
+
+.terminal-form {
+    display: flex;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.terminal-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    outline: none;
+    color: var(--text);
+    font: inherit;
+    caret-color: var(--accent);
+}
+
+.terminal-form input::placeholder {
+    color: var(--border);
 }
 
 .terminal .prompt {
@@ -321,21 +444,6 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
 
 .terminal .level {
     color: var(--green);
-}
-
-.terminal .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 1em;
-    vertical-align: text-bottom;
-    background: var(--accent);
-    animation: blink 1s steps(1) infinite;
-}
-
-@keyframes blink {
-    50% {
-        opacity: 0;
-    }
 }
 
 .stats {
@@ -572,7 +680,7 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
         transition: none;
     }
 
-    .skeleton, .terminal .cursor {
+    .skeleton {
         animation: none;
     }
 }

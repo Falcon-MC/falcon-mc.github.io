@@ -52,7 +52,7 @@
     }
     </script>
     <script>document.documentElement.classList.add("js");</script>
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 <header class="nav">
@@ -98,12 +98,32 @@
                 <p class="release-info" id="release-info"></p>
             </div>
 
-            <div class="terminal" aria-hidden="true">
+            <div class="terminal-slot">
+            <button class="button ghost terminal-reopen" id="terminal-reopen" hidden>Open console</button>
+            <div class="terminal" id="terminal">
                 <div class="terminal-bar">
-                    <span></span><span></span><span></span>
+                    <div class="terminal-lights">
+                        <button class="light light-close" id="terminal-close" aria-label="Close console">
+                            <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 3l4 4M7 3l-4 4"/></svg>
+                        </button>
+                        <button class="light light-minimize" id="terminal-minimize" aria-label="Minimize console">
+                            <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 5h5"/></svg>
+                        </button>
+                        <button class="light light-zoom" id="terminal-zoom" aria-label="Toggle full screen">
+                            <svg viewBox="0 0 10 10" aria-hidden="true"><path class="fill" d="M3 3h3.2L3 6.2zM7 7H3.8L7 3.8z"/></svg>
+                        </button>
+                    </div>
                     <em>FalconServer</em>
                 </div>
-                <pre id="terminal-output"></pre>
+                <div class="terminal-body" id="terminal-body">
+                    <pre id="terminal-output" aria-live="polite"></pre>
+                    <form class="terminal-form" id="terminal-form" hidden>
+                        <span class="prompt" aria-hidden="true">&gt; </span>
+                        <input id="terminal-input" type="text" autocomplete="off" spellcheck="false"
+                               aria-label="Server console" placeholder="Type a command">
+                    </form>
+                </div>
+            </div>
             </div>
         </div>
 
@@ -245,6 +265,6 @@
     <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
     <p><a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a></p>
 </footer>
-<script src="github.js?v=6"></script>
+<script src="github.js?v=8"></script>
 </body>
 </html>

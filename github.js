@@ -220,8 +220,10 @@ const TERMINAL_LINES = [
     {level: "INFO", text: "Generating spawn area"},
     {level: "INFO", text: "RakNet listening on 0.0.0.0:19132"},
     {level: "INFO", text: "NetherNet ready, LAN discovery enabled"},
-    {level: "INFO", text: "Server started. Type help for commands."}
+    {level: "INFO", text: "Server started."}
 ];
+
+const RELEASES_URL = "https://github.com/Falcon-MC/Falcon/releases";
 
 function appendTerminalLine(output, line) {
     const row = document.createElement("div");
@@ -238,31 +240,120 @@ function appendTerminalLine(output, line) {
     output.appendChild(row);
 }
 
+function answerCommand(output, command) {
+    const echo = document.createElement("div");
+    const prompt = document.createElement("span");
+    prompt.className = "prompt";
+    prompt.textContent = "> ";
+    echo.appendChild(prompt);
+    echo.appendChild(document.createTextNode(command));
+    output.appendChild(echo);
+
+    const answer = document.createElement("div");
+    const level = document.createElement("span");
+    level.className = "warn";
+    level.textContent = "[WARN] ";
+    answer.appendChild(level);
+    answer.appendChild(document.createTextNode("This is only a preview. "));
+    appendLink(answer, "Download Falcon", document.getElementById("download").href || RELEASES_URL);
+    answer.appendChild(document.createTextNode(" to run commands on your own server."));
+    output.appendChild(answer);
+}
+
+function openConsole() {
+    const body = document.getElementById("terminal-body");
+    const output = document.getElementById("terminal-output");
+    const form = document.getElementById("terminal-form");
+    const input = document.getElementById("terminal-input");
+
+    form.hidden = false;
+    body.addEventListener("click", (event) => {
+        if (!event.target.closest("a")) {
+            input.focus({preventScroll: true});
+        }
+    });
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const command = input.value.trim();
+        if (command.length === 0) {
+            return;
+        }
+
+        answerCommand(output, command);
+        input.value = "";
+        body.scrollTop = body.scrollHeight;
+    });
+}
+
 function playTerminal() {
     const output = document.getElementById("terminal-output");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const cursor = document.createElement("span");
-    cursor.className = "cursor";
 
     if (reduceMotion) {
         TERMINAL_LINES.forEach((line) => appendTerminalLine(output, line));
-        output.appendChild(cursor);
+        openConsole();
         return;
     }
 
     let index = 0;
     const step = () => {
-        cursor.remove();
         if (index < TERMINAL_LINES.length) {
             appendTerminalLine(output, TERMINAL_LINES[index]);
             index++;
-            output.appendChild(cursor);
             setTimeout(step, index === 1 ? 700 : 260 + Math.random() * 280);
             return;
         }
-        output.appendChild(cursor);
+        openConsole();
     };
     step();
+}
+
+function setupTerminalWindow() {
+    const terminal = document.getElementById("terminal");
+    const reopen = document.getElementById("terminal-reopen");
+
+    document.getElementById("terminal-close").addEventListener("click", () => {
+        if (document.fullscreenElement === terminal) {
+            document.exitFullscreen();
+        }
+        terminal.classList.remove("zoomed", "minimized");
+        terminal.hidden = true;
+        reopen.hidden = false;
+        reopen.focus();
+    });
+
+    reopen.addEventListener("click", () => {
+        reopen.hidden = true;
+        terminal.hidden = false;
+        document.getElementById("terminal-input").focus({preventScroll: true});
+    });
+
+    document.getElementById("terminal-minimize").addEventListener("click", () => {
+        if (document.fullscreenElement === terminal) {
+            document.exitFullscreen();
+        }
+        terminal.classList.remove("zoomed");
+        terminal.classList.toggle("minimized");
+    });
+
+    document.getElementById("terminal-zoom").addEventListener("click", () => {
+        terminal.classList.remove("minimized");
+        if (document.fullscreenEnabled) {
+            if (document.fullscreenElement === terminal) {
+                document.exitFullscreen();
+            } else {
+                terminal.requestFullscreen();
+            }
+            return;
+        }
+        terminal.classList.toggle("zoomed");
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            terminal.classList.remove("zoomed");
+        }
+    });
 }
 
 function setupMenu() {
@@ -302,6 +393,7 @@ function setupReveal() {
 labelDownloadButton();
 setupMenu();
 setupReveal();
+setupTerminalWindow();
 playTerminal();
 
 Promise.allSettled([loadReleases, loadRepositories, loadContributors].map((task) =>
