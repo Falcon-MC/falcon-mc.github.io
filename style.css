@@ -787,6 +787,173 @@ code {
     margin-top: 0;
 }
 
+.language-tabs {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    margin: 24px auto 12px;
+    padding: 4px;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+}
+
+.language-tabs[hidden] {
+    display: none;
+}
+
+.language-tabs button {
+    position: relative;
+    z-index: 1;
+    min-width: 88px;
+    padding: 8px 18px;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: "Minecraft", var(--mono);
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 0.25s;
+}
+
+.language-tabs button:hover {
+    color: var(--text);
+}
+
+.language-tabs button[aria-selected="true"] {
+    color: var(--background);
+}
+
+.language-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: 0;
+    background: var(--accent);
+    border-radius: 999px;
+    box-shadow: 0 0 24px rgba(242, 169, 59, 0.35);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.language-note {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+.tutorial {
+    margin-top: 28px;
+}
+
+.tutorial-step {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    align-items: start;
+    gap: 32px;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.tutorial-step + .tutorial-step {
+    margin-top: 36px;
+}
+
+.tutorial-step.shown {
+    opacity: 1;
+    transform: none;
+}
+
+.tutorial-text h3 {
+    margin: 12px 0 8px;
+    font-size: 20px;
+}
+
+.tutorial-text p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.code-window {
+    overflow: hidden;
+    background: #0a0e14;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.tutorial-step.shown .code-window {
+    border-color: rgba(242, 169, 59, 0.35);
+}
+
+.code-window-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--border);
+}
+
+.code-window-bar span {
+    width: 10px;
+    height: 10px;
+    background: var(--border);
+    border-radius: 50%;
+}
+
+.code-window-bar em {
+    margin-left: 8px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-style: normal;
+}
+
+.code-window .code {
+    display: grid;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+.tutorial-step > *,
+.split > *,
+.guide > *,
+.steps > *,
+.code-window .code {
+    min-width: 0;
+}
+
+.code-ghost,
+.code-typed {
+    grid-area: 1 / 1;
+    white-space: pre;
+}
+
+.code-ghost {
+    visibility: hidden;
+}
+
+.caret {
+    display: inline-block;
+    width: 0.6ch;
+    height: 1.15em;
+    margin-left: 1px;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
 .icon {
     display: block;
     width: 40px;
@@ -911,6 +1078,16 @@ code {
     .skeleton {
         animation: none;
     }
+
+    .tutorial-step {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .caret {
+        animation: none;
+    }
 }
 
 @media (max-width: 900px) {
@@ -936,7 +1113,8 @@ code {
     }
 
     .guide,
-    .split {
+    .split,
+    .tutorial-step {
         grid-template-columns: 1fr;
     }
 }

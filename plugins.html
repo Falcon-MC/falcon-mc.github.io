@@ -30,7 +30,7 @@
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     <script>document.documentElement.classList.add("js");</script>
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 <header class="nav">
@@ -158,6 +158,10 @@
                     <h3>Permissions and config</h3>
                     <p>Permission nodes with defaults, per-player grants, and a <code>config.yml</code> per plugin.</p>
                 </article>
+                <article class="feature reveal">
+                    <h3>Raw packets</h3>
+                    <p>Send any packet to a player, and read, rewrite or drop every packet going in and out.</p>
+                </article>
             </div>
         </div>
     </section>
@@ -165,6 +169,16 @@
     <section id="first-plugin" class="section alt">
         <div class="container">
             <h2 class="reveal">Your first plugin</h2>
+            <p class="section-lead reveal">Pick a language and follow the three steps.</p>
+            <div class="language-tabs reveal" id="language-tabs" role="tablist" aria-label="Plugin language" hidden>
+                <span class="language-indicator" id="language-indicator" aria-hidden="true"></span>
+                <button type="button" role="tab" data-language="cpp" aria-selected="true">C++</button>
+                <button type="button" role="tab" data-language="csharp" aria-selected="false">C#</button>
+                <button type="button" role="tab" data-language="java" aria-selected="false">Java</button>
+            </div>
+            <p class="language-note" id="language-note" hidden>C# and Java support is still in development: package and
+                class names may change before release.</p>
+            <div class="tutorial" id="tutorial">
             <div class="split reveal">
                 <div>
                     <h3>1. Add the SDK</h3>
@@ -193,9 +207,10 @@
 <span class="keyword">class</span> MyPlugin : <span class="keyword">public</span> falcon::Plugin {
 <span class="keyword">public</span>:
     <span class="keyword">bool</span> onEnable() <span class="keyword">override</span> {
-        events().on&lt;falcon::PlayerJoinEvent&gt;([](falcon::PlayerJoinEvent &amp;event) {
-            event.player().sendMessage(<span class="string">"Welcome!"</span>);
-        });
+        events().on&lt;falcon::PlayerJoinEvent&gt;(
+            [](falcon::PlayerJoinEvent &amp;event) {
+                event.player().sendMessage(<span class="string">"Welcome!"</span>);
+            });
         <span class="keyword">return true</span>;
     }
 };
@@ -216,6 +231,7 @@ FALCON_PLUGIN(MyPlugin)</pre>
   <span class="string">"depend"</span>: [],
   <span class="string">"softdepend"</span>: []
 }</pre>
+            </div>
             </div>
         </div>
     </section>
@@ -268,5 +284,6 @@ cmake --build build</pre>
     </p>
 </footer>
 <script src="site.js?v=1"></script>
+<script src="plugins.js?v=1"></script>
 </body>
 </html>
