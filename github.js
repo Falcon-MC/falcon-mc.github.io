@@ -159,9 +159,7 @@ function showContributors(contributors) {
         link.appendChild(avatar);
         list.appendChild(link);
     }
-    const empty = list.children.length === 0;
-    document.getElementById("contributors").hidden = empty;
-    document.getElementById("contributors-link").hidden = empty;
+    document.getElementById("contributors").hidden = list.children.length === 0;
 }
 
 function showVersion(version) {
