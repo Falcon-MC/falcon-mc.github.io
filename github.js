@@ -2,9 +2,9 @@ const REPOSITORY = "Falcon-MC/Falcon";
 const DATA_SOURCE = "data.json";
 
 const PLATFORMS = [
-    {asset: "FalconServer-windows-x64.exe", label: "Windows"},
-    {asset: "FalconServer-linux-x64", label: "Linux"},
-    {asset: "FalconServer-macos-arm64", label: "macOS"}
+    {assets: ["FalconServer.exe", "FalconServer-windows-x64.exe"], label: "Windows"},
+    {assets: ["FalconServer-linux-x64"], label: "Linux"},
+    {assets: ["FalconServer-macos-arm64"], label: "macOS"}
 ];
 
 function detectPlatform() {
@@ -31,8 +31,14 @@ async function fetchData() {
     return response.json();
 }
 
-function findAsset(release, name) {
-    return release.assets.find((asset) => asset.name === name);
+function findAsset(release, names) {
+    for (const name of names) {
+        const asset = release.assets.find((candidate) => candidate.name === name);
+        if (asset) {
+            return asset;
+        }
+    }
+    return undefined;
 }
 
 function formatDate(value) {
@@ -53,7 +59,7 @@ function appendLink(parent, text, href) {
 function showDownloadMenu(release) {
     const options = document.getElementById("download-options");
     for (const platform of PLATFORMS) {
-        const binary = findAsset(release, platform.asset);
+        const binary = findAsset(release, platform.assets);
         if (binary) {
             appendLink(options, `${platform.label} (${release.tag_name})`, binary.browser_download_url);
         }
@@ -75,7 +81,7 @@ function showRelease(release) {
     }
 
     for (const platform of PLATFORMS) {
-        const binary = findAsset(release, platform.asset);
+        const binary = findAsset(release, platform.assets);
         if (!binary) {
             continue;
         }
@@ -88,7 +94,7 @@ function showRelease(release) {
         const button = document.getElementById("download");
         button.href = binary.browser_download_url;
         button.textContent = `Download ${release.tag_name} for ${platform.label}`;
-        checksum = findAsset(release, `${platform.asset}.sha256`);
+        checksum = findAsset(release, [`${binary.name}.sha256`]);
     }
 
     const info = document.getElementById("release-info");
