@@ -459,6 +459,10 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
     caret-color: var(--accent);
 }
 
+.terminal-form .prompt {
+    white-space: pre;
+}
+
 .terminal-form input::placeholder {
     color: var(--border);
 }
