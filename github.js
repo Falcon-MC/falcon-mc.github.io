@@ -1,7 +1,5 @@
-const API = "https://api.github.com";
 const REPOSITORY = "Falcon-MC/Falcon";
-const ORGANIZATION = "Falcon-MC";
-const VERSION_SOURCE = "https://raw.githubusercontent.com/Falcon-MC/Falcon/main/Falcon.Server/include/Server.h";
+const DATA_SOURCE = "data.json";
 
 const PLATFORMS = [
     {asset: "FalconServer-windows-x64.exe", label: "Windows"},
@@ -25,10 +23,10 @@ function detectPlatform() {
     return null;
 }
 
-async function fetchJson(path) {
-    const response = await fetch(API + path, {headers: {Accept: "application/vnd.github+json"}});
+async function fetchData() {
+    const response = await fetch(DATA_SOURCE, {cache: "no-cache"});
     if (!response.ok) {
-        throw new Error(`${path} returned ${response.status}`);
+        throw new Error(`${DATA_SOURCE} returned ${response.status}`);
     }
     return response.json();
 }
@@ -113,18 +111,6 @@ function showRelease(release) {
     info.hidden = false;
 }
 
-function countDownloads(releases) {
-    let total = 0;
-    for (const release of releases) {
-        for (const asset of release.assets) {
-            if (!asset.name.endsWith(".sha256")) {
-                total += asset.download_count;
-            }
-        }
-    }
-    return total;
-}
-
 function formatRelativeDate(value) {
     const days = Math.round((Date.now() - new Date(value).getTime()) / 86400000);
     const format = new Intl.RelativeTimeFormat("en-US", {numeric: "auto"});
@@ -153,10 +139,6 @@ function clearPendingStats() {
 function showContributors(contributors) {
     const list = document.getElementById("contributors-list");
     for (const contributor of contributors) {
-        if (contributor.type !== "User") {
-            continue;
-        }
-
         const link = document.createElement("a");
         link.href = contributor.html_url;
         link.title = `${contributor.login} (${contributor.contributions} commits)`;
@@ -171,20 +153,21 @@ function showContributors(contributors) {
         link.appendChild(avatar);
         list.appendChild(link);
     }
-    document.getElementById("contributors").hidden = list.children.length === 0;
+    const empty = list.children.length === 0;
+    document.getElementById("contributors").hidden = empty;
+    document.getElementById("contributors-link").hidden = empty;
 }
 
-async function loadReleases() {
-    const releases = await fetchJson(`/repos/${REPOSITORY}/releases?per_page=100`);
-    const published = releases.filter((release) => !release.draft);
-    if (published.length > 0) {
-        showRelease(published[0]);
-        setStat("downloads", countDownloads(published));
+function showVersion(version) {
+    if (version.game) {
+        document.getElementById("game-version").textContent = `Bedrock ${version.game}`;
+    }
+    if (version.protocol) {
+        document.getElementById("protocol-version").textContent = `Protocol ${version.protocol}`;
     }
 }
 
-async function loadRepositories() {
-    const repositories = await fetchJson(`/orgs/${ORGANIZATION}/repos?per_page=100`);
+function showRepositories(repositories) {
     for (const repository of repositories) {
         if (repository.full_name === REPOSITORY) {
             setStat("stars", repository.stargazers_count);
@@ -200,10 +183,18 @@ async function loadRepositories() {
     }
 }
 
-async function loadContributors() {
-    const contributors = await fetchJson(`/repos/${REPOSITORY}/contributors?per_page=100`);
-    setStat("contributors", contributors.filter((contributor) => contributor.type === "User").length);
-    showContributors(contributors);
+async function loadData() {
+    const data = await fetchData();
+
+    showVersion(data.version);
+    showRepositories(data.repositories);
+    showContributors(data.contributors);
+    setStat("contributors", data.contributors.length);
+    setStat("downloads", data.downloads);
+
+    if (data.release) {
+        showRelease(data.release);
+    }
 }
 
 function labelDownloadButton() {
@@ -400,32 +391,12 @@ function setupReveal() {
     elements.forEach((element) => observer.observe(element));
 }
 
-async function loadVersion() {
-    const response = await fetch(VERSION_SOURCE);
-    if (!response.ok) {
-        throw new Error(`${VERSION_SOURCE} returned ${response.status}`);
-    }
-
-    const source = await response.text();
-    const game = source.match(/gameVersion\s*=\s*"([^"]+)"/);
-    const protocol = source.match(/protocolVersion\s*=\s*(\d+)/);
-
-    if (game) {
-        document.getElementById("game-version").textContent = `Bedrock ${game[1]}`;
-    }
-    if (protocol) {
-        document.getElementById("protocol-version").textContent = `Protocol ${protocol[1]}`;
-    }
-}
-
 labelDownloadButton();
 setupMenu();
 setupReveal();
 setupTerminalWindow();
 playTerminal();
 
-loadVersion().catch((error) => console.warn("Could not load the supported version", error));
-
-Promise.allSettled([loadReleases, loadRepositories, loadContributors].map((task) =>
-    task().catch((error) => console.warn("Could not load GitHub data", error))
-)).then(clearPendingStats);
+loadData()
+    .catch((error) => console.warn("Could not load site data", error))
+    .finally(clearPendingStats);

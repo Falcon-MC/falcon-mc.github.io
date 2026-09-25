@@ -1,0 +1,73 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate data.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          gh api "repos/Falcon-MC/Falcon/releases?per_page=100" > releases.json
+          gh api "orgs/Falcon-MC/repos?per_page=100" > repositories.json
+          gh api "repos/Falcon-MC/Falcon/contributors?per_page=100" > contributors.json
+          gh api "repos/Falcon-MC/Falcon/contents/Falcon.Server/include/Server.h" \
+            -H "Accept: application/vnd.github.raw" > Server.h
+
+          game=$(grep -oP 'gameVersion\s*=\s*"\K[^"]+' Server.h || true)
+          protocol=$(grep -oP 'protocolVersion\s*=\s*\K[0-9]+' Server.h || true)
+
+          jq -n \
+            --arg game "$game" \
+            --arg protocol "$protocol" \
+            --slurpfile releases releases.json \
+            --slurpfile repositories repositories.json \
+            --slurpfile contributors contributors.json \
+            '{
+              version: {game: $game, protocol: $protocol},
+              release: ([$releases[0][] | select(.draft | not)] | first
+                | if . == null then null else {
+                    tag_name, published_at, html_url,
+                    assets: [.assets[] | {name, browser_download_url}]
+                  } end),
+              downloads: ([$releases[0][] | select(.draft | not) | .assets[]
+                | select(.name | endswith(".sha256") | not) | .download_count] | add // 0),
+              repositories: [$repositories[0][] | {name, full_name, stargazers_count, pushed_at}],
+              contributors: [$contributors[0][] | select(.type == "User")
+                | {login, html_url, avatar_url, contributions}]
+            }' > data.json
+
+          rm releases.json repositories.json contributors.json Server.h
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
