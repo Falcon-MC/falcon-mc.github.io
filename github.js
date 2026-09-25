@@ -211,7 +211,7 @@ function labelDownloadButton() {
 const TERMINAL_LINES = [
     {prompt: "$ ", text: "./FalconServer"},
     {level: "INFO", text: "Starting Server"},
-    {level: "INFO", text: "Version: 1.26.51.01"},
+    {level: "INFO", text: "Version: 1.26.52.01"},
     {level: "INFO", text: "Level Name: Bedrock level"},
     {level: "INFO", text: "Game mode: 0 Survival"},
     {level: "INFO", text: "Difficulty: 1 EASY"},
