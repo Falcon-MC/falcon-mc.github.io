@@ -588,6 +588,205 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
     color: var(--muted);
 }
 
+.feature-link {
+    display: block;
+    color: var(--text);
+}
+
+.feature-link:hover {
+    text-decoration: none;
+}
+
+.more {
+    color: var(--accent);
+    white-space: nowrap;
+}
+
+code {
+    padding: 1px 6px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.88em;
+}
+
+.code {
+    margin: 14px 0 0;
+    padding: 14px 16px;
+    overflow-x: auto;
+    background: #0a0e14;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.code .keyword {
+    color: var(--accent);
+}
+
+.code .string {
+    color: #9ecb7f;
+}
+
+.code .muted {
+    color: var(--muted);
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.step {
+    position: relative;
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.step h3 {
+    margin: 12px 0 8px;
+    font-size: 20px;
+}
+
+.step p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(242, 169, 59, 0.45);
+    border-radius: 8px;
+    color: var(--accent);
+    font-family: "Minecraft", var(--mono);
+}
+
+.guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.guide h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.guide h3:not(:first-child) {
+    margin-top: 22px;
+}
+
+.guide p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.page-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px 64px;
+    text-align: center;
+    background-image:
+            radial-gradient(circle at 50% 0%, var(--accent-soft), transparent 55%),
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+}
+
+.page-hero h1 {
+    margin: 0 0 16px;
+    font-size: clamp(30px, 5vw, 48px);
+    line-height: 1.2;
+}
+
+.page-hero .lead {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.page-hero .badges,
+.page-hero .actions {
+    justify-content: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 1px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.tag.ready {
+    border-color: rgba(95, 168, 59, 0.6);
+    color: var(--green);
+}
+
+.runtime-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.feature ul {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    color: var(--muted);
+}
+
+.feature li + li {
+    margin-top: 4px;
+}
+
+.split {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+    gap: 32px;
+}
+
+.split + .split {
+    margin-top: 40px;
+}
+
+.split h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.split p {
+    margin: 0 0 12px;
+    color: var(--muted);
+}
+
+.split .code {
+    margin-top: 0;
+}
+
 .icon {
     display: block;
     width: 40px;
@@ -731,6 +930,15 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
         grid-column: 1 / -1;
         grid-row: 2;
     }
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    .guide,
+    .split {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 640px) {
@@ -772,6 +980,10 @@ h1, h2, h3, .brand span, .badges span, .button, .stats strong {
 
     .feature.featured {
         grid-column: auto;
+    }
+
+    .runtime-grid {
+        grid-template-columns: 1fr;
     }
 
     .hero-decoration {

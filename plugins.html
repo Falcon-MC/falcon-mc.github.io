@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plugins - Falcon</title>
+    <meta name="description" content="Extend Falcon with plugins in C++, C# or Java. Events, commands, custom items, blocks and entities, services between plugins, all on one stable API.">
+    <meta name="keywords" content="Minecraft, Bedrock, server, plugins, plugin API, C++, C#, Java, Falcon">
+    <meta name="author" content="Falcon-MC">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d1117">
+    <meta name="color-scheme" content="dark">
+    <link rel="canonical" href="https://falcon-mc.github.io/plugins.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Falcon">
+    <meta property="og:url" content="https://falcon-mc.github.io/plugins.html">
+    <meta property="og:title" content="Falcon plugins">
+    <meta property="og:description" content="Extend Falcon with plugins in C++, C# or Java, all on one stable API.">
+    <meta property="og:image" content="https://falcon-mc.github.io/assets/social.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Falcon plugins">
+    <meta name="twitter:description" content="Extend Falcon with plugins in C++, C# or Java, all on one stable API.">
+    <meta name="twitter:image" content="https://falcon-mc.github.io/assets/social.png">
+
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <script>document.documentElement.classList.add("js");</script>
+    <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+<header class="nav">
+    <a class="brand" href="index.html">
+        <img src="assets/icon-white.png" alt="" width="32" height="32">
+        <span>Falcon</span>
+    </a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-menu">
+        <span></span><span></span><span></span>
+    </button>
+    <nav id="site-menu">
+        <a href="index.html">Home</a>
+        <a href="#runtimes">Runtimes</a>
+        <a href="#api">API</a>
+        <a href="#first-plugin">First plugin</a>
+        <a href="#services">Services</a>
+        <a href="https://discord.gg/KZb6YxSHkb">Discord</a>
+        <a href="https://github.com/Falcon-MC/PluginAPI" class="button small">SDK</a>
+    </nav>
+</header>
+
+<main id="top">
+    <section class="page-hero">
+        <h1>Plugins for Falcon</h1>
+        <p class="lead">
+            Extend the server with plugins written in C++, C# or Java. Every language sits on the same stable API, so a
+            plugin keeps working when the server updates.
+        </p>
+        <div class="badges">
+            <span>API 1.2</span>
+            <span>C++17</span>
+            <span>C#</span>
+            <span>Java</span>
+            <span>Windows, Linux &amp; macOS</span>
+        </div>
+        <div class="actions">
+            <a class="button" href="https://github.com/Falcon-MC/PluginAPI">Plugin SDK</a>
+            <a class="button ghost" href="https://github.com/Falcon-MC/PluginAPI/tree/main/examples">Example plugins</a>
+            <a class="button ghost" href="https://discord.gg/KZb6YxSHkb">Ask on Discord</a>
+        </div>
+    </section>
+
+    <section id="runtimes" class="section alt">
+        <div class="container">
+            <h2 class="reveal">Pick a runtime</h2>
+            <div class="runtime-grid">
+                <article class="feature reveal">
+                    <h3>Native C++ <span class="tag ready">Available</span></h3>
+                    <p>Header-only C++ classes over a stable C ABI. Build with any compiler and the plugin loads on every
+                        server with the same API major version.</p>
+                    <ul>
+                        <li>One <code>.dll</code>, <code>.so</code> or <code>.dylib</code> per plugin</li>
+                        <li>Survives server updates without a rebuild</li>
+                        <li><code>"runtime": "native"</code></li>
+                    </ul>
+                </article>
+                <article class="feature reveal">
+                    <h3>Internal C++ <span class="tag ready">Available</span></h3>
+                    <p>Full access to the server's own classes: subclass blocks, items, mobs, AI goals and commands, and
+                        override vanilla ones.</p>
+                    <ul>
+                        <li>Built against one release with its SDK archive</li>
+                        <li>Rebuilt for every server update</li>
+                        <li><code>"runtime": "internal"</code></li>
+                    </ul>
+                </article>
+                <article class="feature reveal">
+                    <h3>C# <span class="tag">In development</span></h3>
+                    <p>.NET class libraries loaded in-process, with the same events, commands and content as C++.</p>
+                    <ul>
+                        <li>Needs the .NET runtime</li>
+                        <li><code>"runtime": "dotnet"</code></li>
+                    </ul>
+                </article>
+                <article class="feature reveal">
+                    <h3>Java <span class="tag">In development</span></h3>
+                    <p>Jar files running in one embedded JVM, calling the server through the foreign function API.</p>
+                    <ul>
+                        <li>Needs Java 22 or newer</li>
+                        <li><code>"runtime": "java"</code></li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="api" class="section">
+        <div class="container">
+            <h2 class="reveal">What a plugin can do</h2>
+            <div class="grid">
+                <article class="feature featured reveal">
+                    <h3>Events</h3>
+                    <p>Listen with priorities from lowest to monitor, cancel, and change what happens next.</p>
+                    <ul>
+                        <li>Players: join, quit, chat, move, death, respawn, commands, game mode, dimension, drop and pickup</li>
+                        <li>Blocks: break, place, interact, fire spread, burn</li>
+                        <li>Entities: damage, death, interact, projectile hit, explosion with editable blocks</li>
+                        <li>Inventories: open, close, every click, crafting</li>
+                        <li>Server: tick, console commands, raw packets in and out</li>
+                    </ul>
+                </article>
+                <article class="feature reveal">
+                    <h3>Commands</h3>
+                    <p>Register commands with a description, usage and permission. They show up in the player's command
+                        list.</p>
+                </article>
+                <article class="feature reveal">
+                    <h3>Custom content</h3>
+                    <p>New items, blocks and entities with their own behaviour, sent to players automatically.</p>
+                </article>
+                <article class="feature reveal">
+                    <h3>World</h3>
+                    <p>Read and set blocks, spawn entities, drop items, change time and weather, strike lightning and
+                        create explosions.</p>
+                </article>
+                <article class="feature reveal">
+                    <h3>Players and items</h3>
+                    <p>Inventories, armor, offhand, health, food, experience, titles, game modes, lore and enchantments.</p>
+                </article>
+                <article class="feature reveal">
+                    <h3>Scheduler</h3>
+                    <p>Delayed and repeating tasks on the main thread, and async work that reports back safely.</p>
+                </article>
+                <article class="feature reveal">
+                    <h3>Permissions and config</h3>
+                    <p>Permission nodes with defaults, per-player grants, and a <code>config.yml</code> per plugin.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="first-plugin" class="section alt">
+        <div class="container">
+            <h2 class="reveal">Your first plugin</h2>
+            <div class="split reveal">
+                <div>
+                    <h3>1. Add the SDK</h3>
+                    <p>The SDK is a CMake project. <code>falcon_add_plugin</code> builds the shared library with the right
+                        settings for your platform.</p>
+                </div>
+                <pre class="code"><span class="keyword">include</span>(FetchContent)
+
+<span class="keyword">FetchContent_Declare</span>(
+    falcon_plugin_api
+    GIT_REPOSITORY https://github.com/Falcon-MC/PluginAPI.git
+    GIT_TAG main
+)
+<span class="keyword">FetchContent_MakeAvailable</span>(falcon_plugin_api)
+
+<span class="keyword">falcon_add_plugin</span>(MyPlugin MyPlugin.cpp)</pre>
+            </div>
+            <div class="split reveal">
+                <div>
+                    <h3>2. Write the plugin</h3>
+                    <p>Subclass <code>falcon::Plugin</code>, subscribe to events and register commands in
+                        <code>onEnable</code>. A plugin can be split into as many classes and folders as you like.</p>
+                </div>
+                <pre class="code"><span class="keyword">#include</span> <span class="string">&lt;falcon/Falcon.hpp&gt;</span>
+
+<span class="keyword">class</span> MyPlugin : <span class="keyword">public</span> falcon::Plugin {
+<span class="keyword">public</span>:
+    <span class="keyword">bool</span> onEnable() <span class="keyword">override</span> {
+        events().on&lt;falcon::PlayerJoinEvent&gt;([](falcon::PlayerJoinEvent &amp;event) {
+            event.player().sendMessage(<span class="string">"Welcome!"</span>);
+        });
+        <span class="keyword">return true</span>;
+    }
+};
+
+FALCON_PLUGIN(MyPlugin)</pre>
+            </div>
+            <div class="split reveal">
+                <div>
+                    <h3>3. Install it</h3>
+                    <p>Put the library next to a <code>plugin.json</code> in <code>plugins/MyPlugin/</code> and start the
+                        server. Dependencies between plugins are declared here and load in the right order.</p>
+                </div>
+                <pre class="code">{
+  <span class="string">"name"</span>: <span class="string">"MyPlugin"</span>,
+  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,
+  <span class="string">"api-version"</span>: <span class="string">"1.2"</span>,
+  <span class="string">"main"</span>: <span class="string">"MyPlugin"</span>,
+  <span class="string">"depend"</span>: [],
+  <span class="string">"softdepend"</span>: []
+}</pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="reveal">Talk to other plugins</h2>
+            <div class="split reveal">
+                <div>
+                    <h3>Services</h3>
+                    <p>A plugin provides a named service and any other plugin calls it, whatever language either of them
+                        is written in. Requests and responses are text, usually JSON.</p>
+                    <h3>Custom events</h3>
+                    <p>Fire your own events and let other plugins listen, cancel them or change their data, with the same
+                        priorities as the server's events.</p>
+                </div>
+                <pre class="code">services().provide(<span class="string">"economy:balance"</span>, [](<span class="keyword">const</span> std::string &amp;request) {
+    <span class="keyword">return</span> std::string(<span class="string">"{\"balance\":250}"</span>);
+});
+
+<span class="keyword">auto</span> balance = services().call(<span class="string">"economy:balance"</span>, <span class="string">"{\"player\":\"Steve\"}"</span>);
+
+services().on(<span class="string">"quests:completed"</span>, [](falcon::CustomEvent &amp;event) {
+    event.setData(event.data() + <span class="string">" rewarded"</span>);
+});
+
+services().fire(<span class="string">"quests:completed"</span>, <span class="string">"{\"quest\":\"miner\"}"</span>, <span class="keyword">true</span>);</pre>
+            </div>
+            <div class="split reveal">
+                <div>
+                    <h3>Internal plugins</h3>
+                    <p>Every release ships a <code>FalconSDK-&lt;platform&gt;.tar.gz</code> with the server's headers.
+                        Extract it next to your project and build against it with the compiler named in its
+                        <code>README.txt</code>.</p>
+                </div>
+                <pre class="code">cmake -B build -DFALCON_SDK_DIR=/path/to/FalconSDK-linux
+cmake --build build</pre>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+    <p>
+        <a href="index.html">Home</a> &middot;
+        <a href="https://discord.gg/KZb6YxSHkb">Discord</a> &middot;
+        <a href="https://github.com/Falcon-MC/PluginAPI">Plugin SDK</a> &middot;
+        <a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a>
+    </p>
+</footer>
+<script src="site.js?v=1"></script>
+</body>
+</html>

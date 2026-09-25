@@ -52,7 +52,7 @@
     }
     </script>
     <script>document.documentElement.classList.add("js");</script>
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 <header class="nav">
@@ -65,8 +65,11 @@
     </button>
     <nav id="site-menu">
         <a href="#features">Features</a>
+        <a href="#getting-started">Getting started</a>
+        <a href="plugins.html">Plugins</a>
         <a href="#repositories">Repositories</a>
         <a href="#contributors" id="contributors-link" hidden>Contributors</a>
+        <a href="https://discord.gg/KZb6YxSHkb">Discord</a>
         <a href="https://github.com/Falcon-MC" class="button small">GitHub</a>
     </nav>
 </header>
@@ -190,6 +193,68 @@
                     <h3>Behavior packs</h3>
                     <p>Custom items, blocks, actors and recipes loaded from packs, with a QuickJS scripting engine.</p>
                 </article>
+                <a class="feature feature-link reveal" href="plugins.html">
+                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
+                        <path class="pixel-light" d="M2 0h1v2H2zM5 0h1v2H5z"/>
+                        <path class="pixel-accent" d="M1 2h6v3H1z"/>
+                        <path class="pixel-light" d="M3 5h2v1H3zM3.5 6h1v2h-1z"/>
+                    </svg>
+                    <h3>Plugins</h3>
+                    <p>Events, commands, custom content and services in C++, with C# and Java on the way. <span class="more">Plugin API &rarr;</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="getting-started" class="section">
+        <div class="container">
+            <h2 class="reveal">Getting started</h2>
+            <ol class="steps">
+                <li class="step reveal">
+                    <span class="step-number">1</span>
+                    <h3>Download</h3>
+                    <p>Grab the build for your system from the
+                        <a href="https://github.com/Falcon-MC/Falcon/releases/latest">latest release</a>. Each file comes with
+                        a <code>.sha256</code> checksum.</p>
+                </li>
+                <li class="step reveal">
+                    <span class="step-number">2</span>
+                    <h3>Run</h3>
+                    <p>Start it from a terminal. On first launch a short wizard asks for the server name, game mode and
+                        world, then writes <code>server.properties</code>.</p>
+                    <pre class="code">chmod +x FalconServer-linux-x64
+./FalconServer-linux-x64</pre>
+                </li>
+                <li class="step reveal">
+                    <span class="step-number">3</span>
+                    <h3>Join</h3>
+                    <p>In Minecraft: Bedrock Edition 1.26.51, open <strong>Play &rarr; Servers &rarr; Add server</strong> and
+                        enter the machine's address with port <code>19132</code>.</p>
+                </li>
+            </ol>
+
+            <div class="guide reveal">
+                <div>
+                    <h3>Configure</h3>
+                    <p>Everything lives in <code>server.properties</code>, next to the executable. Restart the server
+                        after editing it.</p>
+                    <pre class="code">server-name=My Falcon server
+gamemode=survival
+max-players=20
+online-mode=true
+server-port=19132
+view-distance=10</pre>
+                </div>
+                <div>
+                    <h3>Host on a panel</h3>
+                    <p>The <a href="https://github.com/Falcon-MC/Pterodactyl">Pterodactyl egg</a> downloads the latest
+                        release, checks its checksum and exposes the main settings as panel variables.</p>
+                    <h3>Extend it</h3>
+                    <p>Drop plugins into the <code>plugins/</code> folder. See the <a href="plugins.html">plugin API</a>.</p>
+                    <h3>Need help?</h3>
+                    <p>Ask in the <a href="https://discord.gg/KZb6YxSHkb">Discord server</a> or open an
+                        <a href="https://github.com/Falcon-MC/Falcon/issues/new/choose">issue</a>.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -235,8 +300,14 @@
 
 <footer class="footer">
     <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
-    <p><a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a></p>
+    <p>
+        <a href="https://discord.gg/KZb6YxSHkb">Discord</a> &middot;
+        <a href="https://github.com/Falcon-MC">GitHub</a> &middot;
+        <a href="plugins.html">Plugin API</a> &middot;
+        <a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a>
+    </p>
 </footer>
-<script src="github.js?v=11"></script>
+<script src="site.js?v=1"></script>
+<script src="github.js?v=12"></script>
 </body>
 </html>
