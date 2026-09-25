@@ -1,6 +1,7 @@
 const API = "https://api.github.com";
 const REPOSITORY = "Falcon-MC/Falcon";
 const ORGANIZATION = "Falcon-MC";
+const VERSION_SOURCE = "https://raw.githubusercontent.com/Falcon-MC/Falcon/main/Falcon.Server/include/Server.h";
 
 const PLATFORMS = [
     {asset: "FalconServer-windows-x64.exe", label: "Windows"},
@@ -399,11 +400,31 @@ function setupReveal() {
     elements.forEach((element) => observer.observe(element));
 }
 
+async function loadVersion() {
+    const response = await fetch(VERSION_SOURCE);
+    if (!response.ok) {
+        throw new Error(`${VERSION_SOURCE} returned ${response.status}`);
+    }
+
+    const source = await response.text();
+    const game = source.match(/gameVersion\s*=\s*"([^"]+)"/);
+    const protocol = source.match(/protocolVersion\s*=\s*(\d+)/);
+
+    if (game) {
+        document.getElementById("game-version").textContent = `Bedrock ${game[1]}`;
+    }
+    if (protocol) {
+        document.getElementById("protocol-version").textContent = `Protocol ${protocol[1]}`;
+    }
+}
+
 labelDownloadButton();
 setupMenu();
 setupReveal();
 setupTerminalWindow();
 playTerminal();
+
+loadVersion().catch((error) => console.warn("Could not load the supported version", error));
 
 Promise.allSettled([loadReleases, loadRepositories, loadContributors].map((task) =>
     task().catch((error) => console.warn("Could not load GitHub data", error))
