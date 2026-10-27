@@ -38,7 +38,7 @@ jobs:
           gh api "repos/Falcon-MC/Falcon/releases?per_page=100" > releases.json
           gh api "orgs/Falcon-MC/repos?per_page=100" > repositories.json
           gh api "repos/Falcon-MC/Falcon/contributors?per_page=100" > contributors.json
-          gh api "repos/Falcon-MC/Falcon/contents/Falcon.Server/include/Server.h" \
+          gh api "repos/Falcon-MC/Falcon/contents/Falcon.Server/include/Server/ServerHost.h" \
             -H "Accept: application/vnd.github.raw" > Server.h
 
           game=$(grep -oP 'gameVersion\s*=\s*"\K[^"]+' Server.h || true)
