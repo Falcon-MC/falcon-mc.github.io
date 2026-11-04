@@ -57,14 +57,15 @@ FALCON_PLUGIN(MyPlugin)`
     wasm: [
         {
             title: "Build the module",
-            text: "Generate the C bindings from <code>falcon.wit</code> with <code>wit-bindgen</code> and build a " +
-                "core module with clang and a WASI sysroot. The server loads the core module, not a component.",
+            text: "Generate the C bindings from <code>wasm/falcon.wit</code> in the plugin SDK with " +
+                "<code>wit-bindgen</code> and build a core module with clang and a WASI sysroot. The server loads " +
+                "the core module, not a component.",
             file: "build.sh",
             syntax: "cmake",
-            code: `wit-bindgen c wit --out-dir build
+            code: `wit-bindgen c PluginAPI/wasm --out-dir build
 clang --target=wasm32-wasip1 --sysroot="$WASI_SYSROOT" -mexec-model=reactor -O2 \\
-    -Ibuild -Iwit/c -o build/MyPlugin.wasm \\
-    MyPlugin.c wit/c/falcon_wasm.c build/falcon_plugin.c build/falcon_plugin_component_type.o`
+    -Ibuild -IPluginAPI/wasm/c -o build/MyPlugin.wasm \\
+    MyPlugin.c PluginAPI/wasm/c/falcon_wasm.c build/falcon_plugin.c build/falcon_plugin_component_type.o`
         },
         {
             title: "Write the plugin",
