@@ -54,6 +54,52 @@ FALCON_PLUGIN(MyPlugin)`
 }`
         }
     ],
+    wasm: [
+        {
+            title: "Build the module",
+            text: "Generate the C bindings from <code>wasm/falcon.wit</code> in the plugin SDK with " +
+                "<code>wit-bindgen</code> and build a core module with clang and a WASI sysroot. The server loads " +
+                "the core module, not a component.",
+            file: "build.sh",
+            syntax: "cmake",
+            code: `wit-bindgen c PluginAPI/wasm --out-dir build
+clang --target=wasm32-wasip1 --sysroot="$WASI_SYSROOT" -mexec-model=reactor -O2 \\
+    -Ibuild -IPluginAPI/wasm/c -o build/MyPlugin.wasm \\
+    MyPlugin.c PluginAPI/wasm/c/falcon_wasm.c build/falcon_plugin.c build/falcon_plugin_component_type.o`
+        },
+        {
+            title: "Write the plugin",
+            text: "Implement <code>falcon_enable</code>, subscribe to events and register commands. The " +
+                "<code>falcon_wasm.h</code> helper hides the bindings; everything else stays reachable through them.",
+            file: "MyPlugin.c",
+            syntax: "cpp",
+            code: `#include "falcon_wasm.h"
+
+static void welcome(void) {
+    falcon_player player;
+    if (falcon_event_player(&player))
+        falcon_send(player, "Welcome!");
+}
+
+bool falcon_enable(void) {
+    falcon_on(FALCON_EVENT_PLAYER_JOIN, welcome);
+    return true;
+}`
+        },
+        {
+            title: "Install it",
+            text: "Put the module next to a <code>plugin.json</code> in <code>plugins/MyPlugin/</code>. It runs " +
+                "with no file system or network access.",
+            file: "plugin.json",
+            syntax: "json",
+            code: `{
+  "name": "MyPlugin",
+  "version": "1.0.0",
+  "runtime": "wasm",
+  "main": "MyPlugin.wasm"
+}`
+        }
+    ],
     csharp: [
         {
             title: "Reference the SDK",
@@ -158,7 +204,8 @@ public class MyPlugin extends Plugin {
 
 const KEYWORDS = {
     cmake: ["include", "FetchContent_Declare", "FetchContent_MakeAvailable", "falcon_add_plugin"],
-    cpp: ["#include", "class", "public", "bool", "override", "return", "true", "false", "const", "auto"],
+    cpp: ["#include", "class", "public", "bool", "override", "return", "true", "false", "const", "auto", "static",
+        "void", "if"],
     csharp: ["using", "namespace", "public", "class", "override", "bool", "return", "true", "false"],
     java: ["package", "import", "public", "class", "extends", "boolean", "return", "true", "false", "@Override"],
     json: ["true", "false", "null"],

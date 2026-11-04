@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Plugins - Falcon</title>
-    <meta name="description" content="Extend Falcon with plugins in C++, C# or Java. Events, commands, custom items, blocks and entities, services between plugins, all on one stable API.">
-    <meta name="keywords" content="Minecraft, Bedrock, server, plugins, plugin API, C++, C#, Java, Falcon">
+    <meta name="description" content="Extend Falcon with plugins in C++, Java or sandboxed WebAssembly. Events, commands, custom items, blocks and entities, services between plugins, all on one stable API.">
+    <meta name="keywords" content="Minecraft, Bedrock, server, plugins, plugin API, C++, Java, WebAssembly, Wasm, Falcon">
     <meta name="author" content="Falcon-MC">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0d1117">
@@ -16,7 +16,7 @@
     <meta property="og:site_name" content="Falcon">
     <meta property="og:url" content="https://falcon-mc.github.io/plugins.html">
     <meta property="og:title" content="Falcon plugins">
-    <meta property="og:description" content="Extend Falcon with plugins in C++, C# or Java, all on one stable API.">
+    <meta property="og:description" content="Extend Falcon with plugins in C++, Java or sandboxed WebAssembly, all on one stable API.">
     <meta property="og:image" content="https://falcon-mc.github.io/assets/social.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -24,7 +24,7 @@
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Falcon plugins">
-    <meta name="twitter:description" content="Extend Falcon with plugins in C++, C# or Java, all on one stable API.">
+    <meta name="twitter:description" content="Extend Falcon with plugins in C++, Java or sandboxed WebAssembly, all on one stable API.">
     <meta name="twitter:image" content="https://falcon-mc.github.io/assets/social.png">
 
     <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -52,14 +52,14 @@
     <section class="page-hero">
         <h1>Plugins for Falcon</h1>
         <p class="lead">
-            Extend the server with plugins written in C++, C# or Java. Every language sits on the same stable API, so a
+            Extend the server with plugins written in C++, Java or WebAssembly. Every language sits on the same stable API, so a
             plugin keeps working when the server updates.
         </p>
         <div class="badges">
             <span>API 1.2</span>
             <span>C++17</span>
-            <span>C#</span>
             <span>Java</span>
+            <span>WebAssembly</span>
             <span>Windows, Linux &amp; macOS</span>
         </div>
         <div class="actions">
@@ -73,6 +73,17 @@
         <div class="container">
             <h2 class="reveal">Pick a runtime</h2>
             <div class="runtime-grid">
+                <article class="feature reveal">
+                    <h3>WebAssembly <span class="tag ready">New</span></h3>
+                    <p>Sandboxed plugins in any language with WIT bindings for core modules. The recommended choice for
+                        new plugins: a broken or hostile plugin is stopped without taking the server down.</p>
+                    <ul>
+                        <li>No file system or network access</li>
+                        <li>Memory capped by <code>wasm-plugin-memory-mb</code>, work per server call by
+                            <code>wasm-plugin-fuel</code></li>
+                        <li><code>"runtime": "wasm"</code></li>
+                    </ul>
+                </article>
                 <article class="feature reveal">
                     <h3>Native C++ <span class="tag ready">Available</span></h3>
                     <p>Header-only C++ classes over a stable C ABI. Build with any compiler and the plugin loads on every
@@ -94,8 +105,9 @@
                     </ul>
                 </article>
                 <article class="feature reveal">
-                    <h3>C# <span class="tag ready">Available</span></h3>
-                    <p>.NET class libraries loaded in-process, with the same events, commands and content as C++.</p>
+                    <h3>C# <span class="tag">Deprecated</span></h3>
+                    <p>.NET class libraries loaded in-process. Deprecated and removed in a future release: move to
+                        WebAssembly, native C++ or Java.</p>
                     <ul>
                         <li>Needs the .NET runtime</li>
                         <li><code>"runtime": "dotnet"</code></li>
@@ -169,10 +181,12 @@
             <div class="language-tabs reveal" id="language-tabs" role="tablist" aria-label="Plugin language" hidden>
                 <span class="language-indicator" id="language-indicator" aria-hidden="true"></span>
                 <button type="button" role="tab" data-language="cpp" aria-selected="true">C++</button>
+                <button type="button" role="tab" data-language="wasm" aria-selected="false">WebAssembly</button>
                 <button type="button" role="tab" data-language="csharp" aria-selected="false">C#</button>
                 <button type="button" role="tab" data-language="java" aria-selected="false">Java</button>
             </div>
-            <p class="language-note" id="language-note" hidden>C# and Java support is brand new: tell us on
+            <p class="language-note" id="language-note" hidden>Java and WebAssembly support is brand new, and C# is
+                deprecated: tell us on
                 <a href="https://discord.gg/KZb6YxSHkb">Discord</a> if something does not work.</p>
             <div class="tutorial" id="tutorial">
             <div class="split reveal">
