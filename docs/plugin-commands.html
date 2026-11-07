@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commands and permissions - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Commands and permissions</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html" aria-current="page">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html" aria-current="page">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Plugins</p><h1>Commands and permissions</h1>
+
+<h2 id="adding-a-command">Adding a command</h2>
+<pre tabindex="0"><code>commands().add("joins", "Shows how many times a player joined", "/joins [player]",
+    [this](falcon::CommandContext &amp;context) {
+        const auto &amp;arguments = context.arguments();
+        const std::string name = arguments.empty() ? context.senderName() : arguments[0];
+        context.reply(name + " joined");
+        return true;
+    }, falcon::CommandPermission::Any);</code></pre>
+<p><code>add(name, description, usage, handler, permission)</code> returns <code>false</code> when it fails. Permission is <code>Any</code>, or <code>Operator</code> by default. The handler returns whether the command succeeded.</p>
+<div class="table"><table><thead><tr><th><code>CommandContext</code></th><th>Use</th></tr></thead><tbody><tr><td><code>senderName()</code></td><td>Name of the sender</td></tr><tr><td><code>player()</code></td><td><code>optional&lt;Player&gt;</code>, empty for the console</td></tr><tr><td><code>arguments()</code></td><td>Arguments as strings</td></tr><tr><td><code>hasPermission(node)</code></td><td>Tests a permission node</td></tr><tr><td><code>reply(message)</code></td><td>Answers the sender</td></tr></tbody></table></div>
+<h2 id="permission-nodes">Permission nodes</h2>
+<pre tabindex="0"><code>permissions().add("myplugin.fly", falcon::PermissionDefault::Operator);
+
+if (player.hasPermission("myplugin.fly"))
+    player.sendMessage("You can fly");
+
+player.setPermission("myplugin.fly", true);
+player.unsetPermission("myplugin.fly");</code></pre>
+<p><code>PermissionDefault</code> is <code>False</code>, <code>True</code> or <code>Operator</code>, and defaults to <code>Operator</code>.</p>
+<div class="pager"><a class="prev" href="plugin-events.html"><span>Previous</span>Events</a><a class="next" href="plugin-scheduler.html"><span>Next</span>Scheduler and config</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

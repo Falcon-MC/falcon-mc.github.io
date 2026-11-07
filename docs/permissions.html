@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Permissions - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Permissions</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html" aria-current="page">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html" aria-current="page">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Administration</p><h1>Permissions</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#command-levels">Command levels</a></li><li><a href="#operators">Operators</a></li><li><a href="#allow-list">Allow list</a></li><li><a href="#bans">Bans</a></li><li><a href="#plugin-permissions">Plugin permissions</a></li></ul></nav>
+<h2 id="command-levels">Command levels</h2>
+<p>Each command has a required level. A sender can run it when their level is at least that high. The levels, lowest to highest, are <code>Any</code>, <code>GameDirectors</code>, <code>Admin</code>, <code>Host</code>, <code>Owner</code> and <code>Internal</code>.</p>
+<div class="table"><table><thead><tr><th>Sender</th><th>Level</th></tr></thead><tbody><tr><td>Player</td><td><code>Any</code></td></tr><tr><td>Operator</td><td><code>GameDirectors</code></td></tr><tr><td>Console</td><td><code>Internal</code></td></tr><tr><td>Command block</td><td><code>Internal</code></td></tr></tbody></table></div>
+<p>Players stop at <code>GameDirectors</code>, so commands at <code>Admin</code> or <code>Owner</code> are out of reach in game: <code>/world</code>, <code>/stop</code>, <code>/save</code>, <code>/save-on</code>, <code>/save-off</code>, <code>/setmaxplayers</code>, <code>/transfer</code>, <code>/ban-ip</code> and <code>/pardon-ip</code>.</p>
+<h2 id="operators">Operators</h2>
+<p>Add a name to <code>ops.txt</code>, or use <code>/op</code>. Names are compared in lowercase. Operators are also exempt from <code>spawn-protection</code>.</p>
+<h2 id="allow-list">Allow list</h2>
+<pre tabindex="0"><code>allowlist on
+allowlist add Steve
+allowlist remove Steve
+allowlist list
+allowlist reload</code></pre>
+<p>Setting <code>allow-list=true</code> in <code>server.properties</code> does the same at startup. An entry in <code>allowlist.json</code> can set <code>ignoresPlayerLimit</code> to let the player past <code>max-players</code>.</p>
+<h2 id="bans">Bans</h2>
+<p><code>/ban</code> writes to <code>banned-players.json</code> and <code>/ban-ip</code> to <code>banned-ips.json</code>. <code>/ban-ip</code> accepts an address or an online player.</p>
+<h2 id="plugin-permissions">Plugin permissions</h2>
+<p>Plugins have their own named nodes: see <a href="plugin-commands.html">Commands and permissions</a>.</p>
+<div class="pager"><a class="prev" href="commands.html"><span>Previous</span>Commands</a><a class="next" href="worlds.html"><span>Next</span>Worlds and dimensions</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom content - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Custom content</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html" aria-current="page">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html" aria-current="page">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Plugins</p><h1>Custom content</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#items">Items</a></li><li><a href="#blocks">Blocks</a></li><li><a href="#entities">Entities</a></li><li><a href="#deeper-changes">Deeper changes</a></li></ul></nav>
+<p>Register content in <code>onLoad</code>, through <code>content()</code>. Each call returns <code>false</code> when it fails. Put the matching textures in a <code>resource_pack/</code> folder next to <code>plugin.json</code>.</p>
+<h2 id="items">Items</h2>
+<div class="table"><table><thead><tr><th><code>CustomItem</code> field</th><th>Default</th></tr></thead><tbody><tr><td><code>identifier</code>, <code>displayName</code>, <code>icon</code>, <code>creativeCategory</code></td><td>Empty</td></tr><tr><td><code>maxStackSize</code></td><td>64</td></tr><tr><td><code>maxDurability</code></td><td>0</td></tr><tr><td><code>handEquipped</code></td><td><code>false</code></td></tr><tr><td><code>onUse(Player &amp;, Item &amp;)</code></td><td>Optional</td></tr><tr><td><code>onUseOnBlock(Player &amp;, Item &amp;, const BlockPos &amp;, uint32_t face)</code></td><td>Optional</td></tr></tbody></table></div>
+<pre tabindex="0"><code>falcon::CustomItem wand;
+wand.identifier = "hello:thunder_wand";
+wand.displayName = "Thunder Wand";
+wand.icon = "thunder_wand";
+wand.creativeCategory = "equipment";
+wand.maxStackSize = 1;
+wand.handEquipped = true;
+wand.onUseOnBlock = [](falcon::Player &amp;player, falcon::Item &amp;, const falcon::BlockPos &amp;position, uint32_t) {
+    player.entity().level().strikeLightning(position.center());
+    return true;
+};
+
+if (!content().item(std::move(wand)))
+    logger().warning("Could not register the thunder wand");</code></pre>
+<h2 id="blocks">Blocks</h2>
+<div class="table"><table><thead><tr><th><code>CustomBlock</code> field</th><th>Default</th></tr></thead><tbody><tr><td><code>identifier</code>, <code>displayName</code>, <code>texture</code>, <code>creativeCategory</code>, <code>drop</code></td><td>Empty</td></tr><tr><td><code>destroyTime</code></td><td>1.0</td></tr><tr><td><code>explosionResistance</code></td><td>1.0</td></tr><tr><td><code>lightEmission</code></td><td>0</td></tr><tr><td><code>friction</code></td><td>0.6</td></tr><tr><td><code>onInteract(Player &amp;, const BlockPos &amp;, uint32_t face)</code></td><td>Optional, returns <code>bool</code></td></tr><tr><td><code>onBreak(Player &amp;, const BlockPos &amp;)</code></td><td>Optional</td></tr></tbody></table></div>
+<h2 id="entities">Entities</h2>
+<div class="table"><table><thead><tr><th><code>CustomEntity</code> field</th><th>Default</th></tr></thead><tbody><tr><td><code>identifier</code></td><td>Empty</td></tr><tr><td><code>width</code>, <code>height</code></td><td>0.6, 1.8</td></tr><tr><td><code>maxHealth</code></td><td>20</td></tr><tr><td><code>summonable</code></td><td><code>true</code></td></tr><tr><td><code>onTick(Entity &amp;)</code></td><td>Optional</td></tr><tr><td><code>onInteract(Entity &amp;, Player &amp;)</code></td><td>Optional, returns <code>bool</code></td></tr></tbody></table></div>
+<h2 id="deeper-changes">Deeper changes</h2>
+<p>To subclass <code>Block</code>, <code>Item</code>, <code>MobActor</code> or <code>Goal</code>, use an <a href="plugin-internal.html">internal plugin</a>. For content defined in JSON, see <a href="behavior-packs.html">Behavior packs</a>.</p>
+<div class="pager"><a class="prev" href="plugin-scheduler.html"><span>Previous</span>Scheduler and config</a><a class="next" href="plugin-packets.html"><span>Next</span>Packets</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

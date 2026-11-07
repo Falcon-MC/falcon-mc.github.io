@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide - Internal - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Guide - Internal</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html" aria-current="page">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html" aria-current="page">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Plugin runtimes</p><h1>Guide - Internal</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#build">Build</a></li><li><a href="#code">Code</a></li><li><a href="#manifest">Manifest</a></li></ul></nav>
+<p>An internal plugin uses the server's own headers and classes, so it can do anything a fork can. It subclasses <code>Block</code>, <code>Item</code>, <code>MobActor</code>, <code>Goal</code> or <code>Command</code>, and registers classes with <code>FALCON_REGISTER_BLOCK</code>, <code>FALCON_REGISTER_ITEM</code> and <code>FALCON_REGISTER_ACTOR</code>. A lower priority number overrides a vanilla class.</p>
+<p>The server refuses a plugin built against another commit, build number or compiler, and logs why. Rebuild it for every server update, and keep its classes in a namespace.</p>
+<h2 id="build">Build</h2>
+<pre tabindex="0"><code>falcon_add_internal_plugin(MyPlugin MyPlugin.cpp)</code></pre>
+<p>Each release publishes the matching SDK, <code>FalconSDK-&lt;platform&gt;.tar.gz</code>. Point <code>FALCON_SDK_DIR</code> at it, with the compiler named in its <code>README.txt</code>. For a server built from source with <code>FALCON_EXPORT_SYMBOLS</code> (on by default), point <code>FALCON_BUILD_DIR</code> at its build folder instead.</p>
+<h2 id="code">Code</h2>
+<pre tabindex="0"><code>#include "Block/BlockClassRegistry.h"
+#include "Block/Blocks/SaplingBlock.h"
+
+#include &lt;falcon/internal/InternalPlugin.hpp&gt;
+
+namespace myplugin {
+    class CustomSaplingBlock : public SaplingBlock {
+    public:
+        using SaplingBlock::SaplingBlock;
+
+        static bool matches(const std::string &amp;identifier) {
+            return SaplingBlock::matches(identifier);
+        }
+    };
+
+    FALCON_REGISTER_BLOCK(CustomSaplingBlock, 10);
+
+    class MyPlugin : public falcon::internal::Plugin {
+    public:
+        bool onEnable() override {
+            subscribe(getServer().getEventBus().after().mPlayerJoin, [](PlayerJoinAfterEvent &amp;event) {
+                event.mPlayer.sendMessage("Welcome!");
+            });
+            return true;
+        }
+    };
+}
+
+FALCON_INTERNAL_PLUGIN(myplugin::MyPlugin)</code></pre>
+<h2 id="manifest">Manifest</h2>
+<pre tabindex="0"><code>{
+  "name": "MyPlugin",
+  "version": "1.0.0",
+  "main": "MyPlugin",
+  "runtime": "internal"
+}</code></pre>
+<p>Register classes with the macros or in <code>onLoad</code>. The server applies them after every plugin has loaded and removes them when the plugin is disabled. The library stays loaded until the server exits.</p>
+<p>On Windows the plugin imports symbols from <code>FalconServer.exe</code>, so the executable must keep that name.</p>
+<div class="pager"><a class="prev" href="plugin-dotnet.html"><span>Previous</span>Guide - C#</a><a class="next" href="behavior-packs.html"><span>Next</span>Behavior packs</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

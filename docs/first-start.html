@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First start - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>First start</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html" aria-current="page">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html" aria-current="page">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Start</p><h1>First start</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-setup-wizard">The setup wizard</a></li><li><a href="#command-line-options">Command-line options</a></li><li><a href="#joining">Joining</a></li><li><a href="#files-and-folders">Files and folders</a></li><li><a href="#using-the-console">Using the console</a></li><li><a href="#updating">Updating</a></li></ul></nav>
+<h2 id="the-setup-wizard">The setup wizard</h2>
+<p>Run <code>FalconServer</code> in a terminal. When <code>server.properties</code> is needed, the wizard:</p>
+<ol><li>Asks for a language.</li><li>Shows the LGPL-3.0 notice and asks you to accept it. Refusing stops the server.</li><li>Asks whether to configure now. Answering no writes the defaults.</li><li>Goes through four steps, then prints a summary.</li></ol>
+<div class="table"><table><thead><tr><th>Step</th><th>Asks for</th></tr></thead><tbody><tr><td>Server</td><td><code>server-name</code>, <code>gamemode</code>, <code>difficulty</code>, <code>max-players</code></td></tr><tr><td>Network</td><td><code>server-port</code>, <code>server-portv6</code>, <code>online-mode</code>, <code>enable-lan-visibility</code></td></tr><tr><td>World</td><td><code>level-name</code>, <code>level-seed</code>, <code>view-distance</code></td></tr><tr><td>Players</td><td>Operators, <code>allow-list</code> and the allowed players</td></tr></tbody></table></div>
+<p>The wizard only runs when both input and output are a terminal, so it stays out of the way under a service manager or in a container.</p>
+<h2 id="command-line-options">Command-line options</h2>
+<div class="table"><table><thead><tr><th>Option</th><th>Effect</th></tr></thead><tbody><tr><td><code>--no-wizard</code></td><td>Skips the wizard</td></tr><tr><td><code>--accept-license</code></td><td>Skips the license question</td></tr><tr><td><code>--language=fr_FR</code></td><td>Sets the wizard language</td></tr></tbody></table></div>
+<p>The server ships with 29 language files.</p>
+<h2 id="joining">Joining</h2>
+<p>Add the server in the client's server list with the machine's address and <code>server-port</code> (19132 by default). With <code>enable-lan-visibility=true</code> it also appears on the LAN.</p>
+<p>Falcon's transport is NetherNet, and it logs at startup that its signaling endpoint uses plain HTTP. RakNet is no longer accepted: see <a href="troubleshooting.html#raknet-is-no-longer-supported">Troubleshooting</a>.</p>
+<h2 id="files-and-folders">Files and folders</h2>
+<div class="table"><table><thead><tr><th>Path</th><th>Content</th></tr></thead><tbody><tr><td><code>server.properties</code></td><td><a href="configuration.html">Configuration</a></td></tr><tr><td><code>allowlist.json</code></td><td>Entries with <code>name</code>, <code>xuid</code> and <code>ignoresPlayerLimit</code></td></tr><tr><td><code>ops.txt</code></td><td>One operator name per line</td></tr><tr><td><code>banned-players.json</code>, <code>banned-ips.json</code></td><td>Bans, with <code>name</code>, <code>creationDate</code>, <code>source</code>, <code>expireDate</code> and <code>reason</code></td></tr><tr><td><code>worlds/&lt;name&gt;/</code></td><td>Worlds, with their LevelDB in <code>db/</code></td></tr><tr><td><code>players/</code></td><td>Player data</td></tr><tr><td><code>plugins/</code></td><td><a href="plugins.html">Plugins</a></td></tr><tr><td><code>resource_packs/</code></td><td><a href="resource-packs.html">Resource packs</a></td></tr><tr><td><code>behavior_packs/</code></td><td><a href="behavior-packs.html">Behavior packs</a></td></tr><tr><td><code>profiler/</code></td><td>Reports from <code>/profiler</code></td></tr><tr><td><code>cdn_config.json</code></td><td>Optional, <a href="resource-packs.html#cdn">pack CDN URLs</a></td></tr></tbody></table></div>
+<h2 id="using-the-console">Using the console</h2>
+<p>The console takes the same commands as players, without the slash. It holds more permission than any player: see <a href="permissions.html">Permissions</a>.</p>
+<pre tabindex="0"><code>op Steve
+allowlist add Alex
+stop</code></pre>
+<h2 id="updating">Updating</h2>
+<p>Stop the server and replace the executable. Worlds use the Bedrock format, and an internal plugin must be rebuilt for each server build: see <a href="plugin-internal.html">Internal plugins</a>.</p>
+<div class="pager"><a class="prev" href="index.html"><span>Previous</span>Installation</a><a class="next" href="configuration.html"><span>Next</span>Configuration</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

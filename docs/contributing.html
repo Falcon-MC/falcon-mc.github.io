@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contributing - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Contributing</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html" aria-current="page">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html" aria-current="page">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Project</p><h1>Contributing</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#reporting-a-bug">Reporting a bug</a></li><li><a href="#making-a-change">Making a change</a></li><li><a href="#rules-for-code">Rules for code</a></li><li><a href="#pull-requests">Pull requests</a></li><li><a href="#ai-tools">AI tools</a></li><li><a href="#license">License</a></li></ul></nav>
+<p><a href="https://github.com/Falcon-MC/Falcon/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> is the authoritative document. This page gives the essentials.</p>
+<h2 id="reporting-a-bug">Reporting a bug</h2>
+<p>Search the <a href="https://github.com/Falcon-MC/Falcon/issues">issues</a> first, then include:</p>
+<ul><li>The Falcon version and commit, from <code>/about</code></li><li>Your operating system and the Bedrock client version</li><li>Exact steps to reproduce</li><li>Expected and actual behavior, compared with a vanilla world for gameplay bugs</li><li>The server log, with the full crash output if there is one</li></ul>
+<p>Reproduce on a fresh world without behavior packs if you can. Report vulnerabilities privately, as <a href="https://github.com/Falcon-MC/Falcon/blob/main/SECURITY.md">SECURITY.md</a> describes.</p>
+<h2 id="making-a-change">Making a change</h2>
+<ol><li>Fork and clone.</li><li>Install the <a href="index.html">toolchain</a>.</li><li>Branch off <code>main</code>. Work for an upcoming protocol goes on the branch named after that version.</li><li>Build with <code>./build.sh</code> or <code>build.bat</code>.</li><li>Test on a running server, in game.</li></ol>
+<h2 id="rules-for-code">Rules for code</h2>
+<ul><li>C++17 only. Match the style of the file you edit.</li><li>One logical change per pull request, with no unrelated churn.</li><li>Vanilla is the reference. Say how you checked it.</li><li>Reuse existing helpers before writing new ones.</li><li>No dead code and no leftover debug logging.</li><li>New dependencies need an issue first.</li><li>Performance claims need <code>/profiler</code> numbers.</li><li>Commits follow Conventional Commits, such as <code>fix: stop coral from dying underwater</code>.</li></ul>
+<h2 id="pull-requests">Pull requests</h2>
+<p>Link the issue, allow maintainer edits, and use a draft if the work is not finished. CI must pass on Linux, Windows and macOS. Describe exactly what you tested.</p>
+<p>Pull requests are closed without review for code that does not compile, untested changes, calls to things that do not exist, repository-wide reformats, undisclosed AI use, or duplicates.</p>
+<h2 id="ai-tools">AI tools</h2>
+<p>AI tools are allowed. Name the model and version and which part of the work it did. Write pull request text in your own words, read every line you submit, and reproduce bugs on a real server before reporting them. Coding agents should read <a href="https://github.com/Falcon-MC/Falcon/blob/main/AGENTS.md">AGENTS.md</a>.</p>
+<h2 id="license">License</h2>
+<p>Contributions are licensed under the LGPL-3.0.</p>
+<div class="pager"><a class="prev" href="architecture.html"><span>Previous</span>Architecture</a><a class="next" href="troubleshooting.html"><span>Next</span>Troubleshooting</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

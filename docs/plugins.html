@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plugin overview - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Plugin overview</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html" aria-current="page">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html" aria-current="page">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Plugins</p><h1>Plugin overview</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#choosing-a-runtime">Choosing a runtime</a></li><li><a href="#plugin-json">plugin.json</a></li><li><a href="#plugin-folders">Plugin folders</a></li><li><a href="#what-a-plugin-gets">What a plugin gets</a></li></ul></nav>
+<p>The server loads each folder of <code>plugins/</code> that has a <code>plugin.json</code>. The API lives in the <a href="https://github.com/Falcon-MC/PluginAPI">PluginAPI repository</a>, at version 1.3.3, with examples for each runtime in <code>examples/</code>.</p>
+<h2 id="choosing-a-runtime">Choosing a runtime</h2>
+<div class="table"><table><thead><tr><th><code>runtime</code></th><th>Use it for</th><th>Guide</th></tr></thead><tbody><tr><td><code>wasm</code></td><td>New plugins. Sandboxed, any language with WIT bindings for core modules</td><td><a href="plugin-wasm.html">Wasm</a></td></tr><tr><td><code>native</code> (default)</td><td>Raw performance, through the C API</td><td><a href="plugin-native.html">Native C++</a></td></tr><tr><td><code>java</code></td><td>Java 22 plugins</td><td><a href="plugin-java.html">Java</a></td></tr><tr><td><code>internal</code></td><td>Full access to server classes, tied to one build</td><td><a href="plugin-internal.html">Internal</a></td></tr><tr><td><code>dotnet</code></td><td>C# plugins</td><td><a href="plugin-dotnet.html">C#</a></td></tr></tbody></table></div>
+<p>All of them sit on one C ABI, <code>falcon_api.h</code>, so a feature exists once for every language. A native plugin runs on any server with the same API major version.</p>
+<h2 id="plugin-json">plugin.json</h2>
+<pre tabindex="0"><code>{
+  "name": "HelloPlugin",
+  "version": "1.0.0",
+  "api-version": "1.0",
+  "main": "HelloPlugin",
+  "runtime": "native",
+  "authors": ["Falcon-MC"],
+  "description": "Greets players",
+  "depend": [],
+  "softdepend": [],
+  "loadbefore": []
+}</code></pre>
+<div class="table"><table><thead><tr><th>Field</th><th>Rules</th></tr></thead><tbody><tr><td><code>name</code></td><td>Required. Up to 64 letters, digits, <code>_</code> or <code>-</code>. Must be unique</td></tr><tr><td><code>version</code></td><td>Required</td></tr><tr><td><code>main</code></td><td>Required. Library name (<code>native</code>, <code>internal</code>), <code>.wasm</code> file (<code>wasm</code>), or full class name (<code>java</code>, <code>dotnet</code>)</td></tr><tr><td><code>runtime</code></td><td>Defaults to <code>native</code></td></tr><tr><td><code>api-version</code></td><td>Required for <code>native</code> and <code>java</code>. Must have the server's major version and be no newer than the server's API</td></tr><tr><td><code>jar</code></td><td><code>java</code> only, defaults to <code>&lt;name&gt;.jar</code></td></tr><tr><td><code>assembly</code></td><td><code>dotnet</code> only, defaults to <code>&lt;name&gt;.dll</code></td></tr><tr><td><code>depend</code></td><td>Plugins that must load first. A missing one stops this plugin</td></tr><tr><td><code>softdepend</code></td><td>Load first when present</td></tr><tr><td><code>loadbefore</code></td><td>Plugins this one loads before</td></tr><tr><td><code>authors</code>, <code>description</code></td><td>Optional</td></tr></tbody></table></div>
+<h2 id="plugin-folders">Plugin folders</h2>
+<pre tabindex="0"><code>plugins/
+  HelloPlugin/
+    plugin.json
+    libHelloPlugin.so
+    data/
+    resource_pack/</code></pre>
+<p>The server creates <code>data/</code>, returned by <code>dataFolder()</code>. A <code>resource_pack/</code> folder with a <code>manifest.json</code> is loaded as a resource pack under the plugin's name.</p>
+<h2 id="what-a-plugin-gets">What a plugin gets</h2>
+<div class="table"><table><thead><tr><th>Accessor</th><th>Page</th></tr></thead><tbody><tr><td><code>events()</code></td><td><a href="plugin-events.html">Events</a></td></tr><tr><td><code>commands()</code>, <code>permissions()</code></td><td><a href="plugin-commands.html">Commands and permissions</a></td></tr><tr><td><code>scheduler()</code>, <code>config()</code>, <code>logger()</code></td><td><a href="plugin-scheduler.html">Scheduler and config</a></td></tr><tr><td><code>content()</code></td><td><a href="plugin-content.html">Custom content</a></td></tr><tr><td><code>services()</code></td><td><a href="plugin-services.html">Services</a></td></tr><tr><td><code>Player::sendPacket</code>, packet events</td><td><a href="plugin-packets.html">Packets</a></td></tr><tr><td><code>Server</code>, <code>Player</code>, <code>Entity</code>, <code>Level</code>, <code>Item</code></td><td><a href="plugin-objects.html">Game objects</a></td></tr></tbody></table></div>
+<div class="pager"><a class="prev" href="performance.html"><span>Previous</span>Performance</a><a class="next" href="plugin-lifecycle.html"><span>Next</span>Lifecycle</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

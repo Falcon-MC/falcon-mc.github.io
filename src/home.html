@@ -1,0 +1,58 @@
+<main class="home">
+<div class="hero">
+{{logo}}
+<p class="lead">A complete Minecraft: Bedrock Edition server, written from scratch in C++17.</p>
+<ul class="badges">
+<li>license <b>LGPL-3.0</b></li>
+<li>minecraft <b>1.26.60</b></li>
+<li>protocol <b>2225</b></li>
+<li>platforms <b>Windows, Linux, macOS</b></li>
+</ul>
+<div class="buttons">
+<a class="button primary" href="docs/index.html">Read the docs</a>
+<a class="button" href="https://github.com/Falcon-MC/Falcon">GitHub</a>
+</div>
+</div>
+
+<section>
+<h2>What Falcon is</h2>
+<p>Falcon is a server you run yourself for Bedrock clients. The protocol, world storage, inventory, movement and gameplay are all implemented in this project, with vanilla behavior as the reference. It ships as one native executable, reads Bedrock worlds unchanged, and is extended through behavior packs, scripts and plugins.</p>
+</section>
+
+<section>
+<h2>What you can do with it</h2>
+<ul class="features">
+<li><h3>Run several worlds</h3><p>Create, load, unload and move players between worlds at runtime with <code>/world</code>. Each world has its own Overworld, Nether and End.</p></li>
+<li><h3>Play the real dimensions</h3><p>Nether and End generators, portals, and terrain, biomes and features generated from the seed.</p></li>
+<li><h3>Load behavior packs</h3><p>Packs from folders or <code>.mcpack</code>, <code>.mcaddon</code> and <code>.zip</code> archives.</p></li>
+<li><h3>Script in JavaScript</h3><p>The Script API modules <code>@minecraft/server</code> and <code>@minecraft/server-ui</code>: events, entities, forms, scoreboards and item custom components.</p></li>
+<li><h3>Add custom content</h3><p>Custom blocks, items and entities, from JSON in a pack or from a plugin.</p></li>
+<li><h3>Write plugins</h3><p>Sandboxed WebAssembly, native C++ or Java, on one API with more than 60 event types, commands, a scheduler, permissions and services.</p></li>
+<li><h3>Hook packets</h3><p>Read, rewrite, cancel or send raw packets from a plugin, per player.</p></li>
+<li><h3>Defend villages</h3><p>Villages with points of interest and dwellers, and raids with waves, a boss bar and the Hero of the Village reward.</p></li>
+<li><h3>Administer it</h3><p>More than 50 commands, 64 settings, per-second rate limits and <code>/profiler</code> HTML reports.</p></li>
+<li><h3>Match vanilla terrain</h3><p>The parity tool measures 99.6% block match against Bedrock Dedicated Server on a test seed and 98.1% on seed 42, over 32×32 chunks. Structures are in progress.</p></li>
+</ul>
+</section>
+
+<section>
+<h2>Start in a minute</h2>
+<p>Download a build from the <a href="https://github.com/Falcon-MC/Falcon/releases">releases page</a>, or build it:</p>
+<pre tabindex="0"><code>git clone https://github.com/Falcon-MC/Falcon.git
+cd Falcon
+./build.sh
+./build/Falcon.Server/FalconServer</code></pre>
+<p>The first start runs a setup wizard in the console and writes <code>server.properties</code>. Then add the server in your Bedrock client, on port <code>19132</code> by default.</p>
+</section>
+
+<section>
+<h2>Next</h2>
+<ul>
+<li><a href="docs/index.html">Install and run Falcon</a></li>
+<li><a href="docs/configuration.html">Every setting in server.properties</a></li>
+<li><a href="docs/plugins.html">Write a plugin</a></li>
+<li><a href="docs/scripting.html">Script with behavior packs</a></li>
+<li><a href="docs/contributing.html">Contribute</a></li>
+</ul>
+</section>
+</main>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Script events - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Script events</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html" aria-current="page">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html" aria-current="page">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Packs and scripting</p><h1>Script events</h1>
+
+<p>Subscribe with <code>world.afterEvents.&lt;name&gt;.subscribe(callback)</code>, and remove with <code>unsubscribe</code>.</p>
+<h2 id="afterevents">afterEvents</h2>
+<div class="table"><table><thead><tr><th>Group</th><th>Events</th></tr></thead><tbody><tr><td>Players</td><td><code>playerSpawn</code>, <code>playerJoin</code>, <code>playerLeave</code>, <code>playerHotbarSelectedSlotChange</code>, <code>playerInventoryItemChange</code></td></tr><tr><td>Blocks</td><td><code>playerBreakBlock</code>, <code>playerPlaceBlock</code>, <code>playerInteractWithBlock</code></td></tr><tr><td>Entities</td><td><code>entitySpawn</code>, <code>entityRemove</code>, <code>entityLoad</code>, <code>entityHurt</code>, <code>entityDie</code>, <code>entityHitBlock</code>, <code>entityHitEntity</code>, <code>entityItemDrop</code></td></tr><tr><td>Projectiles</td><td><code>projectileHitBlock</code>, <code>projectileHitEntity</code></td></tr><tr><td>Other</td><td><code>chatSend</code>, <code>itemUse</code>, <code>worldLoad</code></td></tr></tbody></table></div>
+<h2 id="beforeevents">beforeEvents</h2>
+<p>Set <code>event.cancel = true</code> to stop the action.</p>
+<div class="table"><table><thead><tr><th>Event</th><th>Use</th></tr></thead><tbody><tr><td><code>playerBreakBlock</code></td><td>Before a block breaks</td></tr><tr><td><code>chatSend</code></td><td>Before a chat message</td></tr><tr><td><code>playerInteractWithBlock</code>, <code>playerInteractWithEntity</code></td><td>Before an interaction</td></tr><tr><td><code>itemUse</code>, <code>itemUseOn</code></td><td>Before an item is used</td></tr><tr><td><code>entityHurt</code></td><td>Before damage</td></tr><tr><td><code>effectAdd</code></td><td>Before an effect</td></tr><tr><td><code>worldInitialize</code></td><td>Gives <code>itemComponentRegistry</code> and <code>blockComponentRegistry</code></td></tr></tbody></table></div>
+<pre tabindex="0"><code>import { world } from "@minecraft/server";
+
+world.beforeEvents.chatSend.subscribe((event) =&gt; {
+  if (event.message.includes("badword")) event.cancel = true;
+});</code></pre>
+<div class="pager"><a class="prev" href="scripting.html"><span>Previous</span>Script API</a><a class="next" href="custom-components.html"><span>Next</span>Custom components</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

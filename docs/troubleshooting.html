@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Troubleshooting</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html" aria-current="page">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html" aria-current="page">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Project</p><h1>Troubleshooting</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#the-client-version-is-not-supported">The client version is not supported</a></li><li><a href="#cannot-join-from-the-same-windows-pc">Cannot join from the same Windows PC</a></li><li><a href="#raknet-is-no-longer-supported">RakNet is no longer supported</a></li><li><a href="#a-setting-is-ignored">A setting is ignored</a></li><li><a href="#the-allow-list-keeps-everyone-out">The allow list keeps everyone out</a></li><li><a href="#xbox-live-authentication-fails">Xbox Live authentication fails</a></li><li><a href="#a-command-says-you-lack-permission">A command says you lack permission</a></li><li><a href="#a-plugin-does-not-load">A plugin does not load</a></li><li><a href="#java-or-c-plugins-fail-to-start">Java or C# plugins fail to start</a></li><li><a href="#a-behavior-pack-is-skipped">A behavior pack is skipped</a></li><li><a href="#script-errors">Script errors</a></li></ul></nav>
+<h2 id="the-client-version-is-not-supported">The client version is not supported</h2>
+<p>By default only the newest version joins, 1.26.60 (protocol 2225). The log shows <code>uses protocol N, which the server does not support</code>. Update the client, or set <code>any-version=true</code>.</p>
+<h2 id="cannot-join-from-the-same-windows-pc">Cannot join from the same Windows PC</h2>
+<p>Windows blocks packaged (UWP) apps from reaching the loopback address. If your client is a UWP package, exempt it from an administrator prompt:</p>
+<pre tabindex="0"><code>CheckNetIsolation LoopbackExempt -a -n="Microsoft.MinecraftUWP_8wekyb3d8bbwe"</code></pre>
+<p>This is a Windows rule, not a Falcon setting.</p>
+<h2 id="raknet-is-no-longer-supported">RakNet is no longer supported</h2>
+<p>The server logs this for <code>transport=raknet</code> and falls back to NetherNet. Set <code>transport=nethernet</code>.</p>
+<h2 id="a-setting-is-ignored">A setting is ignored</h2>
+<p>The log prints <code>Invalid value in server.properties</code> and the default is used. Some keys are also <a href="configuration.html#reserved-keys">reserved</a> and have no effect.</p>
+<h2 id="the-allow-list-keeps-everyone-out">The allow list keeps everyone out</h2>
+<p>With <code>allow-list=true</code> and an empty list, the server warns at startup. Type <code>allowlist add &lt;playername&gt;</code> or <code>allowlist off</code>.</p>
+<h2 id="xbox-live-authentication-fails">Xbox Live authentication fails</h2>
+<p>With <code>online-mode=true</code>, the log shows <code>failed Xbox Live authentication</code>. Check that the player is signed in.</p>
+<h2 id="a-command-says-you-lack-permission">A command says you lack permission</h2>
+<p>Commands at <code>Admin</code> or <code>Owner</code> level cannot be run by players, even operators. Run them in the console. See <a href="permissions.html">Permissions</a>.</p>
+<h2 id="a-plugin-does-not-load">A plugin does not load</h2>
+<div class="table"><table><thead><tr><th>Log message</th><th>Cause</th></tr></thead><tbody><tr><td><code>it needs API X, the server provides Y</code></td><td>Built for another API version</td></tr><tr><td><code>missing dependency</code></td><td>A <code>depend</code> plugin is not installed</td></tr><tr><td><code>circular dependency</code></td><td>Plugins depend on each other</td></tr><tr><td><code>another plugin has the same name</code></td><td>Two folders declare one <code>name</code></td></tr><tr><td><code>falcon_plugin_entry is not exported</code></td><td>Not a Falcon plugin</td></tr><tr><td><code>the X runtime is not supported yet</code></td><td>Unknown <code>runtime</code></td></tr><tr><td><code>is not a valid Wasm module</code></td><td>Bad <code>.wasm</code> file</td></tr><tr><td><code>The Wasm plugin trapped</code></td><td>The plugin trapped or ran out of fuel. Raise <code>wasm-plugin-fuel</code> if the work is legitimate</td></tr></tbody></table></div>
+<h2 id="java-or-c-plugins-fail-to-start">Java or C# plugins fail to start</h2>
+<p>Java plugins need Java 22 in <code>FALCON_JAVA_HOME</code> or <code>JAVA_HOME</code>, and the API jar in <code>plugins/.java/</code>. C# plugins need .NET 8 in <code>DOTNET_ROOT</code> or a default install folder.</p>
+<h2 id="a-behavior-pack-is-skipped">A behavior pack is skipped</h2>
+<p>The log says why: <code>invalid manifest.json</code>, <code>duplicate behavior pack</code>, or <code>missing dependency pack</code>.</p>
+<h2 id="script-errors">Script errors</h2>
+<p>Enable <code>content-log-console-output-enabled=true</code>. Check that the API you call is listed in <a href="scripting.html">Script API</a>.</p>
+<div class="pager"><a class="prev" href="contributing.html"><span>Previous</span>Contributing</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

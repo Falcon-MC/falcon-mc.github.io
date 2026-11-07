@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Script API - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Script API</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html" aria-current="page">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html" aria-current="page">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Packs and scripting</p><h1>Script API</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#enabling-scripts">Enabling scripts</a></li><li><a href="#module-exports">Module exports</a></li><li><a href="#system">system</a></li><li><a href="#world">world</a></li><li><a href="#dimension">Dimension</a></li><li><a href="#entity">Entity</a></li><li><a href="#player">Player</a></li><li><a href="#block">Block</a></li><li><a href="#itemstack">ItemStack</a></li><li><a href="#methods-that-do-nothing">Methods that do nothing</a></li></ul></nav>
+<p>Falcon embeds QuickJS and provides two modules, <code>@minecraft/server</code> and <code>@minecraft/server-ui</code>. They implement a subset of the game's API, listed on this page.</p>
+<h2 id="enabling-scripts">Enabling scripts</h2>
+<pre tabindex="0"><code>{
+  "format_version": 2,
+  "header": {
+    "name": "Hello",
+    "uuid": "&lt;pack uuid&gt;",
+    "version": [1, 0, 0]
+  },
+  "modules": [
+    {
+      "type": "script",
+      "uuid": "&lt;module uuid&gt;",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    { "module_name": "@minecraft/server", "version": "1.0.0" }
+  ]
+}</code></pre>
+<pre tabindex="0"><code>import { world, system } from "@minecraft/server";
+
+world.afterEvents.playerSpawn.subscribe((event) =&gt; {
+  event.player.sendMessage("Welcome!");
+});
+
+system.runInterval(() =&gt; {
+  world.sendMessage(`Tick ${system.currentTick}`);
+}, 1200);</code></pre>
+<p><code>console.log</code>, <code>console.warn</code> and <code>console.error</code> write to the server log.</p>
+<h2 id="module-exports">Module exports</h2>
+<p><code>@minecraft/server</code>: <code>world</code>, <code>system</code>, <code>ItemStack</code>, <code>BlockPermutation</code>, <code>BlockStates</code>, <code>BlockTypes</code>, <code>ItemTypes</code>, <code>EquipmentSlot</code>, <code>GameMode</code>, <code>Player</code>, <code>InputPermissionCategory</code>, <code>Direction</code>, <code>BlockVolume</code>, <code>EntityWaypoint</code>, <code>PlayerInventoryType</code>, <code>TickingAreaManager</code>.</p>
+<p><code>@minecraft/server-ui</code>: <code>ActionFormData</code>, <code>MessageFormData</code>, <code>ModalFormData</code>.</p>
+<h2 id="system">system</h2>
+<p><code>run(callback)</code>, <code>runTimeout(callback, ticks)</code>, <code>runInterval(callback, ticks)</code>, <code>clearRun(id)</code>, <code>currentTick</code>.</p>
+<h2 id="world">world</h2>
+<p><code>sendMessage</code>, <code>getAllPlayers</code>, <code>getDimension</code>, <code>getEntity</code>, <code>getDynamicProperty</code>, <code>setDynamicProperty</code>, <code>getDynamicPropertyIds</code>, <code>clearDynamicProperties</code>, <code>afterEvents</code>, <code>beforeEvents</code>, <code>scoreboard</code>, <code>tickingAreaManager</code>.</p>
+<h2 id="dimension">Dimension</h2>
+<p><code>id</code>, <code>getBlock</code>, <code>getEntities</code>, <code>getPlayers</code>, <code>setBlockType</code>, <code>spawnEntity</code>, <code>spawnItem</code>, <code>spawnParticle</code>, <code>playSound</code>, <code>runCommand</code>.</p>
+<h2 id="entity">Entity</h2>
+<p><code>addEffect</code>, <code>removeEffect</code>, <code>getEffect</code>, <code>addTag</code>, <code>removeTag</code>, <code>hasTag</code>, <code>getTags</code>, <code>applyDamage</code>, <code>applyImpulse</code>, <code>applyKnockback</code>, <code>clearVelocity</code>, <code>getVelocity</code>, <code>getRotation</code>, <code>setRotation</code>, <code>teleport</code>, <code>kill</code>, <code>remove</code>, <code>matches</code>, <code>playAnimation</code>, <code>runCommand</code>, <code>setOnFire</code>, <code>extinguishFire</code>, <code>getComponent</code>, <code>getComponents</code>, <code>hasComponent</code>, <code>getProperty</code>, <code>setProperty</code>, and dynamic properties.</p>
+<p>Components: <code>minecraft:health</code>, <code>minecraft:type_family</code>, <code>minecraft:projectile</code>.</p>
+<h2 id="player">Player</h2>
+<p>Everything in Entity, plus <code>sendMessage</code>, <code>kick</code>, <code>getGameMode</code>, <code>setGameMode</code>, <code>addExperience</code>, <code>addLevels</code>, <code>resetLevel</code>, <code>getHeadLocation</code>, <code>getViewDirection</code>, <code>getItemCooldown</code>, <code>startItemCooldown</code>, <code>playSound</code>, <code>spawnParticle</code>, <code>onScreenDisplay</code>, <code>camera</code>, <code>inputPermissions</code>.</p>
+<p>Components: <code>minecraft:inventory</code>, <code>minecraft:equippable</code>, <code>minecraft:cursor_inventory</code>.</p>
+<p><code>minecraft:inventory</code> gives a container with <code>addItem</code>, <code>getItem</code>, <code>setItem</code>, <code>emptySlotsCount</code> and <code>size</code>. <code>minecraft:equippable</code> has <code>getEquipment</code>, <code>setEquipment</code> and <code>getEquipmentSlot</code>.</p>
+<p><code>onScreenDisplay</code> has <code>setActionBar</code> and <code>setTitle</code>.</p>
+<h2 id="block">Block</h2>
+<p><code>above</code>, <code>below</code>, <code>north</code>, <code>south</code>, <code>east</code>, <code>west</code>, <code>center</code>, <code>matches</code>, <code>setType</code>, <code>setPermutation</code>, <code>permutation</code>, <code>typeId</code>, <code>isAir</code>.</p>
+<h2 id="itemstack">ItemStack</h2>
+<p><code>new ItemStack(typeId, amount)</code>, then <code>getComponent</code>, <code>getTags</code>, <code>hasTag</code>, and dynamic properties. Components: <code>minecraft:durability</code> (<code>getDamageChance</code>, <code>maxDurability</code>), <code>minecraft:enchantable</code> (<code>getEnchantment</code>), <code>minecraft:cooldown</code> (<code>cooldownCategory</code>, <code>cooldownTicks</code>).</p>
+<h2 id="methods-that-do-nothing">Methods that do nothing</h2>
+<p>These exist so packs load, but have no effect: <code>onScreenDisplay.updateSubtitle</code>, <code>onScreenDisplay.hideAllForms</code>, <code>inputPermissions.setPermissionCategory</code>, <code>camera.setCamera</code>, <code>camera.fade</code>, <code>locatorBar.addWaypoint</code>, <code>removeWaypoint</code> and <code>removeAllWaypoints</code>.</p>
+<div class="pager"><a class="prev" href="behavior-packs.html"><span>Previous</span>Behavior packs</a><a class="next" href="script-events.html"><span>Next</span>Script events</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

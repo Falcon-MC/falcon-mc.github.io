@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Installation</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html" aria-current="page">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html" aria-current="page">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Start</p><h1>Installation</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#download-a-release">Download a release</a></li><li><a href="#build-on-linux">Build on Linux</a></li><li><a href="#build-on-macos">Build on macOS</a></li><li><a href="#build-on-windows">Build on Windows</a></li><li><a href="#what-the-build-does">What the build does</a></li><li><a href="#next-step">Next step</a></li></ul></nav>
+<p>Falcon supports Minecraft: Bedrock Edition 1.26.60, protocol 2225. It runs on Windows, Linux and macOS.</p>
+<h2 id="download-a-release">Download a release</h2>
+<p>Each <a href="https://github.com/Falcon-MC/Falcon/releases">release</a> has builds for Windows, Linux and macOS, each with a <code>.sha256</code> file. Check the download against it, put the executable in an empty folder and run it. The server creates everything it needs in the folder it runs from.</p>
+<h2 id="build-on-linux">Build on Linux</h2>
+<p>Install <code>g++</code> with C++17 support, <code>cmake</code> 3.16 or newer, <code>ninja</code>, and the OpenSSL and zlib development headers. Then:</p>
+<pre tabindex="0"><code>git clone https://github.com/Falcon-MC/Falcon.git
+cd Falcon
+./build.sh</code></pre>
+<h2 id="build-on-macos">Build on macOS</h2>
+<p>Install the Xcode command line tools, then <code>cmake</code>, <code>ninja</code> and <code>openssl@3</code>. Run <code>./build.sh</code>. The script checks that <code>cmake</code>, <code>g++</code> and <code>ninja</code> are in <code>PATH</code>.</p>
+<h2 id="build-on-windows">Build on Windows</h2>
+<p>The reference toolchain is <a href="https://www.msys2.org">MSYS2</a> UCRT64, with <code>gcc</code>, <code>cmake</code>, <code>ninja</code>, <code>openssl</code> and <code>zlib</code>. Run <code>build.bat</code>.</p>
+<h2 id="what-the-build-does">What the build does</h2>
+<p>The first configure downloads the dependencies with CMake <code>FetchContent</code> (leveldb, QuickJS, libdatachannel and the Falcon-MC libraries), so it needs network access and takes a while. It also downloads a prebuilt Wasmtime 50.0.1 C API.</p>
+<p>The log goes to <code>build.txt</code> and the executable to <code>build/Falcon.Server/FalconServer</code>. For an incremental rebuild:</p>
+<pre tabindex="0"><code>cmake --build build</code></pre>
+<p>Without the scripts:</p>
+<pre tabindex="0"><code>cmake -B build -G Ninja
+cmake --build build</code></pre>
+<h2 id="next-step">Next step</h2>
+<p>Go to <a href="first-start.html">First start</a>.</p>
+<div class="pager"><a class="next" href="first-start.html"><span>Next</span>First start</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

@@ -2,8 +2,9 @@
 
 Source of the Falcon website, published at https://falcon-mc.github.io.
 
-The site is plain HTML and CSS with no build step: edit `index.html` or `style.css`, push to `main`,
-and GitHub Pages redeploys it.
+The pages are generated from `src/` by `build.py`, which only needs Python 3: edit `src/home.html` or a
+page under `src/docs/`, run `python3 build.py`, commit the generated HTML with its source and push to `main`.
+GitHub Pages redeploys it.
 
 To preview locally:
 

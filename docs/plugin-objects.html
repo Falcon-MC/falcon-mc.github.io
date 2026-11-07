@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game objects - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Game objects</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html" aria-current="page">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html" aria-current="page">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Plugins</p><h1>Game objects</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#server">Server</a></li><li><a href="#player">Player</a></li><li><a href="#playerinventory">PlayerInventory</a></li><li><a href="#entity">Entity</a></li><li><a href="#level">Level</a></li><li><a href="#item">Item</a></li></ul></nav>
+<h2 id="server">Server</h2>
+<div class="table"><table><thead><tr><th>Method</th><th>Use</th></tr></thead><tbody><tr><td><code>version()</code></td><td>Server version</td></tr><tr><td><code>onlinePlayers()</code></td><td>All players</td></tr><tr><td><code>findPlayer(name)</code></td><td><code>optional&lt;Player&gt;</code></td></tr><tr><td><code>broadcast(message)</code></td><td>Message to everyone</td></tr><tr><td><code>level(dimension)</code></td><td>Level in the default world</td></tr><tr><td><code>level(world, dimension)</code></td><td>Level in a named world</td></tr><tr><td><code>worlds()</code>, <code>defaultWorld()</code></td><td>World names</td></tr><tr><td><code>loadWorld(name, create, seed)</code>, <code>unloadWorld(name)</code></td><td>World control</td></tr></tbody></table></div>
+<p><code>Dimension</code> is <code>Overworld</code>, <code>Nether</code> or <code>TheEnd</code>.</p>
+<h2 id="player">Player</h2>
+<p><code>name</code>, <code>xuid</code>, <code>uuid</code>, <code>address</code>, <code>isOperator</code>, <code>setOperator</code>, <code>sendMessage</code>, <code>sendTitle</code>, <code>sendActionBar</code>, <code>kick</code>, <code>transfer(address, port)</code>, <code>gameMode</code>, <code>setGameMode</code>, <code>food</code>, <code>setFood</code>, <code>setXpLevel</code>, <code>inventory</code>, <code>entity</code>, <code>hasPermission</code>, <code>setPermission</code>, <code>unsetPermission</code>, <code>sendPacket</code>.</p>
+<p><code>GameMode</code> is <code>Survival</code>, <code>Creative</code>, <code>Adventure</code> or <code>Spectator</code>.</p>
+<h2 id="playerinventory">PlayerInventory</h2>
+<p><code>item(slot)</code>, <code>setItem(slot, item)</code>, <code>give(item)</code>, <code>heldItem</code>, <code>setSelectedSlot</code>, <code>armor(slot)</code>, <code>setArmor(slot, item)</code>, <code>offhand</code>, <code>setOffhand</code>, <code>clear</code>.</p>
+<h2 id="entity">Entity</h2>
+<p><code>type</code>, <code>level</code>, <code>teleport(position)</code>, <code>teleport(position, level)</code>, <code>setMotion</code>, <code>health</code>, <code>maxHealth</code>, <code>setHealth</code>, <code>isAlive</code>, <code>damage(amount, cause)</code>, <code>damage(amount, cause, attacker)</code>, <code>kill</code>, <code>remove</code>, <code>nameTag</code>, <code>setNameTag</code>, <code>isOnFire</code>, <code>setOnFire(ticks)</code>, <code>extinguish</code>, <code>isInvisible</code>, <code>setInvisible</code>, <code>asPlayer</code>.</p>
+<h2 id="level">Level</h2>
+<p><code>name</code>, <code>dimension</code>, <code>getBlock</code>, <code>blockName</code>, <code>blockStates</code>, <code>setBlock(position, name, statesJson)</code>, <code>breakBlock(position, dropItems)</code>, <code>isChunkLoaded</code>, <code>setTime</code>, <code>isRaining</code>, <code>setRaining</code>, <code>isThundering</code>, <code>setThundering</code>, <code>spawnEntity</code>, <code>dropItem</code>, <code>strikeLightning</code>, <code>createExplosion(position, power, breakBlocks)</code>, <code>entities</code>.</p>
+<h2 id="item">Item</h2>
+<p>Create one with <code>Item::create(identifier, count)</code>. Then: <code>identifier</code>, <code>isEmpty</code>, <code>setCount</code>, <code>setDamage</code>, <code>customName</code>, <code>setCustomName</code>, <code>lore</code>, <code>setLore</code>, <code>setEnchantmentLevel</code>.</p>
+<p>The headers in <code>native/include/falcon/</code> have the full signatures.</p>
+<div class="pager"><a class="prev" href="plugin-services.html"><span>Previous</span>Services</a><a class="next" href="plugin-wasm.html"><span>Next</span>Guide - Wasm</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

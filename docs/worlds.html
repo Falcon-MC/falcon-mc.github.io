@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worlds and dimensions - Falcon docs</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html" aria-current="page">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<details class="docs-menu"><summary>Docs menu<span>Worlds and dimensions</span></summary>
+<div class="menu-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html" aria-current="page">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></details>
+<div class="docs">
+<nav class="sidebar" aria-label="Documentation"><div class="sidebar-in"><h2>Start</h2><ul><li><a href="index.html">Installation</a></li><li><a href="first-start.html">First start</a></li></ul><h2>Administration</h2><ul><li><a href="configuration.html">Configuration</a></li><li><a href="commands.html">Commands</a></li><li><a href="permissions.html">Permissions</a></li><li><a href="worlds.html" aria-current="page">Worlds and dimensions</a></li><li><a href="villages.html">Villages and raids</a></li><li><a href="performance.html">Performance</a></li></ul><h2>Plugins</h2><ul><li><a href="plugins.html">Plugin overview</a></li><li><a href="plugin-lifecycle.html">Lifecycle</a></li><li><a href="plugin-events.html">Events</a></li><li><a href="plugin-commands.html">Commands and permissions</a></li><li><a href="plugin-scheduler.html">Scheduler and config</a></li><li><a href="plugin-content.html">Custom content</a></li><li><a href="plugin-packets.html">Packets</a></li><li><a href="plugin-services.html">Services</a></li><li><a href="plugin-objects.html">Game objects</a></li></ul><h2>Plugin runtimes</h2><ul><li><a href="plugin-wasm.html">Guide - Wasm</a></li><li><a href="plugin-native.html">Guide - Native C++</a></li><li><a href="plugin-java.html">Guide - Java</a></li><li><a href="plugin-dotnet.html">Guide - C#</a></li><li><a href="plugin-internal.html">Guide - Internal</a></li></ul><h2>Packs and scripting</h2><ul><li><a href="behavior-packs.html">Behavior packs</a></li><li><a href="scripting.html">Script API</a></li><li><a href="script-events.html">Script events</a></li><li><a href="custom-components.html">Custom components</a></li><li><a href="forms-scoreboard.html">Forms and scoreboards</a></li><li><a href="resource-packs.html">Resource packs</a></li></ul><h2>Project</h2><ul><li><a href="architecture.html">Architecture</a></li><li><a href="contributing.html">Contributing</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li></ul></div></nav>
+<main class="doc"><p class="crumb">Administration</p><h1>Worlds and dimensions</h1>
+<nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#multiple-worlds">Multiple worlds</a></li><li><a href="#dimensions">Dimensions</a></li><li><a href="#flat-worlds">Flat worlds</a></li><li><a href="#moving-worlds">Moving worlds</a></li><li><a href="#generation-accuracy">Generation accuracy</a></li><li><a href="#ticking-areas">Ticking areas</a></li></ul></nav>
+<h2 id="multiple-worlds">Multiple worlds</h2>
+<p>A world lives in <code>worlds/&lt;name&gt;/</code>, with its LevelDB in <code>db/</code>. The world in <code>level-name</code> is the main one. Names can be up to 64 characters and cannot contain <code>/ \ : * ? " &lt; &gt; |</code> or control characters.</p>
+<p>All <code>/world</code> forms need the console:</p>
+<div class="table"><table><thead><tr><th>Form</th><th>Effect</th></tr></thead><tbody><tr><td><code>world list</code></td><td>Lists loaded worlds, then those only on disk</td></tr><tr><td><code>world create &lt;name&gt; [seed]</code></td><td>Creates and loads a world. Without a seed, one is chosen at random</td></tr><tr><td><code>world load &lt;name&gt;</code></td><td>Loads a world from disk</td></tr><tr><td><code>world unload &lt;name&gt;</code></td><td>Unloads a world</td></tr><tr><td><code>world tp &lt;name&gt; [player]</code></td><td>Moves a player to a world</td></tr></tbody></table></div>
+<p>To load worlds at startup:</p>
+<pre tabindex="0"><code>worlds-autoload=creative,minigames</code></pre>
+<p>Plugins can do the same with <code>Server::worlds()</code>, <code>Server::loadWorld(name, create, seed)</code> and <code>Server::unloadWorld(name)</code>.</p>
+<h2 id="dimensions">Dimensions</h2>
+<p>Each world has an Overworld, a Nether and an End, each with its own generator: <code>OverworldGenerator</code>, <code>NetherGenerator</code> and <code>TheEndGenerator</code>.</p>
+<p>Nether portals and End portals are implemented, including the End obsidian platform and the End podium. <code>PlayerChangeDimensionEvent</code> lets a plugin change or cancel a crossing.</p>
+<h2 id="flat-worlds">Flat worlds</h2>
+<p>The generator type comes from the world's <code>level.dat</code>: <code>Generator</code> set to 2 selects <code>FlatWorldGenerator</code>, with <code>FlatWorldLayers</code> for the layers. No <code>server.properties</code> key selects it, so a flat world is one created elsewhere and copied in.</p>
+<h2 id="moving-worlds">Moving worlds</h2>
+<p>Worlds use the Bedrock format. Copy a world folder into <code>worlds/</code> and load it, or copy one out to use it in the game. Old block states are upgraded when read.</p>
+<h2 id="generation-accuracy">Generation accuracy</h2>
+<p><code>Falcon.Server/tools/WorldGenParity.cpp</code> compares generated chunks against Bedrock Dedicated Server. Over 32×32 chunks it measures 99.6% block match on a test seed and 98.1% on seed 42. Structures are in progress.</p>
+<h2 id="ticking-areas">Ticking areas</h2>
+<p><code>/tickingarea</code> keeps areas loaded. Chunks are otherwise ticked within <code>tick-distance</code> of a player.</p>
+<div class="pager"><a class="prev" href="permissions.html"><span>Previous</span>Permissions</a><a class="next" href="villages.html"><span>Next</span>Villages and raids</a></div>
+</main>
+</div>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+</body>
+</html>

@@ -1,309 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Falcon - Bedrock server software in C++</title>
-    <meta name="description" content="Falcon is a Minecraft: Bedrock Edition server software written from scratch in C++17. One self-contained executable for Windows, Linux and macOS.">
-    <meta name="keywords" content="Minecraft, Bedrock, Bedrock Edition, server, server software, C++, MCBE, RakNet, NetherNet, Falcon">
-    <meta name="author" content="Falcon-MC">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0d1117">
-    <meta name="color-scheme" content="dark">
-    <link rel="canonical" href="https://falcon-mc.github.io/">
-
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Falcon">
-    <meta property="og:url" content="https://falcon-mc.github.io/">
-    <meta property="og:title" content="Falcon - Bedrock server software in C++">
-    <meta property="og:description" content="Minecraft: Bedrock Edition server software written from scratch in C++17.">
-    <meta property="og:image" content="https://falcon-mc.github.io/assets/social.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++">
-    <meta property="og:locale" content="en_US">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Falcon - Bedrock server software in C++">
-    <meta name="twitter:description" content="Minecraft: Bedrock Edition server software written from scratch in C++17.">
-    <meta name="twitter:image" content="https://falcon-mc.github.io/assets/social.png">
-    <meta name="twitter:image:alt" content="Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++">
-
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Falcon",
-        "description": "Minecraft: Bedrock Edition server software written from scratch in C++17.",
-        "url": "https://falcon-mc.github.io/",
-        "applicationCategory": "GameServer",
-        "operatingSystem": "Windows, Linux, macOS",
-        "programmingLanguage": "C++",
-        "codeRepository": "https://github.com/Falcon-MC/Falcon",
-        "image": "https://falcon-mc.github.io/assets/social.png",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        }
-    }
-    </script>
-    <script>document.documentElement.classList.add("js");</script>
-    <link rel="stylesheet" href="style.css?v=10">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Falcon: a Bedrock server written from scratch in C++</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="icon" href="assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<header class="nav">
-    <a class="brand" href="#top">
-        <img src="assets/icon-white.png" alt="" width="32" height="32">
-        <span>Falcon</span>
-    </a>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-menu">
-        <span></span><span></span><span></span>
-    </button>
-    <nav id="site-menu">
-        <a href="plugins.html">Plugins</a>
-        <a href="https://discord.gg/KZb6YxSHkb">Discord</a>
-        <a href="https://github.com/Falcon-MC" class="button small">GitHub</a>
-    </nav>
-</header>
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="assets/logo.png"><img class="" src="assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="docs/index.html">Docs</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a></nav>
+</div></header>
+<main class="home">
+<div class="hero">
+<picture><source media="(prefers-color-scheme: light)" srcset="assets/logo.png"><img class="hero-logo" src="assets/logo-white.png" alt="Falcon"></picture>
+<p class="lead">A complete Minecraft: Bedrock Edition server, written from scratch in C++17.</p>
+<ul class="badges">
+<li>license <b>LGPL-3.0</b></li>
+<li>minecraft <b>1.26.60</b></li>
+<li>protocol <b>2225</b></li>
+<li>platforms <b>Windows, Linux, macOS</b></li>
+</ul>
+<div class="buttons">
+<a class="button primary" href="docs/index.html">Read the docs</a>
+<a class="button" href="https://github.com/Falcon-MC/Falcon">GitHub</a>
+</div>
+</div>
 
-<main id="top">
-    <section class="hero">
-        <img class="hero-decoration" src="assets/logo-white.png" alt="" width="520" height="520">
-        <div class="hero-inner">
-            <div class="hero-text">
-                <h1>Bedrock server software, written from scratch in C++</h1>
-                <p class="lead">
-                    Falcon reimplements the Minecraft: Bedrock Edition protocol, world storage and gameplay by hand.
-                    No runtime to install: one self-contained executable.
-                </p>
-                <div class="badges">
-                    <span id="game-version">Bedrock 1.26.52</span>
-                    <span id="protocol-version">Protocol 2193</span>
-                    <span>C++17</span>
-                    <span>Windows, Linux &amp; macOS</span>
-                </div>
-                <div class="actions">
-                    <a class="button" id="download" href="https://github.com/Falcon-MC/Falcon/releases">Download</a>
-                    <details class="dropdown" id="download-menu" hidden>
-                        <summary class="button">Download</summary>
-                        <div class="dropdown-menu" id="download-options"></div>
-                    </details>
-                    <a class="button ghost" href="https://github.com/Falcon-MC/Falcon">Source code</a>
-                </div>
-                <p class="release-info" id="release-info"></p>
-            </div>
+<section>
+<h2>What Falcon is</h2>
+<p>Falcon is a server you run yourself for Bedrock clients. The protocol, world storage, inventory, movement and gameplay are all implemented in this project, with vanilla behavior as the reference. It ships as one native executable, reads Bedrock worlds unchanged, and is extended through behavior packs, scripts and plugins.</p>
+</section>
 
-            <div class="terminal-slot">
-            <button class="button ghost terminal-reopen" id="terminal-reopen" hidden>Open console</button>
-            <div class="terminal" id="terminal">
-                <div class="terminal-bar">
-                    <div class="terminal-lights">
-                        <button class="light light-close" id="terminal-close" aria-label="Close console">
-                            <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 3l4 4M7 3l-4 4"/></svg>
-                        </button>
-                        <button class="light light-minimize" id="terminal-minimize" aria-label="Minimize console">
-                            <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 5h5"/></svg>
-                        </button>
-                        <button class="light light-zoom" id="terminal-zoom" aria-label="Toggle full screen">
-                            <svg viewBox="0 0 10 10" aria-hidden="true"><path class="fill" d="M3 3h3.2L3 6.2zM7 7H3.8L7 3.8z"/></svg>
-                        </button>
-                    </div>
-                    <em>FalconServer</em>
-                </div>
-                <div class="terminal-body" id="terminal-body">
-                    <pre id="terminal-output" aria-live="polite"></pre>
-                    <form class="terminal-form" id="terminal-form" hidden>
-                        <span class="prompt" aria-hidden="true">&gt; </span>
-                        <input id="terminal-input" type="text" autocomplete="off" spellcheck="false"
-                               aria-label="Server console" placeholder="Type a command">
-                    </form>
-                </div>
-            </div>
-            </div>
-        </div>
+<section>
+<h2>What you can do with it</h2>
+<ul class="features">
+<li><h3>Run several worlds</h3><p>Create, load, unload and move players between worlds at runtime with <code>/world</code>. Each world has its own Overworld, Nether and End.</p></li>
+<li><h3>Play the real dimensions</h3><p>Nether and End generators, portals, and terrain, biomes and features generated from the seed.</p></li>
+<li><h3>Load behavior packs</h3><p>Packs from folders or <code>.mcpack</code>, <code>.mcaddon</code> and <code>.zip</code> archives.</p></li>
+<li><h3>Script in JavaScript</h3><p>The Script API modules <code>@minecraft/server</code> and <code>@minecraft/server-ui</code>: events, entities, forms, scoreboards and item custom components.</p></li>
+<li><h3>Add custom content</h3><p>Custom blocks, items and entities, from JSON in a pack or from a plugin.</p></li>
+<li><h3>Write plugins</h3><p>Sandboxed WebAssembly, native C++ or Java, on one API with more than 60 event types, commands, a scheduler, permissions and services.</p></li>
+<li><h3>Hook packets</h3><p>Read, rewrite, cancel or send raw packets from a plugin, per player.</p></li>
+<li><h3>Defend villages</h3><p>Villages with points of interest and dwellers, and raids with waves, a boss bar and the Hero of the Village reward.</p></li>
+<li><h3>Administer it</h3><p>More than 50 commands, 64 settings, per-second rate limits and <code>/profiler</code> HTML reports.</p></li>
+<li><h3>Match vanilla terrain</h3><p>The parity tool measures 99.6% block match against Bedrock Dedicated Server on a test seed and 98.1% on seed 42, over 32×32 chunks. Structures are in progress.</p></li>
+</ul>
+</section>
 
-        <ul class="stats">
-            <li><strong class="skeleton" data-stat="stars"></strong><span>GitHub stars</span></li>
-            <li><strong class="skeleton" data-stat="downloads"></strong><span>Downloads</span></li>
-            <li><strong class="skeleton" data-stat="contributors"></strong><span>Contributors</span></li>
-        </ul>
-    </section>
+<section>
+<h2>Start in a minute</h2>
+<p>Download a build from the <a href="https://github.com/Falcon-MC/Falcon/releases">releases page</a>, or build it:</p>
+<pre tabindex="0"><code>git clone https://github.com/Falcon-MC/Falcon.git
+cd Falcon
+./build.sh
+./build/Falcon.Server/FalconServer</code></pre>
+<p>The first start runs a setup wizard in the console and writes <code>server.properties</code>. Then add the server in your Bedrock client, on port <code>19132</code> by default.</p>
+</section>
 
-    <section id="features" class="section alt">
-        <div class="container">
-            <h2 class="reveal">Features</h2>
-            <div class="grid">
-                <article class="feature featured reveal">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-accent" d="M2 2h4v4H2z"/>
-                        <path class="pixel-light" d="M3 3h2v2H3zM2 0h1v2H2zM5 0h1v2H5zM2 6h1v2H2zM5 6h1v2H5zM0 2h2v1H0zM0 5h2v1H0zM6 2h2v1H6zM6 5h2v1H6z"/>
-                    </svg>
-                    <h3>Native C++17</h3>
-                    <p>No virtual machine, no interpreter. The server ships as a single executable for Windows, Linux and macOS: download it and run it.</p>
-                </article>
-                <article class="feature reveal">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-light" d="M3 0h2v1H3zM1 1h2v1H1zM5 1h2v1H5zM0 2h1v2H0zM7 2h1v2H7z"/>
-                        <path class="pixel-accent" d="M3 3h2v1H3zM2 4h1v1H2zM5 4h1v1H5zM3 6h2v2H3z"/>
-                    </svg>
-                    <h3>Own transport</h3>
-                    <p>RakNet and NetherNet (WebRTC) are implemented in the Network library, with LAN discovery.</p>
-                </article>
-                <article class="feature reveal">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-green" d="M0 0h8v3H0z"/>
-                        <path class="pixel-dirt" d="M0 3h8v5H0z"/>
-                        <path class="pixel-dark" d="M1 4h1v1H1zM5 5h1v1H5zM3 6h1v1H3zM6 3h1v1H6z"/>
-                    </svg>
-                    <h3>Vanilla worlds</h3>
-                    <p>Bedrock world format, so worlds move between Falcon and the game unchanged.</p>
-                </article>
-                <article class="feature reveal">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-light" d="M3 1h1v1H3zM2 2h3v1H2zM1 3h5v1H1z"/>
-                        <path class="pixel-green" d="M0 4h8v1H0zM5 3h2v1H5z"/>
-                        <path class="pixel-dirt" d="M0 5h8v3H0z"/>
-                    </svg>
-                    <h3>World generation</h3>
-                    <p>Noise, density functions, aquifers, caves, 3D biomes, ore veins and surface features.</p>
-                </article>
-                <article class="feature reveal">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-accent" d="M0 0h8v2H0z"/>
-                        <path class="pixel-light" d="M0 3h6v2H0z"/>
-                        <path class="pixel-accent" d="M0 6h4v2H0z"/>
-                    </svg>
-                    <h3>Threaded chunks</h3>
-                    <p>Generation, population, lighting and LevelDB storage run on worker threads, never on the tick.</p>
-                </article>
-                <article class="feature reveal">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-accent" d="M1 1h6v6H1z"/>
-                        <path class="pixel-dark" d="M1 3h6v1H1zM3 1h2v2H3z"/>
-                        <path class="pixel-light" d="M3 5h2v1H3z"/>
-                    </svg>
-                    <h3>Behavior packs</h3>
-                    <p>Custom items, blocks, actors and recipes loaded from packs, with a QuickJS scripting engine.</p>
-                </article>
-                <a class="feature feature-link reveal" href="plugins.html">
-                    <svg class="icon" viewBox="0 0 8 8" aria-hidden="true">
-                        <path class="pixel-light" d="M2 0h1v2H2zM5 0h1v2H5z"/>
-                        <path class="pixel-accent" d="M1 2h6v3H1z"/>
-                        <path class="pixel-light" d="M3 5h2v1H3zM3.5 6h1v2h-1z"/>
-                    </svg>
-                    <h3>Plugins</h3>
-                    <p>Events, commands, custom content and services, in C++, Java or WebAssembly. <span class="more">Plugin API &rarr;</span></p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="getting-started" class="section">
-        <div class="container">
-            <h2 class="reveal">Getting started</h2>
-            <ol class="steps">
-                <li class="step reveal">
-                    <span class="step-number">1</span>
-                    <h3>Download</h3>
-                    <p>Grab the build for your system from the
-                        <a href="https://github.com/Falcon-MC/Falcon/releases/latest">latest release</a>. Each file comes with
-                        a <code>.sha256</code> checksum.</p>
-                </li>
-                <li class="step reveal">
-                    <span class="step-number">2</span>
-                    <h3>Run</h3>
-                    <p>Start it from a terminal. On first launch a short wizard asks for the server name, game mode and
-                        world, then writes <code>server.properties</code>.</p>
-                    <pre class="code">chmod +x FalconServer-linux-x64
-./FalconServer-linux-x64</pre>
-                </li>
-                <li class="step reveal">
-                    <span class="step-number">3</span>
-                    <h3>Join</h3>
-                    <p>In Minecraft: Bedrock Edition 1.26.52, open <strong>Play &rarr; Servers &rarr; Add server</strong> and
-                        enter the machine's address with port <code>19132</code>.</p>
-                </li>
-            </ol>
-
-            <div class="guide reveal">
-                <div>
-                    <h3>Configure</h3>
-                    <p>Everything lives in <code>server.properties</code>, next to the executable. Restart the server
-                        after editing it.</p>
-                    <pre class="code">server-name=My Falcon server
-gamemode=survival
-max-players=20
-online-mode=true
-server-port=19132
-view-distance=10</pre>
-                </div>
-                <div>
-                    <h3>Host on a panel</h3>
-                    <p>The <a href="https://github.com/Falcon-MC/Pterodactyl">Pterodactyl egg</a> downloads the latest
-                        release, checks its checksum and exposes the main settings as panel variables.</p>
-                    <h3>Extend it</h3>
-                    <p>Drop plugins into the <code>plugins/</code> folder. See the <a href="plugins.html">plugin API</a>.</p>
-                    <h3>Need help?</h3>
-                    <p>Ask in the <a href="https://discord.gg/KZb6YxSHkb">Discord server</a> or open an
-                        <a href="https://github.com/Falcon-MC/Falcon/issues/new/choose">issue</a>.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="repositories" class="section">
-        <div class="container">
-            <h2 class="reveal">Repositories</h2>
-            <ul class="repo-list">
-                <li class="reveal">
-                    <a href="https://github.com/Falcon-MC/Falcon" data-repo="Falcon">
-                        <span class="repo-name">Falcon</span>
-                        <span class="repo-description">The server: world, gameplay, commands, generation and scripting.</span>
-                        <span class="repo-meta"></span>
-                    </a>
-                </li>
-                <li class="reveal">
-                    <a href="https://github.com/Falcon-MC/Protocol" data-repo="Protocol">
-                        <span class="repo-name">Protocol</span>
-                        <span class="repo-description">Bedrock packets and network types.</span>
-                        <span class="repo-meta"></span>
-                    </a>
-                </li>
-                <li class="reveal">
-                    <a href="https://github.com/Falcon-MC/Network" data-repo="Network">
-                        <span class="repo-name">Network</span>
-                        <span class="repo-description">RakNet, NetherNet, compression and login verification.</span>
-                        <span class="repo-meta"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="contributors" class="section alt" hidden>
-        <div class="container">
-            <h2>Contributors</h2>
-            <p class="section-lead">Falcon is built in the open. Give it a star on
-                <a href="https://github.com/Falcon-MC/Falcon">GitHub</a> if it helped you.</p>
-            <div class="contributors" id="contributors-list"></div>
-        </div>
-    </section>
+<section>
+<h2>Next</h2>
+<ul>
+<li><a href="docs/index.html">Install and run Falcon</a></li>
+<li><a href="docs/configuration.html">Every setting in server.properties</a></li>
+<li><a href="docs/plugins.html">Write a plugin</a></li>
+<li><a href="docs/scripting.html">Script with behavior packs</a></li>
+<li><a href="docs/contributing.html">Contribute</a></li>
+</ul>
+</section>
 </main>
-
-<footer class="footer">
-    <p>Falcon is not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
-    <p>
-        <a href="https://discord.gg/KZb6YxSHkb">Discord</a> &middot;
-        <a href="https://github.com/Falcon-MC">GitHub</a> &middot;
-        <a href="plugins.html">Plugin API</a> &middot;
-        <a href="https://github.com/Falcon-MC/falcon-mc.github.io">Website source</a>
-    </p>
-</footer>
-<script src="site.js?v=1"></script>
-<script src="github.js?v=13"></script>
+<footer class="footer"><div class="footer-in">
+<p>Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
 </body>
 </html>
