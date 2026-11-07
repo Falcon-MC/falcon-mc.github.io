@@ -137,7 +137,8 @@ def main():
     home = (ROOT / "src" / "home.html").read_text().replace("{{logo}}", logo("", "hero-logo"))
     (ROOT / "index.html").write_text(
         head("Falcon: a Bedrock server written from scratch in C++", "")
-        + "<body>\n" + topbar("", "home") + home + FOOTER + "</body>\n</html>\n")
+        + "<body>\n" + topbar("", "home") + home + FOOTER
+        + '<script src="assets/download.js"></script>\n' + "</body>\n</html>\n")
 
     pages = []
     for source in sorted((ROOT / "src" / "docs").glob("*.md")):
