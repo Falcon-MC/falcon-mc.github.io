@@ -16,6 +16,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent
 REPO = "https://github.com/Falcon-MC/Falcon"
+DISCORD = "https://discord.gg/KZb6YxSHkb"
 
 def logo(prefix, css=""):
     """The project logo, switching to the dark variant if the visitor's system prefers a light scheme."""
@@ -121,13 +122,13 @@ def topbar(prefix, active):
     docs = ' aria-current="page"' if active == "docs" else ""
     return f"""<header class="topbar"><div class="topbar-in">
 <a class="brand" href="{prefix}index.html" aria-label="Falcon home">{logo(prefix)}<span>Falcon</span></a>
-<nav aria-label="Main"><a href="{prefix}docs/index.html"{docs}>Docs</a><a href="{REPO}">GitHub</a></nav>
+<nav aria-label="Main"><a href="{prefix}docs/index.html"{docs}>Docs</a><a href="{REPO}">GitHub</a><a href="{DISCORD}">Discord</a></nav>
 </div></header>
 """
 
 
 FOOTER = f"""<footer class="footer"><div class="footer-in">
-<p>Falcon is licensed under the <a href="{REPO}/blob/main/LICENSE">LGPL-3.0</a>.
+<p>Questions and help on <a href="{DISCORD}">Discord</a>. Falcon is licensed under the <a href="{REPO}/blob/main/LICENSE">LGPL-3.0</a>.
 Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
 </div></footer>
 """
