@@ -19,7 +19,7 @@ Reproduce on a fresh world without behavior packs if you can. Report vulnerabili
 
 1. Fork and clone.
 2. Install the [toolchain](index.html).
-3. Branch off `main`. Work for an upcoming protocol goes on the branch named after that version.
+3. Branch off `dev` and open the pull request against it. Work for an upcoming protocol goes on the branch named after that version.
 4. Build with `./build.sh` or `build.bat`.
 5. Test on a running server, in game.
 
