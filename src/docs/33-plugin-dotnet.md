@@ -11,7 +11,7 @@ A C# plugin is a `net8.0` class library.
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Falcon.PluginAPI" Version="1.3.3" />
+    <PackageReference Include="Falcon.PluginAPI" Version="1.0.5" />
   </ItemGroup>
 </Project>
 ```

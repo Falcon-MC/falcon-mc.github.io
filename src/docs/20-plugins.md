@@ -1,7 +1,7 @@
 title: Plugin overview
 section: Plugins
 ---
-The server loads each folder of `plugins/` that has a `plugin.json`. The API lives in the [PluginAPI repository](https://github.com/Falcon-MC/PluginAPI), at version 1.3.3, with examples for each runtime in `examples/`.
+The server loads each folder of `plugins/` that has a `plugin.json`. The API lives in the [PluginAPI repository](https://github.com/Falcon-MC/PluginAPI), at version 1.0.5, with examples for each runtime in `examples/`.
 
 ## Choosing a runtime
 

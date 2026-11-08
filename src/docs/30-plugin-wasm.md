@@ -5,7 +5,7 @@ A Wasm plugin runs in Wasmtime with no file system or network access. It has at 
 
 ## The API
 
-The API is defined in `wasm/falcon.wit`, package `falcon:plugin@1.3.3`, and mirrors the C API. Its interfaces are `types`, `server`, `players`, `entities`, `levels`, `items`, `events`, `event`, `commands`, `scheduler`, `permissions`, `services` and `content`.
+The API is defined in `wasm/falcon.wit`, package `falcon:plugin@1.0.5`, and mirrors the C API. Its interfaces are `types`, `server`, `players`, `entities`, `levels`, `items`, `events`, `event`, `commands`, `scheduler`, `permissions`, `services` and `content`.
 
 The plugin exports `on-load`, `on-enable`, `on-disable`, `on-event`, `on-command`, `on-task`, `on-service`, and callbacks for custom items, blocks and entities.
 

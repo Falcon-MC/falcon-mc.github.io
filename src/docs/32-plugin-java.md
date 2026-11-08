@@ -9,7 +9,7 @@ A Java plugin is a Java 22 jar. The bindings use the Foreign Function & Memory A
 <dependency>
     <groupId>io.github.falcon-mc</groupId>
     <artifactId>falcon-plugin-api</artifactId>
-    <version>1.3.3</version>
+    <version>1.0.5</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -41,7 +41,7 @@ Put the jar next to `plugin.json` in `plugins/<name>/`:
 {
   "name": "MyPlugin",
   "version": "1.0.0",
-  "api-version": "1.3.3",
+  "api-version": "1.0.5",
   "main": "myplugin.MyPlugin",
   "runtime": "java",
   "jar": "MyPlugin.jar"
