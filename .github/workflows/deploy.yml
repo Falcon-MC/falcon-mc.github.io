@@ -10,6 +10,7 @@ on:
   repository_dispatch:
     types:
       - falcon-release
+      - docs-changed
 
 permissions:
   contents: read
@@ -65,6 +66,13 @@ jobs:
             }' > data.json
 
           rm releases.json repositories.json contributors.json Server.h
+
+      - name: Build the pages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 tools/fetch_docs.py
+          python3 build.py
 
       - uses: actions/configure-pages@v5
 
