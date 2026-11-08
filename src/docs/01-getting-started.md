@@ -1,7 +1,7 @@
 title: Installation
 section: Start
 ---
-Falcon supports Minecraft: Bedrock Edition 1.26.60, protocol 2225. It runs on Windows, Linux and macOS.
+Falcon supports Minecraft: Bedrock Edition 1.26.60, protocol 2225. With `any-version=true` it also accepts 1.26.52 (2193), 1.26.45 (2169) and 1.26.40 (2168). It runs on Windows, Linux and macOS.
 
 ## Download a release
 

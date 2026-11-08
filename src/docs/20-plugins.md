@@ -11,7 +11,7 @@ The server loads each folder of `plugins/` that has a `plugin.json`. The API liv
 | `native` (default) | Raw performance, through the C API | [Native C++](plugin-native.html) |
 | `java` | Java 22 plugins | [Java](plugin-java.html) |
 | `internal` | Full access to server classes, tied to one build | [Internal](plugin-internal.html) |
-| `dotnet` | C# plugins | [C#](plugin-dotnet.html) |
+| `dotnet` | Deprecated: existing C# plugins only | [C#](plugin-dotnet.html) |
 
 All of them sit on one C ABI, `falcon_api.h`, so a feature exists once for every language. A native plugin runs on any server with the same API major version.
 

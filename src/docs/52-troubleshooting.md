@@ -3,7 +3,7 @@ section: Project
 ---
 ## The client version is not supported
 
-By default only the newest version joins, 1.26.60 (protocol 2225). The log shows `uses protocol N, which the server does not support`. Update the client, or set `any-version=true`.
+By default only the newest version joins, 1.26.60 (protocol 2225). `any-version=true` also accepts 1.26.52, 1.26.45 and 1.26.40. The log shows `uses protocol N, which the server does not support`. Update the client, or set `any-version=true`.
 
 ## Cannot join from the same Windows PC
 

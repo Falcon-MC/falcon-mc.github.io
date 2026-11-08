@@ -1,6 +1,8 @@
 title: Guide - C#
 section: Plugin runtimes
 ---
+> The `dotnet` runtime is deprecated and receives no new API. Write new plugins for `wasm`, `native` or `java`.
+
 A C# plugin is a `net8.0` class library.
 
 ```xml

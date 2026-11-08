@@ -33,7 +33,7 @@ The server ships with 29 language files.
 
 Add the server in the client's server list with the machine's address and `server-port` (19132 by default). With `enable-lan-visibility=true` it also appears on the LAN.
 
-Falcon's transport is NetherNet, and it logs at startup that its signaling endpoint uses plain HTTP. RakNet is no longer accepted: see [Troubleshooting](troubleshooting.html#raknet-is-no-longer-supported).
+Falcon's transport is NetherNet. Without a certificate its signaling endpoint serves plain HTTP: see [Join by address](configuration.html#join-by-address). RakNet is no longer accepted: see [Troubleshooting](troubleshooting.html#raknet-is-no-longer-supported).
 
 ## Files and folders
 

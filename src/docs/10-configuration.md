@@ -1,9 +1,9 @@
 title: Configuration
 section: Administration
 ---
-`server.properties` holds one `key=value` per line. There are 64 keys. Each value is validated when the file is read: a bad value is reported in the log and the default is used.
+`server.properties` holds one `key=value` per line. There are 72 keys. Each value is validated when the file is read: a bad value is reported in the log and the default is used.
 
-Booleans accept `true`, `false`, `1` and `0`, except `simulation`, `server-authoritative-block-breaking` and `disable-client-vibrant-visuals`, which accept only `true` and `false`.
+Booleans accept `true`, `false`, `1` and `0`, except `movement-simulation`, `simulation`, `server-authoritative-block-breaking` and `disable-client-vibrant-visuals`, which accept only `true` and `false`.
 
 ## Identity and rules
 
@@ -50,7 +50,8 @@ With `any-version` on, older clients still receive the blocks, items and recipes
 | `auto-compaction-interval` | `360` | Seconds between world database compactions. 0 turns it off |
 | `client-side-chunk-generation-enabled` | `false` | Sent to clients in the start-game data |
 | `block-network-ids-are-hashes` | `true` | Sends block network IDs as hashes |
-| `simulation` | `true` | Runs the server movement simulation for players. `false` skips it |
+| `movement-simulation` | `false` | Replays player movement on the server and corrects clients that diverge from it |
+| `simulation` | `true` | Former name of `movement-simulation`, still read when that key is absent |
 
 ## Packs, skins and logs
 
@@ -66,13 +67,31 @@ With `any-version` on, older clients still receive the blocks, items and recipes
 
 | Key | Default | Effect |
 |---|---|---|
-| `server-authoritative-movement-strict` | `false` | Strict movement validation |
+| `server-authoritative-movement-strict` | `false` | Corrects every mismatch instead of absorbing small ones. No effect while `movement-simulation=false` |
 | `server-authoritative-block-breaking` | `false` | The server checks break progress |
 | `server-authoritative-block-breaking-range-scalar` | `1.5` | Must be above 1. Scales the allowed reach. Also read as `server-authoritative-block-breaking-pick-range-scalar` |
 | `player-position-acceptance-threshold` | `0.5` | Squared distance, in blocks, between the reported and simulated position above which movement is corrected |
 | `player-movement-action-direction-threshold` | `0.85` | How directly a player must face a target to act on it, as a cosine from 0 to 1 |
 | `player-tick-throttled-input-batch-size` | `-1` | -1 or more. Input batching limit |
 | `player-tick-throttled-max-tick-credits` | `-1` | -1 or more. Input tick credit limit |
+
+A file without `movement-simulation` keeps its `simulation` value, or turns the simulation on when strict mode is on.
+
+## Join by address
+
+The client tries HTTPS before HTTP on the signaling port, and beside port 19132 it also tries 443 and 80.
+
+| Key | Default | Effect |
+|---|---|---|
+| `signaling-certificate` | empty | PEM certificate chain for HTTPS on the signaling port |
+| `signaling-private-key` | empty | PEM private key of that certificate |
+| `signaling-extra-port` | `0` | Second signaling port, 0 for none. Set 443 so clients typing port 19132 join without waiting |
+| `signaling-acme-domain` | empty | Domain players type. When set, the certificate is obtained and renewed with ACME into `certificates/` |
+| `signaling-acme-email` | empty | Contact address sent to the ACME directory |
+| `signaling-acme-directory` | Let's Encrypt | ACME directory URL, `https://` only |
+| `signaling-acme-challenge` | `tls-alpn-01` | `tls-alpn-01` answers on TCP 443, `http-01` on TCP 80 |
+
+A complete certificate and key pair takes precedence over ACME.
 
 ## Rate limits
 
