@@ -18,7 +18,7 @@
     </url>
     <url>
         <loc>https://falcon-mc.github.io/docs/configuration.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-11</lastmod>
     </url>
     <url>
         <loc>https://falcon-mc.github.io/docs/contributing.html</loc>
@@ -126,6 +126,10 @@
     </url>
     <url>
         <loc>https://falcon-mc.github.io/docs/worlds.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-11</lastmod>
+    </url>
+    <url>
+        <loc>https://falcon-mc.github.io/docs/privacy.html</loc>
+        <lastmod>2026-11-11</lastmod>
     </url>
 </urlset>

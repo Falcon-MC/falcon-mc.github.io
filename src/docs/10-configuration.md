@@ -1,7 +1,7 @@
 title: Configuration
 section: Administration
 ---
-`server.properties` holds one `key=value` per line. There are 72 keys. Each value is validated when the file is read: a bad value is reported in the log and the default is used.
+`server.properties` holds one `key=value` per line. There are 76 keys. Each value is validated when the file is read: a bad value is reported in the log and the default is used.
 
 Booleans accept `true`, `false`, `1` and `0`, except `movement-simulation`, `simulation`, `server-authoritative-block-breaking` and `disable-client-vibrant-visuals`, which accept only `true` and `false`.
 
@@ -30,11 +30,14 @@ Booleans accept `true`, `false`, `1` and `0`, except `movement-simulation`, `sim
 | `network-encryption` | `true` | Encrypts the connection |
 | `enable-lan-visibility` | `true` | Announces the server on the LAN |
 | `allow-list` | `false` | Only `allowlist.json` entries can join. An empty list logs a warning |
-| `any-version` | `false` | Lets every supported protocol join, not only the newest |
+| `any-version` | `false` | Lets every supported protocol join, not only the newest. Ignored while `allow-unofficial-clients` is off |
+| `allow-unofficial-clients` | `false` | Turns every client check off, see [Client checks and telemetry](privacy.html) |
+| `allow-lan-without-identity` | `false` | Lets LAN players from a private address join without an identity assertion |
+| `emit-server-telemetry` | `false` | Sends anonymous reports to the Falcon service, see [Client checks and telemetry](privacy.html) |
 | `compression-threshold` | `1` | 0 to 65535, sent to clients in the network settings |
 | `compression-algorithm` | `zlib` | `zlib` or `snappy` |
 
-With `any-version` on, older clients still receive the blocks, items and recipes of the newest version, and the server logs a warning.
+With `any-version` on, older clients still receive the blocks, items and recipes of the newest version, and the server logs a warning. The client checks only know how the newest version behaves, so `any-version` only takes effect with `allow-unofficial-clients=true`; otherwise the server logs an error at start and keeps the newest version only.
 
 ## Worlds and performance
 
