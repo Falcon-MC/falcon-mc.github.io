@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://falcon-mc.github.io/sitemap.xml
+Sitemap: https://falcon-mc.com/sitemap.xml

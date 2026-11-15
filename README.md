@@ -1,6 +1,6 @@
 # falcon-mc.github.io
 
-Source of the Falcon website, published at https://falcon-mc.github.io.
+Source of the Falcon website, published at https://falcon-mc.com.
 
 The pages are generated from `src/` by `build.py`, which only needs Python 3: edit `src/home.html` or a
 page under `src/docs/`, run `python3 build.py`, commit the generated HTML with its source and push to `main`.
