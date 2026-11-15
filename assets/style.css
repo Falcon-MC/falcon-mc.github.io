@@ -213,3 +213,10 @@ select:disabled { opacity: .6; }
 .rules-more summary { cursor: pointer; color: var(--text); }
 .rules-more ul { margin: 8px 0 0; padding-left: 20px; }
 .rules-more li { margin: 4px 0; }
+.readme { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 28px; line-height: 1.65; overflow-wrap: anywhere; }
+.readme h2, .readme h3, .readme h4, .readme h5, .readme h6 { margin: 1.4em 0 .5em; }
+.readme img { max-width: 100%; height: auto; vertical-align: middle; }
+.readme pre { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; }
+.readme pre code { background: none; border: 0; padding: 0; }
+.readme blockquote { margin: 1em 0; padding: 2px 14px; border-left: 3px solid var(--line); color: var(--muted); }
+.readme hr { border: 0; border-top: 1px solid var(--line); margin: 1.6em 0; }
