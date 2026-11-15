@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="../assets/style.css?v=69d68c085a">
+<link rel="stylesheet" href="../assets/style.css?v=48c74c3285">
 </head>
 <body>
 <header class="topbar"><div class="topbar-in">
@@ -58,7 +58,7 @@
 <h2 id="rate-limits">Rate limits</h2>
 <div class="table"><table><thead><tr><th>Key</th><th>Default</th></tr></thead><tbody><tr><td><code>max-inbound-packets-per-second</code></td><td><code>2500</code></td></tr><tr><td><code>max-commands-per-second</code></td><td><code>10</code></td></tr><tr><td><code>max-chat-messages-per-second</code></td><td><code>2</code></td></tr><tr><td><code>max-form-responses-per-second</code></td><td><code>20</code></td></tr><tr><td><code>max-movement-packets-per-second</code></td><td><code>40</code></td></tr><tr><td><code>max-chat-message-length</code></td><td><code>512</code></td></tr><tr><td><code>chat-restriction</code></td><td><code>None</code>. Also <code>Dropped</code> or <code>Disabled</code></td></tr></tbody></table></div>
 <h2 id="wasm-plugins">Wasm plugins</h2>
-<div class="table"><table><thead><tr><th>Key</th><th>Default</th><th>Effect</th></tr></thead><tbody><tr><td><code>wasm-plugin-memory-mb</code></td><td><code>64</code></td><td>1 to 4096. Memory limit per plugin</td></tr><tr><td><code>wasm-plugin-fuel</code></td><td><code>10000000</code></td><td>1 or more. Fuel per server call</td></tr></tbody></table></div>
+<div class="table"><table><thead><tr><th>Key</th><th>Default</th><th>Effect</th></tr></thead><tbody><tr><td><code>wasm-plugin-memory-mb</code></td><td><code>64</code></td><td>1 to 4096. Memory limit per plugin</td></tr><tr><td><code>wasm-plugin-fuel</code></td><td><code>10000000</code></td><td>1 or more. Fuel per server call</td></tr><tr><td><code>wasm-plugin-disk-mb</code></td><td><code>64</code></td><td>1 to 65536. Space a plugin's data folder may take; above it the plugin can no longer write</td></tr></tbody></table></div>
 <h2 id="reserved-keys">Reserved keys</h2>
 <p>The server accepts and validates these keys, but they have no effect in the current version:</p>
 <div class="table"><table><thead><tr><th>Key</th><th>Default</th></tr></thead><tbody><tr><td><code>force-gamemode</code></td><td><code>false</code></td></tr><tr><td><code>player-idle-timeout</code></td><td><code>30</code></td></tr><tr><td><code>content-log-file-enabled</code></td><td><code>false</code></td></tr><tr><td><code>content-log-level</code></td><td><code>info</code></td></tr><tr><td><code>server-authoritative-dismount-strict</code></td><td><code>false</code></td></tr><tr><td><code>server-authoritative-entity-interactions-strict</code></td><td><code>false</code></td></tr><tr><td><code>server-build-radius-ratio</code></td><td><code>Disabled</code></td></tr><tr><td><code>allow-inbound-script-debugging</code></td><td><code>false</code></td></tr><tr><td><code>allow-outbound-script-debugging</code></td><td><code>false</code></td></tr><tr><td><code>script-debugger-auto-attach</code></td><td><code>disabled</code></td></tr><tr><td><code>disable-persona</code></td><td><code>false</code></td></tr><tr><td><code>fluid-budget-ms</code></td><td><code>20</code></td></tr></tbody></table></div>
