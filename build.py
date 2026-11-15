@@ -11,6 +11,7 @@ Each file starts with "title: ...", "section: ..." and a "---" line; files sort 
 Markdown subset: # headings, paragraphs, - lists, 1. lists, > notes, ``` code, | tables,
 `code`, **bold** and [links](url).
 """
+import hashlib
 import html
 import pathlib
 import re
@@ -117,6 +118,17 @@ def address(path):
     return re.sub(r"\.html$", "", path)
 
 
+# a browser keeps assets for a while: their address changes with their content so a page never runs an old one
+ASSET = re.compile(r'((?:href|src)="(?:\.\./)?assets/([a-z-]+\.(?:css|js)))"')
+
+
+def versioned(document):
+    def stamp(match):
+        digest = hashlib.sha256((ROOT / "assets" / match.group(2)).read_bytes()).hexdigest()[:10]
+        return f'{match.group(1)}?v={digest}"'
+    return ASSET.sub(stamp, document)
+
+
 def clean(document):
     def link(match):
         attribute, base, index, rest = match.groups()
@@ -124,7 +136,7 @@ def clean(document):
         if index and not base:
             target = "./"
         return f'{attribute}="{target}{rest or ""}"'
-    return LOCAL_HTML.sub(link, document)
+    return versioned(LOCAL_HTML.sub(link, document))
 
 
 def head(title, prefix, path):

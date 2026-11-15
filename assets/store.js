@@ -34,7 +34,12 @@
       init.headers = { "content-type": "application/json" };
       init.body = JSON.stringify(body);
     }
-    return fetch(API + path, init).then(function (response) {
+    // a store that does not answer shows an error instead of loading forever
+    var controller = typeof AbortController === "function" ? new AbortController() : null;
+    if (controller) { init.signal = controller.signal; setTimeout(function () { controller.abort(); }, 20000); }
+    return fetch(API + path, init).catch(function () {
+      throw new Error("the store did not answer, try again");
+    }).then(function (response) {
       return response.json().catch(function () { return {}; }).then(function (data) {
         if (!response.ok) throw new Error(data.error || "the store did not answer (" + response.status + ")");
         return data;
