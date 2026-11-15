@@ -3,6 +3,9 @@
   "use strict";
   var API = /(^|\.)falcon-mc\.com$/.test(location.hostname) ? "https://api.falcon-mc.com" : "http://localhost:8787";
   var RUNTIMES = { wasm: "Wasm", native: "Native", java: "Java", internal: "Internal", dotnet: ".NET" };
+  var CATEGORIES = { admin: "Admin tools", chat: "Chat", economy: "Economy", gameplay: "Gameplay", library: "Library",
+    minigames: "Minigames", moderation: "Moderation", protection: "Protection", utility: "Utility", world: "World" };
+  var OS = { linux: "Linux", windows: "Windows", macos: "macOS" };
   var page = document.body.getAttribute("data-page");
 
   function $(selector) { return document.querySelector("[data-" + selector + "]"); }
@@ -16,9 +19,10 @@
       else node.setAttribute(key, props[key]);
     }
     for (var i = 2; i < arguments.length; i++) {
-      var child = arguments[i];
-      if (child === null || child === undefined || child === false) continue;
-      node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+      [].concat(arguments[i]).forEach(function (child) {
+        if (child === null || child === undefined || child === false) return;
+        node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+      });
     }
     return node;
   }
@@ -50,6 +54,43 @@
   function runtimeBadge(runtime) {
     return el("span", { class: "badge" + (runtime === "wasm" ? " sandboxed" : ""), text: runtime === "wasm" ? "Wasm · sandboxed" : (RUNTIMES[runtime] || runtime) });
   }
+  function platformName(platform) {
+    if (platform === "any") return "every platform";
+    var parts = platform.split("-");
+    return (OS[parts[0]] || parts[0]) + (parts[1] ? " " + parts[1] : "");
+  }
+  function downloadUrl(slug, tag, platform) {
+    return API + "/v1/store/download/" + encodeURIComponent(slug) + "/" + encodeURIComponent(tag) + "/" + encodeURIComponent(platform);
+  }
+  function categoryChips(list) {
+    var box = el("span", { class: "chips" });
+    (list || []).forEach(function (category) {
+      box.appendChild(el("a", { class: "chip", href: "index.html?category=" + encodeURIComponent(category), text: CATEGORIES[category] || category }));
+    });
+    return box;
+  }
+  // checkboxes for one to three categories; past three the rest are disabled
+  function categoryPicker(selected) {
+    var box = el("fieldset", { class: "picker" }, el("legend", { text: "Categories (one to three)" }));
+    var inputs = [];
+    function refresh() {
+      var count = inputs.filter(function (input) { return input.checked; }).length;
+      inputs.forEach(function (input) { input.disabled = !input.checked && count >= 3; });
+    }
+    Object.keys(CATEGORIES).forEach(function (category) {
+      var input = el("input", { type: "checkbox", value: category, onchange: refresh });
+      input.checked = (selected || []).indexOf(category) >= 0;
+      inputs.push(input);
+      box.appendChild(el("label", { class: "pick" }, input, CATEGORIES[category]));
+    });
+    refresh();
+    return { node: box, value: function () { return inputs.filter(function (input) { return input.checked; }).map(function (input) { return input.value; }); } };
+  }
+  function filesSummary(version) {
+    var files = version.files || [];
+    if (files.length === 1) return files[0].name + " · " + size(files[0].size);
+    return files.length + " files: " + files.map(function (file) { return platformName(file.platform); }).join(", ");
+  }
   function statusBadge(status) { return el("span", { class: "badge state-" + status, text: status }); }
 
   function loginUrl() { return API + "/v1/auth/login?return=" + encodeURIComponent(location.pathname + location.search); }
@@ -78,6 +119,7 @@
         el("div", { class: "card-top" }, avatar ? el("img", { class: "avatar", src: avatar, alt: "" }) : null,
           el("strong", { text: plugin.name }), plugin.latest ? el("span", { class: "version", text: plugin.latest }) : null),
         el("p", { text: plugin.summary || "No description" }),
+        plugin.categories && plugin.categories.length ? el("div", { class: "card-cats", text: plugin.categories.map(function (c) { return CATEGORIES[c] || c; }).join(" · ") }) : null,
         el("div", { class: "card-meta" }, runtimeBadge(plugin.runtime),
           el("span", { text: "by " + plugin.author }), el("span", { text: plural(plugin.downloads, "download") }))));
   }
@@ -87,11 +129,14 @@
     var params = new URLSearchParams(location.search);
     form.q.value = params.get("q") || "";
     form.runtime.value = params.get("runtime") || "";
+    Object.keys(CATEGORIES).forEach(function (category) { form.category.appendChild(el("option", { value: category, text: CATEGORIES[category] })); });
+    form.category.value = params.get("category") || "";
     var timer;
     function load() {
       var query = new URLSearchParams();
       if (form.q.value.trim()) query.set("q", form.q.value.trim());
       if (form.runtime.value) query.set("runtime", form.runtime.value);
+      if (form.category.value) query.set("category", form.category.value);
       history.replaceState(null, "", query.toString() ? "?" + query : location.pathname);
       api("/v1/store/plugins?" + query).then(function (data) {
         var target = $("list");
@@ -103,6 +148,7 @@
     form.addEventListener("submit", function (event) { event.preventDefault(); load(); });
     form.q.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(load, 250); });
     form.runtime.addEventListener("change", load);
+    form.category.addEventListener("change", load);
     load();
   }
 
@@ -117,21 +163,27 @@
       if (avatar) $("avatar").src = avatar; else $("avatar").remove();
       var meta = $("meta");
       meta.append(runtimeBadge(info.runtime), el("span", { text: "by " + info.author }), el("span", { text: info.license }),
-        el("span", { text: plural(info.stars, "star") }), el("span", { text: plural(info.downloads, "download") }));
+        el("span", { text: plural(info.stars, "star") }), el("span", { text: plural(info.downloads, "download") }), categoryChips(info.categories));
       var latest = data.versions[0];
       var actions = $("actions");
-      if (latest) actions.appendChild(el("a", { class: "button primary", href: API + "/v1/store/download/" + encodeURIComponent(info.slug) + "/" + encodeURIComponent(latest.tag) }, "Download " + latest.version));
+      if (latest) latest.files.forEach(function (file) {
+        actions.appendChild(el("a", { class: "button primary", href: downloadUrl(info.slug, latest.tag, file.platform) },
+          "Download " + latest.version + (file.platform === "any" ? "" : " for " + platformName(file.platform))));
+      });
       actions.appendChild(el("a", { class: "button", href: "https://github.com/" + info.repo }, "Source on GitHub"));
       var rows = $("versions");
       data.versions.forEach(function (version) {
-        rows.appendChild(el("tr", null,
-          el("td", null, el("a", { href: API + "/v1/store/download/" + encodeURIComponent(info.slug) + "/" + encodeURIComponent(version.tag), text: version.version || version.tag })),
-          el("td", { text: day(version.published) }),
-          el("td", null, el("code", { text: version.file }), " " + size(version.size)),
-          el("td", null, el("code", { class: "hash", text: version.sha256 })),
-          el("td", { text: String(version.downloads) })));
+        var files = el("td", null);
+        version.files.forEach(function (file) {
+          files.appendChild(el("div", { class: "file" },
+            el("a", { href: downloadUrl(info.slug, version.tag, file.platform) }, el("code", { text: file.name })),
+            el("span", { class: "muted", text: " " + platformName(file.platform) + " · " + size(file.size) }),
+            el("code", { class: "hash", text: file.sha256 })));
+        });
+        rows.appendChild(el("tr", null, el("td", null, el("strong", { text: version.version || version.tag })),
+          el("td", { text: day(version.published) }), files, el("td", { text: String(version.downloads) })));
       });
-      if (!data.versions.length) rows.appendChild(el("tr", null, el("td", { colspan: "5", text: "No version is listed yet." })));
+      if (!data.versions.length) rows.appendChild(el("tr", null, el("td", { colspan: "4", text: "No version is listed yet." })));
       var report = $("report");
       report.hidden = false;
       if (!me) report.querySelector("form").replaceWith(el("p", null, el("a", { href: loginUrl() }, "Sign in"), " to report this plugin."));
@@ -148,7 +200,7 @@
 
   function versionLine(version, extra) {
     return el("li", { class: "version-line" }, el("strong", { text: version.version || version.tag }), el("code", { text: version.tag }),
-      runtimeBadge(version.runtime), statusBadge(version.status), el("span", { class: "muted", text: version.file + " · " + size(version.size) }),
+      runtimeBadge(version.runtime), statusBadge(version.status), el("span", { class: "muted", text: filesSummary(version) }),
       version.note ? el("span", { class: "note-inline", text: version.note }) : null, extra || null);
   }
 
@@ -169,6 +221,7 @@
               el("a", { href: "https://github.com/" + item.repo, text: item.repo }),
               item.status === "approved" ? el("a", { href: slugLink(item.slug), text: "Store page" }) : null),
             item.note ? el("p", { class: "note-inline", text: "Review note: " + item.note }) : null,
+            categoryChips(item.categories),
             versions,
             item.status !== "removed" ? el("div", { class: "row" }, el("button", { class: "button", type: "button", onclick: function () {
               say(syncStatus, "Reading the releases…");
@@ -176,18 +229,29 @@
                 say(syncStatus, plural(result.versions, "new version") + " found.");
                 load();
               }).catch(function (error) { say(syncStatus, error.message); });
-            } }, "Check for new releases"), syncStatus) : null));
+            } }, "Check for new releases"), el("button", { class: "button", type: "button", onclick: function (event) {
+              var picker = categoryPicker(item.categories);
+              var status = el("span", { class: "muted", role: "status" });
+              event.target.closest(".row").replaceWith(el("div", null, picker.node, el("div", { class: "row" },
+                el("button", { class: "button primary", type: "button", onclick: function () {
+                  api("/v1/store/plugins/" + encodeURIComponent(item.slug) + "/categories", { categories: picker.value() })
+                    .then(load).catch(function (error) { say(status, error.message); });
+                } }, "Save categories"), status)));
+            } }, "Edit categories"), syncStatus) : null));
         });
         say($("status"), data.plugins.length ? "" : "You have not published a plugin yet.");
       }).catch(function (error) { say($("status"), error.message); });
     }
+    var picker = categoryPicker([]);
+    $("submit").insertBefore(picker.node, $("submit-status"));
     $("submit").addEventListener("submit", function (event) {
       event.preventDefault();
       var form = event.target;
       say($("submit-status"), "Reading the repository…");
-      api("/v1/store/plugins", { repo: form.repo.value.trim() }).then(function (result) {
+      api("/v1/store/plugins", { repo: form.repo.value.trim(), categories: picker.value() }).then(function (result) {
         say($("submit-status"), "Submitted with " + plural(result.versions, "version") + ". An administrator will read it.");
         form.reset();
+        picker.node.querySelectorAll("input").forEach(function (input) { input.disabled = false; });
         load();
       }).catch(function (error) { say($("submit-status"), error.message); });
     });
@@ -221,7 +285,7 @@
         plugins.appendChild(el("section", { class: "panel" },
           el("div", { class: "panel-head" }, el("strong", { text: item.name }), runtimeBadge(item.runtime), el("span", { text: "by " + item.author }),
             el("a", { href: "https://github.com/" + item.repo, text: item.repo }), el("span", { class: "muted", text: item.license + " · " + plural(item.stars, "star") })),
-          el("p", { text: item.summary }),
+          el("p", { text: item.summary }), categoryChips(item.categories),
           decision("/v1/store/admin/plugins/" + encodeURIComponent(item.slug), [["approve", "Approve"], ["reject", "Reject"]])));
       });
       if (!data.plugins.length) plugins.appendChild(el("p", { class: "muted", text: "Nothing waits." }));
@@ -229,7 +293,9 @@
         versions.appendChild(el("section", { class: "panel" },
           el("div", { class: "panel-head" }, el("strong", { text: version.name }), el("a", { href: "https://github.com/" + version.repo + "/releases/tag/" + encodeURIComponent(version.tag), text: version.repo + " " + version.tag })),
           el("ul", { class: "versions" }, versionLine(version)),
-          el("p", { class: "small" }, "SHA-256 ", el("code", { class: "hash", text: version.sha256 })),
+          el("ul", { class: "files" }, version.files.map(function (file) {
+            return el("li", null, el("code", { text: file.name }), el("span", { class: "muted", text: " " + platformName(file.platform) + " · " + size(file.size) + " · SHA-256 " }), el("code", { class: "hash", text: file.sha256 }));
+          })),
           version.status === "changed" ? el("p", { class: "note-inline", text: "The release file was replaced after it was checked." }) : null,
           decision("/v1/store/admin/versions/" + version.id, [["approve", "Approve"], ["reject", "Reject"]])));
       });

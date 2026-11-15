@@ -12,7 +12,8 @@ path: store/publish.html
 <div data-signed-in hidden>
 <ol class="rules">
 <li>The plugin lives in a public GitHub repository you administer, with its <a href="../docs/plugins.html"><code>plugin.json</code></a> at the root.</li>
-<li>Each version is a GitHub release with one <code>.zip</code> (or a single <code>.wasm</code>, <code>.jar</code> or library) of at most 32 MB. Drafts and pre-releases are skipped.</li>
+<li>Each version is a GitHub release with the files a server loads, each at most 32 MB: one <code>.wasm</code> for a Wasm plugin, one <code>.jar</code> for a Java plugin, or for a native plugin one library per platform: <code>.so</code> for Linux, <code>.dll</code> for Windows, <code>.dylib</code> for macOS. Put <code>x86_64</code> or <code>arm64</code> in the name when you ship both. Drafts and pre-releases are skipped.</li>
+<li>Choose one to three categories; you can change them later.</li>
 <li>An administrator reads the plugin before it is listed. After that, new Wasm versions are listed once the store has checked them; native and Java versions wait for an administrator.</li>
 <li>A release file replaced after it was checked hides its version until it is checked again.</li>
 </ol>

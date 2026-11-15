@@ -182,3 +182,17 @@ input:focus, select:focus, textarea:focus, .store .button:focus-visible { outlin
   .filters { flex-direction: column; }
   .topbar nav { gap: 14px; }
 }
+.chips { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; color: var(--text); text-decoration: none; }
+.chip:hover { border-color: var(--strong); }
+.card-cats { font-size: 13.5px; color: var(--muted); margin: -6px 0 12px; }
+.picker { border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px 12px; margin: 4px 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.picker legend { font-size: 15px; padding: 0 6px; }
+.pick { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px 3px 8px; cursor: pointer; }
+.pick:has(input:checked) { border-color: var(--strong); color: var(--strong); }
+.pick:has(input:disabled) { opacity: .45; cursor: not-allowed; }
+.file { margin: 2px 0 8px; }
+.file .hash { display: block; margin-top: 2px; }
+.files { list-style: none; padding: 0; margin: 8px 0; font-size: 14.5px; }
+.files li { margin: 4px 0; }
+.filters select { min-width: 0; }
