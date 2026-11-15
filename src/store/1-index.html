@@ -1,0 +1,28 @@
+title: Plugin store
+path: store/
+---
+<main class="store">
+<div class="store-head">
+<div><h1>Plugins</h1>
+<p class="muted">Plugins for Falcon, published from GitHub by their authors. An administrator of Falcon-MC reads every plugin before it is listed.</p></div>
+<div class="account" data-account></div>
+</div>
+<form class="filters" role="search" data-filters>
+<label class="visually-hidden" for="q">Search plugins</label>
+<input id="q" name="q" type="search" placeholder="Search plugins" maxlength="64" autocomplete="off">
+<label class="visually-hidden" for="runtime">Runtime</label>
+<select id="runtime" name="runtime">
+<option value="">All runtimes</option>
+<option value="wasm">Wasm</option>
+<option value="native">Native</option>
+<option value="java">Java</option>
+</select>
+<label class="visually-hidden" for="category">Category</label>
+<select id="category" name="category">
+<option value="">All categories</option>
+</select>
+</form>
+<p class="status" data-status role="status">Loading plugins…</p>
+<ul class="cards" data-list></ul>
+<p class="muted small">Wasm plugins run in a sandbox and their new versions go out once the store has checked the file. Native and Java plugins run with the server's rights, so every one of their versions is read by an administrator. <a href="publish.html">Publish a plugin</a>.</p>
+</main>

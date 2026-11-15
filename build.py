@@ -5,6 +5,7 @@
 
 src/home.html        -> index.html
 src/docs/NN-slug.md  -> docs/slug.html (the "getting-started" page becomes docs/index.html)
+src/store/N-slug.html -> store/slug.html, the plugin store pages filled in by assets/store.js
 Each file starts with "title: ...", "section: ..." and a "---" line; files sort into the sidebar by NN.
 
 Markdown subset: # headings, paragraphs, - lists, 1. lists, > notes, ``` code, | tables,
@@ -143,9 +144,10 @@ def head(title, prefix, path):
 
 def topbar(prefix, active):
     docs = ' aria-current="page"' if active == "docs" else ""
+    store = ' aria-current="page"' if active == "store" else ""
     return f"""<header class="topbar"><div class="topbar-in">
 <a class="brand" href="{prefix}index.html" aria-label="Falcon home">{logo(prefix)}<span>Falcon</span></a>
-<nav aria-label="Main"><a href="{prefix}docs/index.html"{docs}>Docs</a><a href="{REPO}">GitHub</a><a href="{DISCORD}">Discord</a></nav>
+<nav aria-label="Main"><a href="{prefix}docs/index.html"{docs}>Docs</a><a href="{prefix}store/index.html"{store}>Plugins</a><a href="{REPO}">GitHub</a><a href="{DISCORD}">Discord</a></nav>
 </div></header>
 """
 
@@ -220,7 +222,16 @@ def main():
 </div>
 """ + FOOTER + "</body>\n</html>\n")
         (ROOT / "docs" / page["file"]).write_text(document)
-    print(f"Built index.html and {len(pages)} docs pages")
+    (ROOT / "store").mkdir(exist_ok=True)
+    stores = sorted((ROOT / "src" / "store").glob("*.html"))
+    for source in stores:
+        meta, body = source.read_text().split("\n---\n", 1)
+        fields = dict(line.split(": ", 1) for line in meta.splitlines())
+        slug = source.stem.split("-", 1)[1]
+        (ROOT / "store" / f"{slug}.html").write_text(
+            head(f'{fields["title"]} - Falcon', "../", fields["path"]) + f'<body data-page="{slug}">\n'
+            + topbar("../", "store") + body + FOOTER + '<script src="../assets/store.js"></script>\n</body>\n</html>\n')
+    print(f"Built index.html, {len(pages)} docs pages and {len(stores)} store pages")
 
 
 if __name__ == "__main__":

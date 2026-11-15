@@ -1,0 +1,26 @@
+title: Plugin
+path: store/plugin.html
+---
+<main class="store">
+<p class="crumb"><a href="index.html">Plugins</a></p>
+<p class="status" data-status role="status">Loading…</p>
+<article data-plugin hidden>
+<div class="plugin-head">
+<img class="avatar large" alt="" data-avatar>
+<div><h1 data-name></h1><p class="lead-small" data-summary></p><p class="meta" data-meta></p></div>
+</div>
+<div class="buttons left" data-actions></div>
+<h2>Versions</h2>
+<div class="table"><table><thead><tr><th>Version</th><th>Published</th><th>Files and SHA-256</th><th>Downloads</th></tr></thead><tbody data-versions></tbody></table></div>
+<p class="muted small">Check the file you download against its SHA-256. The store computed it from the release file when the version was checked. Native plugins have one library per platform.</p>
+<details class="report" data-report hidden>
+<summary>Report this plugin</summary>
+<form data-report-form>
+<label for="reason">What is wrong with it?</label>
+<textarea id="reason" name="reason" maxlength="500" rows="3" required minlength="10"></textarea>
+<button class="button" type="submit">Send the report</button>
+<p class="status" data-report-status role="status"></p>
+</form>
+</details>
+</article>
+</main>
