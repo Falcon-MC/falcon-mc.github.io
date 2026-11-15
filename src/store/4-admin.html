@@ -1,0 +1,21 @@
+title: Store administration
+path: store/admin.html
+---
+<main class="store">
+<div class="store-head">
+<div><p class="crumb"><a href="index.html">Plugins</a></p><h1>Administration</h1>
+<p class="muted">For the administrators of the Falcon-MC organisation on GitHub. The role is checked with GitHub again every ten minutes.</p></div>
+<div class="account" data-account></div>
+</div>
+<p class="status" data-status role="status">Loading…</p>
+<div data-admin hidden>
+<h2>Plugins waiting <span class="count" data-count-plugins></span></h2>
+<div data-plugins></div>
+<h2>Versions waiting <span class="count" data-count-versions></span></h2>
+<div data-versions></div>
+<h2>Reports <span class="count" data-count-reports></span></h2>
+<div data-reports></div>
+<h2>Recent decisions</h2>
+<div class="table"><table><thead><tr><th>When</th><th>Who</th><th>What</th><th>Target</th><th>Note</th></tr></thead><tbody data-audit></tbody></table></div>
+</div>
+</main>

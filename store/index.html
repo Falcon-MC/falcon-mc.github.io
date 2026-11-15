@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plugin store - Falcon</title>
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<link rel="canonical" href="https://falcon-mc.com/store/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Falcon">
+<meta property="og:url" content="https://falcon-mc.com/store/">
+<meta property="og:title" content="Plugin store - Falcon">
+<meta property="og:description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<meta property="og:image" content="https://falcon-mc.com/assets/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Plugin store - Falcon">
+<meta name="twitter:description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<meta name="twitter:image" content="https://falcon-mc.com/assets/social.png">
+<meta name="twitter:image:alt" content="Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++">
+<meta name="theme-color" content="#0d1117">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="index">
+<header class="topbar"><div class="topbar-in">
+<a class="brand" href="../index.html" aria-label="Falcon home"><picture><source media="(prefers-color-scheme: light)" srcset="../assets/logo.png"><img class="" src="../assets/logo-white.png" alt="Falcon"></picture><span>Falcon</span></a>
+<nav aria-label="Main"><a href="../docs/index.html">Docs</a><a href="../store/index.html" aria-current="page">Plugins</a><a href="https://github.com/Falcon-MC/Falcon">GitHub</a><a href="https://discord.gg/KZb6YxSHkb">Discord</a></nav>
+</div></header>
+<main class="store">
+<div class="store-head">
+<div><h1>Plugins</h1>
+<p class="muted">Plugins for Falcon, published from GitHub by their authors. An administrator of Falcon-MC reads every plugin before it is listed.</p></div>
+<div class="account" data-account></div>
+</div>
+<form class="filters" role="search" data-filters>
+<label class="visually-hidden" for="q">Search plugins</label>
+<input id="q" name="q" type="search" placeholder="Search plugins" maxlength="64" autocomplete="off">
+<label class="visually-hidden" for="runtime">Runtime</label>
+<select id="runtime" name="runtime">
+<option value="">All runtimes</option>
+<option value="wasm">Wasm</option>
+<option value="native">Native</option>
+<option value="java">Java</option>
+</select>
+</form>
+<p class="status" data-status role="status">Loading plugins…</p>
+<ul class="cards" data-list></ul>
+<p class="muted small">Wasm plugins run in a sandbox and their new versions go out once checked against the release. Native and Java plugins run with the server's rights, so every one of their versions is read by an administrator. <a href="publish.html">Publish a plugin</a>.</p>
+</main>
+<footer class="footer"><div class="footer-in">
+<p>Questions and help on <a href="https://discord.gg/KZb6YxSHkb">Discord</a>. Falcon is licensed under the <a href="https://github.com/Falcon-MC/Falcon/blob/main/LICENSE">LGPL-3.0</a>.
+Not affiliated with Mojang. All brands and trademarks belong to their respective owners.</p>
+</div></footer>
+<script src="../assets/store.js"></script>
+</body>
+</html>

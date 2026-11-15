@@ -1,0 +1,29 @@
+title: Publish a plugin
+path: store/publish.html
+---
+<main class="store">
+<div class="store-head">
+<div><p class="crumb"><a href="index.html">Plugins</a></p><h1>Publish a plugin</h1></div>
+<div class="account" data-account></div>
+</div>
+<div data-signed-out hidden>
+<p>Sign in with GitHub to publish. The store asks GitHub who you are and whether you belong to Falcon-MC; it never writes to your account.</p>
+</div>
+<div data-signed-in hidden>
+<ol class="rules">
+<li>The plugin lives in a public GitHub repository you administer, with its <a href="../docs/plugins.html"><code>plugin.json</code></a> at the root.</li>
+<li>Each version is a GitHub release with one <code>.zip</code> (or a single <code>.wasm</code>, <code>.jar</code> or library) of at most 32 MB. Drafts and pre-releases are skipped.</li>
+<li>An administrator reads the plugin before it is listed. After that, new Wasm versions are listed once the store has checked them; native and Java versions wait for an administrator.</li>
+<li>A release file replaced after it was checked hides its version until it is checked again.</li>
+</ol>
+<form class="submit" data-submit>
+<label for="repo">Repository</label>
+<div class="row"><input id="repo" name="repo" placeholder="owner/name" required pattern="[A-Za-z0-9-]+/[A-Za-z0-9._-]+" maxlength="140" autocomplete="off">
+<button class="button primary" type="submit">Submit</button></div>
+<p class="status" data-submit-status role="status"></p>
+</form>
+<h2>Your plugins</h2>
+<p class="status" data-status role="status">Loading…</p>
+<div data-mine></div>
+</div>
+</main>
