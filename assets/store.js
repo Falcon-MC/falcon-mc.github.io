@@ -242,16 +242,35 @@
         say($("status"), data.plugins.length ? "" : "You have not published a plugin yet.");
       }).catch(function (error) { say($("status"), error.message); });
     }
+    // the public repositories the user administers and has not published yet
+    function loadRepos() {
+      var select = $("submit").repo;
+      api("/v1/store/repos").then(function (data) {
+        select.textContent = "";
+        select.appendChild(el("option", { value: "", text: data.repos.length ? "Choose a repository" : "No public repository you administer is left to publish" }));
+        data.repos.forEach(function (repo) {
+          select.appendChild(el("option", { value: repo.name, title: repo.description || "", text: repo.description ? repo.name + " · " + repo.description : repo.name }));
+        });
+        select.disabled = !data.repos.length;
+      }).catch(function (error) {
+        select.textContent = "";
+        select.appendChild(el("option", { value: "", text: "Could not read your repositories" }));
+        say($("submit-status"), error.message);
+      });
+    }
+    loadRepos();
     var picker = categoryPicker([]);
     $("submit").insertBefore(picker.node, $("submit-status"));
     $("submit").addEventListener("submit", function (event) {
       event.preventDefault();
       var form = event.target;
       say($("submit-status"), "Reading the repository…");
-      api("/v1/store/plugins", { repo: form.repo.value.trim(), categories: picker.value() }).then(function (result) {
+      if (!form.repo.value) { say($("submit-status"), "Choose a repository."); return; }
+      api("/v1/store/plugins", { repo: form.repo.value, categories: picker.value() }).then(function (result) {
         say($("submit-status"), "Submitted with " + plural(result.versions, "version") + ". An administrator will read it.");
         form.reset();
         picker.node.querySelectorAll("input").forEach(function (input) { input.disabled = false; });
+        loadRepos();
         load();
       }).catch(function (error) { say($("submit-status"), error.message); });
     });
