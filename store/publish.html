@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="../assets/style.css?v=d5b25b74b2">
+<link rel="stylesheet" href="../assets/style.css?v=48c74c3285">
 </head>
 <body data-page="publish">
 <header class="topbar"><div class="topbar-in">
@@ -41,13 +41,20 @@
 </div>
 <div data-signed-in hidden>
 <ol class="rules">
-<li>The plugin lives in a public GitHub repository you administer, with its <a href="../docs/plugins"><code>plugin.json</code></a> at the root.</li>
-<li>Each version is a GitHub release with the files a server loads, each at most 32 MB: one <code>.wasm</code> for a Wasm plugin, one <code>.jar</code> for a Java plugin, or for a native plugin one library per platform: <code>.so</code> for Linux, <code>.dll</code> for Windows, <code>.dylib</code> for macOS. Put <code>x86_64</code> or <code>arm64</code> in the name when you ship both. Drafts and pre-releases are skipped.</li>
-<li>Choose one to three categories; you can change them later.</li>
-<li>Optionally, give the plugin a logo and a banner in <code>plugin.json</code>: <code>"icon": "assets/icon.png"</code> and <code>"banner": "assets/banner.png"</code>, paths in the repository. PNG, JPEG or WebP; the logo square, 64 to 512 pixels, at most 256 KB; the banner about 3:1, 600×150 to 1600×600, at most 1 MB. The store keeps a copy and shows it once an administrator approved it; a new one, pushed to the default branch, shows after <em>Check for new releases</em> and a new approval.</li>
-<li>An administrator reads the plugin before it is listed. After that, new Wasm versions are listed once the store has checked them; native and Java versions wait for an administrator.</li>
-<li>A release file replaced after it was checked hides its version until it is checked again.</li>
+<li>A public repo you administer, with a <a href="../docs/plugins"><code>plugin.json</code></a> at the root.</li>
+<li>Each GitHub release is a version: attach the <code>.wasm</code>, <code>.jar</code> or native libraries.</li>
+<li>Pick your repo and up to three categories, then submit.</li>
+<li>An administrator checks it before it is listed.</li>
 </ol>
+<details class="rules-more">
+<summary>Files, images and review</summary>
+<ul>
+<li><strong>Files</strong>: at most 32 MB each. Native plugins ship one library per platform: <code>.so</code> Linux, <code>.dll</code> Windows, <code>.dylib</code> macOS, with <code>x86_64</code> or <code>arm64</code> in the name if you ship both. Drafts and pre-releases are skipped.</li>
+<li><strong>Images</strong> (optional): <code>"icon"</code> and <code>"banner"</code> in <code>plugin.json</code>, paths in the repo. PNG, JPEG or WebP. Logo square, 64 to 512 px, 256 KB max. Banner about 3:1, up to 1600×600, 1 MB max.</li>
+<li><strong>Updates</strong>: click <em>Check for new releases</em>. New Wasm versions go out once checked; native and Java versions, and new images, wait for an administrator.</li>
+<li>A release file replaced after its check hides that version until it is checked again.</li>
+</ul>
+</details>
 <form class="submit" data-submit>
 <label for="repo">Repository</label>
 <div class="row"><select id="repo" name="repo" required disabled><option value="">Loading your repositories…</option></select>
