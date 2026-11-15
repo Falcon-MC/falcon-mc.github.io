@@ -17,6 +17,9 @@ import re
 ROOT = pathlib.Path(__file__).resolve().parent
 REPO = "https://github.com/Falcon-MC/Falcon"
 DISCORD = "https://discord.gg/KZb6YxSHkb"
+SITE = "https://falcon-mc.com/"
+DESCRIPTION = "Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17."
+SOCIAL_ALT = "Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++"
 
 def logo(prefix, css=""):
     """The project logo, switching to the dark variant if the visitor's system prefers a light scheme."""
@@ -103,14 +106,34 @@ def render(markdown):
     return "\n".join(out), toc
 
 
-def head(title, prefix):
+def head(title, prefix, path):
+    """path is the page's address under the site root, empty for the home page."""
+    title = html.escape(title)
+    url = SITE + path
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{html.escape(title)}</title>
-<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<title>{title}</title>
+<meta name="description" content="{DESCRIPTION}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Falcon">
+<meta property="og:url" content="{url}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{DESCRIPTION}">
+<meta property="og:image" content="{SITE}assets/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{SOCIAL_ALT}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{DESCRIPTION}">
+<meta name="twitter:image" content="{SITE}assets/social.png">
+<meta name="twitter:image:alt" content="{SOCIAL_ALT}">
+<meta name="theme-color" content="#0d1117">
+<link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">
 <link rel="icon" href="{prefix}assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="{prefix}assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="{prefix}assets/style.css">
@@ -137,7 +160,7 @@ Not affiliated with Mojang. All brands and trademarks belong to their respective
 def main():
     home = (ROOT / "src" / "home.html").read_text().replace("{{logo}}", logo("", "hero-logo"))
     (ROOT / "index.html").write_text(
-        head("Falcon: a Bedrock server written from scratch in C++", "")
+        head("Falcon: a Bedrock server written from scratch in C++", "", "")
         + "<body>\n" + topbar("", "home") + home + FOOTER
         + '<script src="assets/download.js"></script>\n' + "</body>\n</html>\n")
 
@@ -184,7 +207,7 @@ def main():
             nxt = pages[index + 1]
             pager += f'<a class="next" href="{nxt["file"]}"><span>Next</span>{nxt["title"]}</a>'
         document = (
-            head(f'{page["title"]} - Falcon docs', "../") + "<body>\n" + topbar("../", "docs")
+            head(f'{page["title"]} - Falcon docs', "../", "docs/" + ("" if page["file"] == "index.html" else page["file"])) + "<body>\n" + topbar("../", "docs")
             + f"""<details class="docs-menu"><summary>Docs menu<span>{page["title"]}</span></summary>
 <div class="menu-in">{links}</div></details>
 <div class="docs">
