@@ -107,10 +107,30 @@ def render(markdown):
     return "\n".join(out), toc
 
 
+# GitHub Pages serves page.html at /page and index.html at its folder: links say neither
+LOCAL_HTML = re.compile(r'(href|src)="(?![a-z]+:|#|//)([^"?#]*?)(index)?\.html([?#][^"]*)?"')
+
+
+def address(path):
+    """a page address without .html, and a folder without index.html"""
+    path = re.sub(r"(^|/)index\.html$", r"\1", path)
+    return re.sub(r"\.html$", "", path)
+
+
+def clean(document):
+    def link(match):
+        attribute, base, index, rest = match.groups()
+        target = base if index else base and address(base + ".html")
+        if index and not base:
+            target = "./"
+        return f'{attribute}="{target}{rest or ""}"'
+    return LOCAL_HTML.sub(link, document)
+
+
 def head(title, prefix, path):
     """path is the page's address under the site root, empty for the home page."""
     title = html.escape(title)
-    url = SITE + path
+    url = SITE + address(path)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,10 +181,10 @@ Not affiliated with Mojang. All brands and trademarks belong to their respective
 
 def main():
     home = (ROOT / "src" / "home.html").read_text().replace("{{logo}}", logo("", "hero-logo"))
-    (ROOT / "index.html").write_text(
+    (ROOT / "index.html").write_text(clean(
         head("Falcon: a Bedrock server written from scratch in C++", "", "")
         + "<body>\n" + topbar("", "home") + home + FOOTER
-        + '<script src="assets/download.js"></script>\n' + "</body>\n</html>\n")
+        + '<script src="assets/download.js"></script>\n' + "</body>\n</html>\n"))
 
     pages = []
     for source in sorted((ROOT / "src" / "docs").glob("*.md")):
@@ -221,16 +241,16 @@ def main():
 </main>
 </div>
 """ + FOOTER + "</body>\n</html>\n")
-        (ROOT / "docs" / page["file"]).write_text(document)
+        (ROOT / "docs" / page["file"]).write_text(clean(document))
     (ROOT / "store").mkdir(exist_ok=True)
     stores = sorted((ROOT / "src" / "store").glob("*.html"))
     for source in stores:
         meta, body = source.read_text().split("\n---\n", 1)
         fields = dict(line.split(": ", 1) for line in meta.splitlines())
         slug = source.stem.split("-", 1)[1]
-        (ROOT / "store" / f"{slug}.html").write_text(
+        (ROOT / "store" / f"{slug}.html").write_text(clean(
             head(f'{fields["title"]} - Falcon', "../", fields["path"]) + f'<body data-page="{slug}">\n'
-            + topbar("../", "store") + body + FOOTER + '<script src="../assets/store.js"></script>\n</body>\n</html>\n')
+            + topbar("../", "store") + body + FOOTER + '<script src="../assets/store.js"></script>\n</body>\n</html>\n'))
     print(f"Built index.html, {len(pages)} docs pages and {len(stores)} store pages")
 
 

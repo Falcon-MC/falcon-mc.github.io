@@ -50,7 +50,7 @@
     return isNaN(date) ? "" : date.toISOString().slice(0, 10);
   }
   function safeImage(url) { return /^https:\/\/avatars\.githubusercontent\.com\//.test(url || "") ? url : ""; }
-  function slugLink(slug) { return "plugin.html?slug=" + encodeURIComponent(slug); }
+  function slugLink(slug) { return "plugin?slug=" + encodeURIComponent(slug); }
   function runtimeBadge(runtime) {
     return el("span", { class: "badge" + (runtime === "wasm" ? " sandboxed" : ""), text: runtime === "wasm" ? "Wasm · sandboxed" : (RUNTIMES[runtime] || runtime) });
   }
@@ -65,7 +65,7 @@
   function categoryChips(list) {
     var box = el("span", { class: "chips" });
     (list || []).forEach(function (category) {
-      box.appendChild(el("a", { class: "chip", href: "index.html?category=" + encodeURIComponent(category), text: CATEGORIES[category] || category }));
+      box.appendChild(el("a", { class: "chip", href: "./?category=" + encodeURIComponent(category), text: CATEGORIES[category] || category }));
     });
     return box;
   }
@@ -105,8 +105,8 @@
     }
     var avatar = safeImage(me.avatar);
     box.appendChild(el("span", { class: "who" }, avatar ? el("img", { class: "avatar", src: avatar, alt: "" }) : null, me.login));
-    box.appendChild(el("a", { class: "button", href: "publish.html" }, "Your plugins"));
-    if (me.admin) box.appendChild(el("a", { class: "button", href: "admin.html" }, "Administration"));
+    box.appendChild(el("a", { class: "button", href: "publish" }, "Your plugins"));
+    if (me.admin) box.appendChild(el("a", { class: "button", href: "admin" }, "Administration"));
     box.appendChild(el("button", { class: "button", type: "button", onclick: function () {
       api("/v1/auth/logout", {}).then(function () { location.reload(); });
     } }, "Sign out"));
