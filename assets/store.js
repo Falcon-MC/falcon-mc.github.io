@@ -72,6 +72,116 @@
     var src = storeImage(path);
     return src ? el("img", { class: "banner", src: src, alt: "" }) : null;
   }
+  // ---- the repository's README, as markdown: built node by node, never from its HTML ----
+
+  // images only from GitHub and badges, so a README cannot make every visitor load a tracker
+  var IMAGE_HOSTS = /^(?:[a-z0-9-]+\.)?githubusercontent\.com$|^github\.com$|^img\.shields\.io$/;
+
+  function readmeUrl(url, repo, image) {
+    url = (url || "").trim().replace(/^<|>$/g, "").split(/\s+/)[0];
+    if (/^https?:\/\//i.test(url)) return url;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(url) || url.charAt(0) === "#" || url === "") return "";
+    var path = url.replace(/^\.?\//, "");
+    return image ? "https://raw.githubusercontent.com/" + repo + "/HEAD/" + path : "https://github.com/" + repo + "/blob/HEAD/" + path;
+  }
+
+  var HTML_TAG = /<\/?(?:a|abbr|b|big|blockquote|br|center|code|dd|del|details|div|dl|dt|em|embed|font|h[1-6]|hr|i|img|ins|kbd|li|object|ol|p|picture|pre|s|samp|small|source|span|strike|strong|sub|summary|sup|table|tbody|td|tfoot|th|thead|tr|tt|u|ul|var|video|svg|iframe|script|style|input|button|form|meta|link)\b[^>]*>/gi;
+
+  function inline(text, repo) {
+    var out = [];
+    var pattern = /(`+)([\s\S]*?)\1|!\[([^\]]*)\]\(((?:[^()]|\([^()]*\))*)\)|\[([^\]]+)\]\(((?:[^()]|\([^()]*\))*)\)|(\*\*|__)(.+?)\7|~~(.+?)~~|(\*|_)(.+?)\10|(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"])/g;
+    var last = 0, match;
+    while ((match = pattern.exec(text)) !== null) {
+      if (match.index > last) out.push(text.slice(last, match.index));
+      if (match[1]) out.push(el("code", { text: match[2] }));
+      else if (match[4] !== undefined) {
+        var src = readmeUrl(match[4], repo, true), host = "";
+        try { host = new URL(src).hostname; } catch (e) { src = ""; }
+        if (src && /^https:/.test(src) && IMAGE_HOSTS.test(host)) out.push(el("img", { src: src, alt: match[3], loading: "lazy", referrerpolicy: "no-referrer" }));
+        else if (match[3]) out.push(match[3]);
+      } else if (match[6] !== undefined) {
+        var href = readmeUrl(match[6], repo, false);
+        var label = inline(match[5], repo);
+        out.push(href ? el("a", { href: href, rel: "nofollow noopener", target: "_blank" }, label) : el("span", null, label));
+      } else if (match[8]) out.push(el("strong", null, inline(match[8], repo)));
+      else if (match[9]) out.push(el("del", null, inline(match[9], repo)));
+      else if (match[11]) out.push(el("em", null, inline(match[11], repo)));
+      else if (match[12]) out.push(el("a", { href: match[12], rel: "nofollow noopener", target: "_blank", text: match[12] }));
+      last = pattern.lastIndex;
+    }
+    if (last < text.length) out.push(text.slice(last));
+    return out;
+  }
+
+  function cells(row) {
+    return row.trim().replace(/^\||\|$/g, "").split("|").map(function (cell) { return cell.trim(); });
+  }
+
+  function markdown(source, repo) {
+    // HTML in a README is dropped, its text kept; <https://…> stays a link
+    // only real HTML tags go, so `/tpa <player>` keeps its <player>; scripts and styles go with their content
+    var text = source.replace(/\r/g, "").replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/<(script|style|iframe|object|svg)\b[\s\S]*?<\/\1\s*>/gi, "")
+      .replace(/<(https?:\/\/[^>\s]+)>/g, "$1").replace(HTML_TAG, "");
+    var lines = text.split("\n"), root = document.createDocumentFragment(), i = 0;
+    while (i < lines.length) {
+      var line = lines[i];
+      var fence = line.match(/^\s*(```|~~~)/);
+      if (fence) {
+        var code = [];
+        for (i++; i < lines.length && lines[i].trim().indexOf(fence[1]) !== 0; i++) code.push(lines[i]);
+        i++;
+        root.appendChild(el("pre", null, el("code", { text: code.join("\n") })));
+        continue;
+      }
+      var heading = line.match(/^(#{1,6})\s+(.*?)\s*#*\s*$/);
+      if (heading) {
+        // the page's own title is an h1: a README's headings start one below it
+        root.appendChild(el("h" + Math.min(6, heading[1].length + 1), null, inline(heading[2], repo)));
+        i++;
+        continue;
+      }
+      if (/^\s*([-*_])\s*(\1\s*){2,}$/.test(line)) { root.appendChild(el("hr")); i++; continue; }
+      if (/^\s*>/.test(line)) {
+        var quoted = [];
+        for (; i < lines.length && /^\s*>/.test(lines[i]); i++) quoted.push(lines[i].replace(/^\s*>\s?/, ""));
+        var quote = el("blockquote");
+        quote.appendChild(markdown(quoted.join("\n"), repo));
+        root.appendChild(quote);
+        continue;
+      }
+      if (/^\s*\|.*\|\s*$/.test(line) && i + 1 < lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[i + 1])) {
+        var head = el("tr"), body = el("tbody");
+        cells(line).forEach(function (cell) { head.appendChild(el("th", null, inline(cell, repo))); });
+        for (i += 2; i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i]); i++) {
+          var row = el("tr");
+          cells(lines[i]).forEach(function (cell) { row.appendChild(el("td", null, inline(cell, repo))); });
+          body.appendChild(row);
+        }
+        root.appendChild(el("div", { class: "table" }, el("table", null, el("thead", null, head), body)));
+        continue;
+      }
+      var item = line.match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+      if (item) {
+        var ordered = /\d/.test(item[2]), list = el(ordered ? "ol" : "ul");
+        for (; i < lines.length; i++) {
+          var next = lines[i].match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+          if (next) list.appendChild(el("li", null, inline(next[3].replace(/^\[[ xX]\]\s*/, ""), repo)));
+          else if (/^\s{2,}\S/.test(lines[i]) && list.lastChild) list.lastChild.append(" ", el("span", null, inline(lines[i].trim(), repo)));
+          else break;
+        }
+        root.appendChild(list);
+        continue;
+      }
+      if (line.trim() === "") { i++; continue; }
+      var paragraph = [];
+      for (; i < lines.length && lines[i].trim() !== "" && !/^\s*(#{1,6}\s|```|~~~|>|[-*+]\s|\d+[.)]\s|\|)/.test(lines[i]); i++) paragraph.push(lines[i].trim());
+      if (!paragraph.length) { paragraph.push(line.trim()); i++; }
+      root.appendChild(el("p", null, inline(paragraph.join(" "), repo)));
+    }
+    return root;
+  }
+
   function problemsText(problems) { return problems && problems.length ? " " + problems.join(". ") + "." : ""; }
   function safeImage(url) { return /^https:\/\/avatars\.githubusercontent\.com\//.test(url || "") ? url : ""; }
   function slugLink(slug) { return "plugin?slug=" + encodeURIComponent(slug); }
@@ -183,6 +293,11 @@
       $("name").textContent = info.name;
       $("summary").textContent = info.summary;
       $("avatar").replaceWith(logo(info, "large"));
+      if (info.readme) {
+        var readme = $("readme");
+        readme.appendChild(markdown(info.readme, info.repo));
+        readme.hidden = false;
+      }
       var top = banner(info.banner);
       if (top) document.querySelector(".plugin-head").before(top);
       var meta = $("meta");
