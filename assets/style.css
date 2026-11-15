@@ -160,7 +160,8 @@ input:focus, select:focus, textarea:focus, .store .button:focus-visible { outlin
 .report summary { cursor: pointer; font-weight: 600; }
 .report form, .submit { display: grid; gap: 8px; margin-top: 12px; max-width: 620px; }
 .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.row input { flex: 1; min-width: 200px; }
+.row input, .row select { flex: 1; min-width: 200px; max-width: 100%; text-overflow: ellipsis; }
+select:disabled { opacity: .6; }
 .rules { color: var(--muted); font-size: 15.5px; padding-left: 20px; }
 .rules li { margin: 4px 0; }
 .panel { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 14px 18px; margin: 12px 0; }
