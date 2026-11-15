@@ -54,6 +54,25 @@
     var date = typeof value === "number" ? new Date(value * 1000) : new Date(value);
     return isNaN(date) ? "" : date.toISOString().slice(0, 10);
   }
+  // a logo or banner the store keeps: only its own image addresses
+  function storeImage(path) { return typeof path === "string" && /^\/v1\/store\/images\/[0-9a-f]{64}$/.test(path) ? API + path : ""; }
+  function hue(text) {
+    var value = 0;
+    for (var i = 0; i < text.length; i++) value = (value * 31 + text.charCodeAt(i)) % 360;
+    return value;
+  }
+  // the plugin's logo, or its first letter on a colour of its own
+  function logo(plugin, size, path) {
+    var src = storeImage(path === undefined ? plugin.icon : path);
+    if (src) return el("img", { class: "logo " + size, src: src, alt: "", loading: "lazy" });
+    return el("span", { class: "logo logo-initial " + size, "aria-hidden": "true", style: "--hue:" + hue(plugin.slug || plugin.name || ""),
+      text: (plugin.name || "?").charAt(0).toUpperCase() });
+  }
+  function banner(path) {
+    var src = storeImage(path);
+    return src ? el("img", { class: "banner", src: src, alt: "" }) : null;
+  }
+  function problemsText(problems) { return problems && problems.length ? " " + problems.join(". ") + "." : ""; }
   function safeImage(url) { return /^https:\/\/avatars\.githubusercontent\.com\//.test(url || "") ? url : ""; }
   function slugLink(slug) { return "plugin?slug=" + encodeURIComponent(slug); }
   function runtimeBadge(runtime) {
@@ -118,10 +137,9 @@
   }
 
   function card(plugin) {
-    var avatar = safeImage(plugin.avatar);
     return el("li", { class: "card" },
       el("a", { class: "card-link", href: slugLink(plugin.slug) },
-        el("div", { class: "card-top" }, avatar ? el("img", { class: "avatar", src: avatar, alt: "" }) : null,
+        el("div", { class: "card-top" }, logo(plugin, "small"),
           el("strong", { text: plugin.name }), plugin.latest ? el("span", { class: "version", text: plugin.latest }) : null),
         el("p", { text: plugin.summary || "No description" }),
         plugin.categories && plugin.categories.length ? el("div", { class: "card-cats", text: plugin.categories.map(function (c) { return CATEGORIES[c] || c; }).join(" · ") }) : null,
@@ -164,8 +182,9 @@
       document.title = info.name + " - Falcon plugins";
       $("name").textContent = info.name;
       $("summary").textContent = info.summary;
-      var avatar = safeImage(info.avatar);
-      if (avatar) $("avatar").src = avatar; else $("avatar").remove();
+      $("avatar").replaceWith(logo(info, "large"));
+      var top = banner(info.banner);
+      if (top) document.querySelector(".plugin-head").before(top);
       var meta = $("meta");
       meta.append(runtimeBadge(info.runtime), el("span", { text: "by " + info.author }), el("span", { text: info.license }),
         el("span", { text: plural(info.stars, "star") }), el("span", { text: plural(info.downloads, "download") }), categoryChips(info.categories));
@@ -217,21 +236,24 @@
         var target = $("mine");
         target.textContent = "";
         data.plugins.forEach(function (item) {
-          var syncStatus = el("span", { class: "muted", role: "status" });
+          // the last check's result survives the reload that follows it
+          var syncStatus = el("span", { class: "muted", role: "status", text: notices[item.slug] || "" });
+          var waiting = [item.iconWaiting ? "logo" : "", item.bannerWaiting ? "banner" : ""].filter(Boolean);
           var versions = el("ul", { class: "versions" });
           item.versions.forEach(function (version) { versions.appendChild(versionLine(version)); });
           if (!item.versions.length) versions.appendChild(el("li", { class: "muted", text: "No release with a usable file yet." }));
           target.appendChild(el("section", { class: "panel" },
-            el("div", { class: "panel-head" }, el("strong", { text: item.name }), statusBadge(item.status), runtimeBadge(item.runtime),
+            el("div", { class: "panel-head" }, logo(item, "small"), el("strong", { text: item.name }), statusBadge(item.status), runtimeBadge(item.runtime),
               el("a", { href: "https://github.com/" + item.repo, text: item.repo }),
               item.status === "approved" ? el("a", { href: slugLink(item.slug), text: "Store page" }) : null),
             item.note ? el("p", { class: "note-inline", text: "Review note: " + item.note }) : null,
+            waiting.length ? el("p", { class: "muted small", text: "New " + waiting.join(" and ") + " waiting for an administrator." }) : null,
             categoryChips(item.categories),
             versions,
             item.status !== "removed" ? el("div", { class: "row" }, el("button", { class: "button", type: "button", onclick: function () {
               say(syncStatus, "Reading the releases…");
               api("/v1/store/plugins/" + encodeURIComponent(item.slug) + "/sync", {}).then(function (result) {
-                say(syncStatus, plural(result.versions, "new version") + " found.");
+                notices[item.slug] = plural(result.versions, "new version") + " found." + problemsText(result.problems);
                 load();
               }).catch(function (error) { say(syncStatus, error.message); });
             } }, "Check for new releases"), el("button", { class: "button", type: "button", onclick: function (event) {
@@ -248,6 +270,7 @@
       }).catch(function (error) { say($("status"), error.message); });
     }
     // the public repositories the user administers and has not published yet
+    var notices = {};
     function loadRepos() {
       var select = $("submit").repo;
       api("/v1/store/repos").then(function (data) {
@@ -272,7 +295,7 @@
       say($("submit-status"), "Reading the repository…");
       if (!form.repo.value) { say($("submit-status"), "Choose a repository."); return; }
       api("/v1/store/plugins", { repo: form.repo.value, categories: picker.value() }).then(function (result) {
-        say($("submit-status"), "Submitted with " + plural(result.versions, "version") + ". An administrator will read it.");
+        say($("submit-status"), "Submitted with " + plural(result.versions, "version") + ". An administrator will read it." + problemsText(result.problems));
         form.reset();
         picker.node.querySelectorAll("input").forEach(function (input) { input.disabled = false; });
         loadRepos();
@@ -296,12 +319,31 @@
     return row;
   }
 
+  // the images an administrator approves, beside the shown ones
+  function imagePreview(item) {
+    if (!item.iconPending && !item.bannerPending) return null;
+    return el("div", { class: "image-preview" },
+      item.iconPending ? el("figure", null, logo(item, "large", item.iconPending), el("figcaption", { text: item.icon ? "New logo" : "Logo" })) : null,
+      item.iconPending && item.icon ? el("figure", null, logo(item, "large"), el("figcaption", { text: "Shown now" })) : null,
+      item.bannerPending ? el("figure", { class: "wide" }, banner(item.bannerPending), el("figcaption", { text: item.banner ? "New banner" : "Banner" })) : null,
+      item.bannerPending && item.banner ? el("figure", { class: "wide" }, banner(item.banner), el("figcaption", { text: "Shown now" })) : null);
+  }
+
   function admin() {
     api("/v1/store/admin/queue").then(function (data) {
       $("status").textContent = "Signed in as " + data.admin + ", administrator of Falcon-MC.";
       $("admin").hidden = false;
-      var plugins = $("plugins"), versions = $("versions"), reports = $("reports"), audit = $("audit");
-      [plugins, versions, reports, audit].forEach(function (node) { node.textContent = ""; });
+      var plugins = $("plugins"), versions = $("versions"), reports = $("reports"), audit = $("audit"), images = $("images");
+      [plugins, versions, reports, audit, images].forEach(function (node) { node.textContent = ""; });
+      $("count-images").textContent = String(data.images.length);
+      data.images.forEach(function (item) {
+        images.appendChild(el("section", { class: "panel" },
+          el("div", { class: "panel-head" }, el("a", { href: slugLink(item.slug), text: item.name }), el("span", { text: "by " + item.author }),
+            el("a", { href: "https://github.com/" + item.repo, text: item.repo })),
+          imagePreview(item),
+          decision("/v1/store/admin/images/" + encodeURIComponent(item.slug), [["approve", "Approve"], ["reject", "Reject"]])));
+      });
+      if (!data.images.length) images.appendChild(el("p", { class: "muted", text: "Nothing waits." }));
       $("count-plugins").textContent = String(data.plugins.length);
       $("count-versions").textContent = String(data.versions.length);
       $("count-reports").textContent = String(data.reports.length);
@@ -309,7 +351,7 @@
         plugins.appendChild(el("section", { class: "panel" },
           el("div", { class: "panel-head" }, el("strong", { text: item.name }), runtimeBadge(item.runtime), el("span", { text: "by " + item.author }),
             el("a", { href: "https://github.com/" + item.repo, text: item.repo }), el("span", { class: "muted", text: item.license + " · " + plural(item.stars, "star") })),
-          el("p", { text: item.summary }), categoryChips(item.categories),
+          el("p", { text: item.summary }), categoryChips(item.categories), imagePreview(item),
           decision("/v1/store/admin/plugins/" + encodeURIComponent(item.slug), [["approve", "Approve"], ["reject", "Reject"]])));
       });
       if (!data.plugins.length) plugins.appendChild(el("p", { class: "muted", text: "Nothing waits." }));
