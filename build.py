@@ -20,7 +20,7 @@ ROOT = pathlib.Path(__file__).resolve().parent
 REPO = "https://github.com/Falcon-MC/Falcon"
 DISCORD = "https://discord.gg/KZb6YxSHkb"
 SITE = "https://falcon-mc.com/"
-DESCRIPTION = "Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17."
+DESCRIPTION = "Falcon is a Minecraft: Bedrock Edition server written from scratch in C++20."
 SOCIAL_ALT = "Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++"
 
 def logo(prefix, css=""):

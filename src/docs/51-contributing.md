@@ -25,7 +25,7 @@ Reproduce on a fresh world without behavior packs if you can. Report vulnerabili
 
 ## Rules for code
 
-- C++17 only. Match the style of the file you edit.
+- C++20 only. Match the style of the file you edit.
 - One logical change per pull request, with no unrelated churn.
 - Vanilla is the reference. Say how you checked it.
 - Reuse existing helpers before writing new ones.
