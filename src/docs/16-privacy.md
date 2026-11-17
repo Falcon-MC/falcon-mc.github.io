@@ -9,9 +9,9 @@ On by default. They remove clients that don't behave as the game's own client: m
 
 1. **Offer.** When a player connects over NetherNet, the server looks at the client's connection offer and refuses one the game would never send.
 2. **Identity.** The offer must carry the identity assertion the game signs with the player's account. An offer without one is refused, except in a LAN game, see below.
-3. **Attestation.** Once connected, the server sends the service what it saw of the connection being set up: the handshake of the secure session, the offer, and the headers of the join request. It removes the account token, the player's identity and every address, its own included. The service answers whether the client behaves as the game does, and the server removes it if not. If the service doesn't answer, the player stays.
+3. **Attestation.** Once connected, the server sends the service what it saw of the connection being set up: the handshake of the secure session, the offer, and the headers of the join request. It removes the account token, the player's identity and every address, its own included. The service answers whether to remove the client, and the server removes it if so. A client the service finds suspicious is only removed once the same client software has been seen by several servers for a while, so the answer cannot be used to tune a client. If the service doesn't answer, the player stays.
 
-No player name, identifier or address is sent. The service keeps nothing.
+No player name, identifier or address is sent. For a month the service keeps its verdict and a short hash of the client's software traits, never the bytes it was sent; for a suspicious client it also keeps a keyed hash of the server's address, to tell servers apart, never the address itself.
 
 `allow-unofficial-clients=true` turns all three checks off. It is also the only way to let older versions join with `any-version`, because the checks only know the newest version.
 

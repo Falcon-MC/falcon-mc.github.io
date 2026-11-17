@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="icon" href="../assets/logo-white.png" type="image/png" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/logo.png" type="image/png" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" href="../assets/style.css?v=48c74c3285">
+<link rel="stylesheet" href="../assets/style.css?v=699cc6d7e6">
 </head>
 <body>
 <header class="topbar"><div class="topbar-in">
@@ -40,8 +40,8 @@
 <p>A Falcon server talks to one outside service, <code>api.falcon-mc.workers.dev</code>. This page lists everything it sends.</p>
 <h2 id="client-checks">Client checks</h2>
 <p>On by default. They remove clients that don't behave as the game's own client: modified clients, proxies and bots.</p>
-<ol><li><strong>Offer.</strong> When a player connects over NetherNet, the server looks at the client's connection offer and refuses one the game would never send.</li><li><strong>Identity.</strong> The offer must carry the identity assertion the game signs with the player's account. An offer without one is refused, except in a LAN game, see below.</li><li><strong>Attestation.</strong> Once connected, the server sends the service what it saw of the connection being set up: the handshake of the secure session, the offer, and the headers of the join request. It removes the account token, the player's identity and every address, its own included. The service answers whether the client behaves as the game does, and the server removes it if not. If the service doesn't answer, the player stays.</li></ol>
-<p>No player name, identifier or address is sent. The service keeps nothing.</p>
+<ol><li><strong>Offer.</strong> When a player connects over NetherNet, the server looks at the client's connection offer and refuses one the game would never send.</li><li><strong>Identity.</strong> The offer must carry the identity assertion the game signs with the player's account. An offer without one is refused, except in a LAN game, see below.</li><li><strong>Attestation.</strong> Once connected, the server sends the service what it saw of the connection being set up: the handshake of the secure session, the offer, and the headers of the join request. It removes the account token, the player's identity and every address, its own included. The service answers whether to remove the client, and the server removes it if so. A client the service finds suspicious is only removed once the same client software has been seen by several servers for a while, so the answer cannot be used to tune a client. If the service doesn't answer, the player stays.</li></ol>
+<p>No player name, identifier or address is sent. For a month the service keeps its verdict and a short hash of the client's software traits, never the bytes it was sent; for a suspicious client it also keeps a keyed hash of the server's address, to tell servers apart, never the address itself.</p>
 <p><code>allow-unofficial-clients=true</code> turns all three checks off. It is also the only way to let older versions join with <code>any-version</code>, because the checks only know the newest version.</p>
 <h2 id="lan-games">LAN games</h2>
 <p>In a LAN game the client sends its offer without an identity assertion, so these players are refused by default. <code>allow-lan-without-identity=true</code> lets them in, but only when the offer comes through LAN discovery from a loopback or private address: <code>127.0.0.0/8</code>, <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>, link local, or IPv6 unique local. The other checks still apply.</p>
