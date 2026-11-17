@@ -114,6 +114,7 @@ A complete certificate and key pair takes precedence over ACME.
 |---|---|---|
 | `wasm-plugin-memory-mb` | `64` | 1 to 4096. Memory limit per plugin |
 | `wasm-plugin-fuel` | `10000000` | 1 or more. Fuel per server call |
+| `wasm-plugin-disk-mb` | `64` | 1 to 65536. Space a plugin's data folder may take; above it the plugin can no longer write |
 
 ## Reserved keys
 
