@@ -9,7 +9,7 @@ Each [release](https://github.com/Falcon-MC/Falcon/releases) has builds for Wind
 
 ## Build on Linux
 
-Install `g++` with C++17 support, `cmake` 3.16 or newer, `ninja`, and the OpenSSL and zlib development headers. Then:
+Install `g++` with C++20 support, `cmake` 3.16 or newer, `ninja`, and the OpenSSL and zlib development headers. Then:
 
 ```
 git clone https://github.com/Falcon-MC/Falcon.git

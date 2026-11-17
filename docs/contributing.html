@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contributing - Falcon docs</title>
-<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<meta name="description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++20.">
 <link rel="canonical" href="https://falcon-mc.com/docs/contributing">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Falcon">
 <meta property="og:url" content="https://falcon-mc.com/docs/contributing">
 <meta property="og:title" content="Contributing - Falcon docs">
-<meta property="og:description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<meta property="og:description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++20.">
 <meta property="og:image" content="https://falcon-mc.com/assets/social.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contributing - Falcon docs">
-<meta name="twitter:description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++17.">
+<meta name="twitter:description" content="Falcon is a Minecraft: Bedrock Edition server written from scratch in C++20.">
 <meta name="twitter:image" content="https://falcon-mc.com/assets/social.png">
 <meta name="twitter:image:alt" content="Falcon logo with the tagline: Minecraft Bedrock Edition server written from scratch in C++">
 <meta name="theme-color" content="#0d1117">
@@ -45,7 +45,7 @@
 <h2 id="making-a-change">Making a change</h2>
 <ol><li>Fork and clone.</li><li>Install the <a href="./">toolchain</a>.</li><li>Branch off <code>dev</code> and open the pull request against it. Work for an upcoming protocol goes on the branch named after that version.</li><li>Build with <code>./build.sh</code> or <code>build.bat</code>.</li><li>Test on a running server, in game.</li></ol>
 <h2 id="rules-for-code">Rules for code</h2>
-<ul><li>C++17 only. Match the style of the file you edit.</li><li>One logical change per pull request, with no unrelated churn.</li><li>Vanilla is the reference. Say how you checked it.</li><li>Reuse existing helpers before writing new ones.</li><li>No dead code and no leftover debug logging.</li><li>New dependencies need an issue first.</li><li>Performance claims need <code>/profiler</code> numbers.</li><li>Commits follow Conventional Commits, such as <code>fix: stop coral from dying underwater</code>.</li></ul>
+<ul><li>C++20 only. Match the style of the file you edit.</li><li>One logical change per pull request, with no unrelated churn.</li><li>Vanilla is the reference. Say how you checked it.</li><li>Reuse existing helpers before writing new ones.</li><li>No dead code and no leftover debug logging.</li><li>New dependencies need an issue first.</li><li>Performance claims need <code>/profiler</code> numbers.</li><li>Commits follow Conventional Commits, such as <code>fix: stop coral from dying underwater</code>.</li></ul>
 <h2 id="pull-requests">Pull requests</h2>
 <p>Link the issue, allow maintainer edits, and use a draft if the work is not finished. CI must pass on Linux, Windows and macOS. Describe exactly what you tested.</p>
 <p>Pull requests are closed without review for code that does not compile, untested changes, calls to things that do not exist, repository-wide reformats, undisclosed AI use, or duplicates.</p>
