@@ -1,7 +1,13 @@
 title: Guide - Wasm
 section: Plugin runtimes
 ---
-A Wasm plugin runs in Wasmtime with no file system or network access. It has at most `wasm-plugin-memory-mb` of memory (default 64) and `wasm-plugin-fuel` units of fuel per server call (default 10000000). A plugin that runs out of fuel or traps logs `The Wasm plugin trapped and will not be called again` and stays stopped.
+A Wasm plugin runs in Wasmtime with no network access. Its only folder is its data folder, `plugins/<name>/data`: see [Files](#files). It has at most `wasm-plugin-memory-mb` of memory (default 64) and `wasm-plugin-fuel` units of fuel per server call (default 10000000). A plugin that runs out of fuel or traps logs `The Wasm plugin trapped and will not be called again` and stays stopped.
+
+## Files
+
+Through WASI, a plugin sees its data folder as its root and nothing else: `fopen("warps.txt", "w")` in C or C++, `std::fs::write` in Rust, and paths such as `../x` or `/etc/x` never leave it. There are no arguments, environment variables, sockets or standard input. What the plugin prints to standard output or error goes to the server log, a line at a time.
+
+The folder holds at most `wasm-plugin-disk-mb` (default 64). The server checks every few seconds; above the limit the plugin can still read its files but no longer write them, until the folder is back under it.
 
 ## The API
 
