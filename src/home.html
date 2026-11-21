@@ -10,7 +10,26 @@
 <li id="downloads" hidden>downloads <b></b></li>
 </ul>
 <div class="buttons">
+<div class="split" id="download-group">
 <a class="button primary" id="download" href="https://github.com/Falcon-MC/Falcon/releases/latest">Download</a>
+<button class="button primary split-toggle" id="download-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Other builds" hidden>&#9662;</button>
+<div class="split-menu" id="download-menu" role="menu" hidden>
+<a role="menuitem" id="download-release" href="https://github.com/Falcon-MC/Falcon/releases/latest"><b>Latest release</b><span>Stable, for your server</span></a>
+<a role="menuitem" id="download-nightly" href="https://github.com/Falcon-MC/Falcon/releases/tag/nightly"><b>Nightly</b><span>Development build, may be unstable</span></a>
+</div>
+</div>
+<dialog class="confirm" id="nightly-confirm" aria-labelledby="nightly-title">
+<form method="dialog">
+<h2 id="nightly-title">Download a nightly build?</h2>
+<p>A nightly is built from the development branch once its tests pass. It has the newest features and fixes, but it can still break worlds or crash, and it is replaced by the next build.</p>
+<p>Back up your worlds first and do not use it for a server you rely on. Internal plugins must be rebuilt for every nightly.</p>
+<p class="muted small" id="nightly-version"></p>
+<div class="confirm-buttons">
+<button class="button" value="cancel" type="submit">Cancel</button>
+<button class="button primary" value="download" type="submit" id="nightly-accept">Download the nightly</button>
+</div>
+</form>
+</dialog>
 <a class="button" href="docs/index.html">Read the docs</a>
 <a class="button" href="https://github.com/Falcon-MC/Falcon">GitHub</a>
 <a class="button" href="https://discord.gg/KZb6YxSHkb">Discord</a>

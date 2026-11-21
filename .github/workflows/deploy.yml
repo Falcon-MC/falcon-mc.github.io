@@ -58,6 +58,12 @@ jobs:
                     tag_name, published_at, html_url,
                     assets: [.assets[] | {name, browser_download_url}]
                   } end),
+              nightly: ([$releases[0][] | select(.tag_name == "nightly" and (.draft | not))] | first
+                | if . == null then null else {
+                    name, html_url,
+                    updated_at: ([.assets[].updated_at] | max),
+                    assets: [.assets[] | {name, browser_download_url}]
+                  } end),
               downloads: ([$releases[0][] | select(.draft | not) | .assets[]
                 | select(.name | endswith(".sha256") | not) | .download_count] | add // 0),
               repositories: [$repositories[0][] | {name, full_name, stargazers_count, pushed_at}],

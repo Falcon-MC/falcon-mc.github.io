@@ -220,3 +220,17 @@ select:disabled { opacity: .6; }
 .readme pre code { background: none; border: 0; padding: 0; }
 .readme blockquote { margin: 1em 0; padding: 2px 14px; border-left: 3px solid var(--line); color: var(--muted); }
 .readme hr { border: 0; border-top: 1px solid var(--line); margin: 1.6em 0; }
+.split { position: relative; display: inline-flex; }
+.split > .button:first-child { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.split-toggle { border-top-left-radius: 0; border-bottom-left-radius: 0; border-left: 1px solid rgba(127, 127, 127, .45); padding: 10px 12px; font: inherit; font-weight: 600; cursor: pointer; }
+.split-menu { text-align: left; position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; min-width: 260px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.split-menu a { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
+.split-menu a:hover, .split-menu a:focus-visible { background: var(--panel); outline: none; }
+.split-menu a span { font-size: 13px; color: var(--muted); }
+.confirm { text-align: left; max-width: 460px; width: calc(100% - 32px); border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); padding: 20px 22px; }
+.confirm::backdrop { background: rgba(0, 0, 0, .55); }
+.confirm h2 { margin: 0 0 10px; font-size: 20px; }
+.confirm p { margin: 0 0 10px; line-height: 1.55; }
+.confirm-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.confirm .button { font: inherit; font-weight: 600; cursor: pointer; background: none; }
+.confirm .button.primary { background: var(--strong); color: var(--bg); }
