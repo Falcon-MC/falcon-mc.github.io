@@ -53,7 +53,7 @@ jobs:
             --slurpfile contributors contributors.json \
             '{
               version: {game: $game, protocol: $protocol},
-              release: ([$releases[0][] | select(.draft | not)] | first
+              release: ([$releases[0][] | select((.draft | not) and (.prerelease | not))] | first
                 | if . == null then null else {
                     tag_name, published_at, html_url,
                     assets: [.assets[] | {name, browser_download_url}]
