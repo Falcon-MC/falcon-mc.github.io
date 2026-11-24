@@ -79,12 +79,14 @@ jobs:
         run: |
           python3 tools/fetch_docs.py
           python3 build.py
+          mkdir _site
+          cp -R assets discord docs store index.html plugins.html robots.txt sitemap.xml data.json LICENSE _site/
 
       - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: .
+          path: _site
 
       - id: deployment
         uses: actions/deploy-pages@v5

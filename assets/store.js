@@ -287,8 +287,15 @@
 
   function plugin(me) {
     var slug = new URLSearchParams(location.search).get("slug") || "";
+    if (!slug) {
+      location.replace("./");
+      return;
+    }
     api("/v1/store/plugins/" + encodeURIComponent(slug)).then(function (data) {
       var info = data.plugin;
+      var canonical = "https://falcon-mc.com/store/" + slugLink(info.slug);
+      document.head.appendChild(el("link", { rel: "canonical", href: canonical }));
+      document.head.appendChild(el("meta", { property: "og:url", content: canonical }));
       document.title = info.name + " - Falcon plugins";
       $("name").textContent = info.name;
       $("summary").textContent = info.summary;

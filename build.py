@@ -15,6 +15,7 @@ import hashlib
 import html
 import pathlib
 import re
+from xml.etree import ElementTree as ET
 
 ROOT = pathlib.Path(__file__).resolve().parent
 REPO = "https://github.com/Falcon-MC/Falcon"
@@ -142,7 +143,10 @@ def clean(document):
 def head(title, prefix, path):
     """path is the page's address under the site root, empty for the home page."""
     title = html.escape(title)
-    url = SITE + address(path)
+    # The store resolves plugin detail URLs from their slug after loading the record.
+    url = SITE + address(path) if path is not None else None
+    canonical = f'<link rel="canonical" href="{url}">' if url else ""
+    og_url = f'<meta property="og:url" content="{url}">' if url else ""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,10 +154,10 @@ def head(title, prefix, path):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{DESCRIPTION}">
-<link rel="canonical" href="{url}">
+{canonical}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Falcon">
-<meta property="og:url" content="{url}">
+{og_url}
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{DESCRIPTION}">
 <meta property="og:image" content="{SITE}assets/social.png">
@@ -256,13 +260,22 @@ def main():
         (ROOT / "docs" / page["file"]).write_text(clean(document))
     (ROOT / "store").mkdir(exist_ok=True)
     stores = sorted((ROOT / "src" / "store").glob("*.html"))
+    public_paths = ["", *("docs/" + page["file"] for page in pages)]
     for source in stores:
         meta, body = source.read_text().split("\n---\n", 1)
         fields = dict(line.split(": ", 1) for line in meta.splitlines())
         slug = source.stem.split("-", 1)[1]
+        if slug in ("index", "publish"):
+            public_paths.append(fields["path"])
+        canonical_path = None if slug == "plugin" else fields["path"]
         (ROOT / "store" / f"{slug}.html").write_text(clean(
-            head(f'{fields["title"]} - Falcon', "../", fields["path"]) + f'<body data-page="{slug}">\n'
+            head(f'{fields["title"]} - Falcon', "../", canonical_path) + f'<body data-page="{slug}">\n'
             + topbar("../", "store") + body + FOOTER + '<script src="../assets/store.js"></script>\n</body>\n</html>\n'))
+    sitemap = ET.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+    for url in sorted({SITE + address(path) for path in public_paths}):
+        ET.SubElement(ET.SubElement(sitemap, "url"), "loc").text = url
+    ET.indent(sitemap)
+    ET.ElementTree(sitemap).write(ROOT / "sitemap.xml", encoding="utf-8", xml_declaration=True)
     print(f"Built index.html, {len(pages)} docs pages and {len(stores)} store pages")
 
 
