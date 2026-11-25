@@ -49,7 +49,7 @@
 <p><code>sendPacket</code> takes a pointer and length, a <code>vector&lt;uint8_t&gt;</code>, or a <code>string_view</code>, and returns <code>bool</code>.</p>
 <h2 id="connection-hooks">Connection hooks</h2>
 <p><code>ConnectionOpenEvent</code> has <code>address</code>, <code>transport</code>, <code>clientGuid</code> and <code>mtuSize</code>, before any game packet. <code>PlayerPreLoginEvent</code> adds client data such as <code>gameVersion</code>, <code>deviceModel</code> and <code>deviceOS</code>, and <code>setKickMessage</code>.</p>
-<p>Packet IDs and formats are in the <a href="https://github.com/Falcon-MC/Protocol">Protocol repository</a>.</p>
+<p>Packet IDs and formats are in the <a href="https://github.com/Falcon-MC/Falcon/tree/dev/Falcon.Protocol">Falcon.Protocol folder</a>.</p>
 <aside class="note">These events run on hot paths. Keep handlers short.</aside>
 <div class="pager"><a class="prev" href="plugin-content"><span>Previous</span>Custom content</a><a class="next" href="plugin-services"><span>Next</span>Services</a></div>
 </main>

@@ -38,9 +38,12 @@
 <main class="doc"><p class="crumb">Project</p><h1>Architecture</h1>
 <nav class="toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#repositories">Repositories</a></li><li><a href="#source-layout">Source layout</a></li><li><a href="#classes-not-string-checks">Classes, not string checks</a></li><li><a href="#damage">Damage</a></li><li><a href="#threads">Threads</a></li><li><a href="#blocks">Blocks</a></li><li><a href="#embedding">Embedding</a></li></ul></nav>
 <h2 id="repositories">Repositories</h2>
-<div class="table"><table><thead><tr><th>Repository</th><th>Content</th></tr></thead><tbody><tr><td><a href="https://github.com/Falcon-MC/Falcon">Falcon</a></td><td>The server</td></tr><tr><td><a href="https://github.com/Falcon-MC/Protocol">Protocol</a></td><td>Packets and network types</td></tr><tr><td><a href="https://github.com/Falcon-MC/Network">Network</a></td><td>Transport</td></tr><tr><td><a href="https://github.com/Falcon-MC/NBT">NBT</a></td><td>NBT tags and binary streams</td></tr><tr><td><a href="https://github.com/Falcon-MC/BedrockData">BedrockData</a></td><td>Game data files, versioned by protocol</td></tr><tr><td><a href="https://github.com/Falcon-MC/BlockStateUpdater">BlockStateUpdater</a></td><td>Block state upgrade schemas</td></tr><tr><td><a href="https://github.com/Falcon-MC/leveldb">leveldb</a></td><td>LevelDB with Bedrock's zlib compression</td></tr><tr><td><a href="https://github.com/Falcon-MC/PluginAPI">PluginAPI</a></td><td>Plugin API</td></tr></tbody></table></div>
+<div class="table"><table><thead><tr><th>Repository</th><th>Content</th></tr></thead><tbody><tr><td><a href="https://github.com/Falcon-MC/Falcon">Falcon</a></td><td>The server, with its protocol, transport and shared libraries</td></tr><tr><td><a href="https://github.com/Falcon-MC/BedrockData">BedrockData</a></td><td>Game data files, versioned by protocol</td></tr><tr><td><a href="https://github.com/Falcon-MC/BlockStateUpdater">BlockStateUpdater</a></td><td>Block state upgrade schemas</td></tr><tr><td><a href="https://github.com/Falcon-MC/leveldb">leveldb</a></td><td>LevelDB with Bedrock's zlib compression</td></tr><tr><td><a href="https://github.com/Falcon-MC/PluginAPI">PluginAPI</a></td><td>Plugin API</td></tr></tbody></table></div>
 <h2 id="source-layout">Source layout</h2>
-<pre tabindex="0"><code>Falcon.Server/
+<pre tabindex="0"><code>Falcon.Shared/        NBT, binary streams, JSON, math and logging
+Falcon.Protocol/      Packets and network types
+Falcon.Network/       RakNet and NetherNet transport, login parsing
+Falcon.Server/
   include/            Headers, mirroring src/
   src/
     Core/             Shared utilities

@@ -34,6 +34,6 @@ player.sendPacket(packetId, payload);
 
 `ConnectionOpenEvent` has `address`, `transport`, `clientGuid` and `mtuSize`, before any game packet. `PlayerPreLoginEvent` adds client data such as `gameVersion`, `deviceModel` and `deviceOS`, and `setKickMessage`.
 
-Packet IDs and formats are in the [Protocol repository](https://github.com/Falcon-MC/Protocol).
+Packet IDs and formats are in the [Falcon.Protocol folder](https://github.com/Falcon-MC/Falcon/tree/dev/Falcon.Protocol).
 
 > These events run on hot paths. Keep handlers short.
