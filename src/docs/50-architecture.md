@@ -5,10 +5,7 @@ section: Project
 
 | Repository | Content |
 |---|---|
-| [Falcon](https://github.com/Falcon-MC/Falcon) | The server |
-| [Protocol](https://github.com/Falcon-MC/Protocol) | Packets and network types |
-| [Network](https://github.com/Falcon-MC/Network) | Transport |
-| [NBT](https://github.com/Falcon-MC/NBT) | NBT tags and binary streams |
+| [Falcon](https://github.com/Falcon-MC/Falcon) | The server, with its protocol, transport and shared libraries |
 | [BedrockData](https://github.com/Falcon-MC/BedrockData) | Game data files, versioned by protocol |
 | [BlockStateUpdater](https://github.com/Falcon-MC/BlockStateUpdater) | Block state upgrade schemas |
 | [leveldb](https://github.com/Falcon-MC/leveldb) | LevelDB with Bedrock's zlib compression |
@@ -17,6 +14,9 @@ section: Project
 ## Source layout
 
 ```
+Falcon.Shared/        NBT, binary streams, JSON, math and logging
+Falcon.Protocol/      Packets and network types
+Falcon.Network/       RakNet and NetherNet transport, login parsing
 Falcon.Server/
   include/            Headers, mirroring src/
   src/
